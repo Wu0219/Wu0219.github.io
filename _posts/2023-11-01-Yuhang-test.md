@@ -3,7 +3,7 @@ layout:     post
 title:      CV学习之路
 subtitle:   变形金刚随时变形状
 date:       2023-11-01
-author:     Yuhang
+author:     BY
 header-img: img/post-bg-ios9-web.jpg
 catalog: true
 tags:
