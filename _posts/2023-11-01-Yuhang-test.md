@@ -1,14 +1,14 @@
 ---
 layout:     post
-title:      「体能训练理论」之功能性
-subtitle:   「健身先健脑」科学的运动需要科学的运动理论
-date:       2017-07-10
-author:     BY
+title:      CV
+subtitle:   Test
+date:       2023-11-01
+author:     Yuhang
 header-img: img/post-bg-mma-3.jpg
 catalog: true
 tags:
-    - 健身
-    - 生活
+    - CV
+    - Transformer
 ---
 
 
