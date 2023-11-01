@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Transformer |Attention Is All You Need
+title:      Transformer | Attention Is All You Need
 subtitle:   变形金刚随时变形状
 date:       2023-11-01
 author:     Yuhang
