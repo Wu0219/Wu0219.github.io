@@ -14,7 +14,7 @@ tags:
 
 
 
-[TOC]
+
 
 
 ## 注意力机制
@@ -37,6 +37,12 @@ $Q（query）,K（key）,V（value）$分别为一个输入的原始矩阵和一
 
 
 下图中除了上述过程，还增加了SoftMax
+
+
+## test1
+## test2
+## test3
+## test4
 
 
 
