@@ -35,14 +35,17 @@ $Q（query）,K（key）,V（value）$分别为一个输入的原始矩阵和一
 在已经拥有了Q，K，V之后，首先对Q，K进行点乘，此处可以联系向量乘法的意义（向量$A\cdot B$可以看作A在B上的投影长度与B长度的乘积，代表着两个向量在同一方向上的匹配度），即使用点乘计算query和key之间的匹配度，得到的Attention(Q, K)可以用作后续的提取信息。将Attention(Q, K)与V进行点积就可以得出提取之后的信息，即理想中的有用信息。
 
 本文中注意力的计算公式为：
+
 $$
 Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 $$
+
 其解释说明为： *Dot-product attention is identical to our algorithm, except for the scaling factor of $\frac{1}{\sqrt{d_k}}$*
 
 下面让我们理解一下为什么Dot-product attention is identical to our algorithm
 
 假设矩阵Q、K、V都是一个由很多向量构成的矩阵（如一个由许多词向量构成的句子），如下所示Q：
+
 $$
 \begin{equation}Q=
  \left[
@@ -54,7 +57,9 @@ $$
  \right]        
  \end{equation}
 $$
+
  其中每一行可以看作一个向量（也就是一个单词），矩阵可以被记为：
+ 
 $$
 \begin{equation}Q=
  \left[
