@@ -127,7 +127,7 @@ $$
      q_{1}/k_{1}/v_{1}  \\
      q_{2}/k_{2}/v_{2} 
  \end{array}
- \right] \underleftrightarrow{\text{\quad对应\quad}}\left[
+ \right] \underleftrightarrow{\text{  对应  }}\left[
  \begin{array}{ccc}
      I  \\
      love  \\
