@@ -8,7 +8,7 @@ header-img: img/post/transformer.jpg
 catalog: true
 tags:
     - CV 
-    - transformer
+    - transformerz
 ---
 
 
@@ -197,7 +197,7 @@ $$
 
 
 
-以上过程在李宏毅老师的ppt中有详细说明：https://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Transformer%20(v5).pptx
+以上过程在[李宏毅老师的ppt](https://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Transformer%20(v5).pptx)中有详细说明
 
 
 
