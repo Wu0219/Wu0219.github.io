@@ -117,6 +117,44 @@ $$
 
 在生成的$3\times3$矩阵中每一项都是原有的一个词向量与自己的dot product，即$Attention(Q_n, K_n)$，整个矩阵实现了Q，K两个矩阵的每一向量的两两点乘。
 
-假设
+假设原有的矩阵$X$是一句话:**I love cats**
+
+$$
+\begin{equation}Q/K/V=
+ \left[
+ \begin{array}{ccc}
+     q_{0}/k_{0}/v_{0}  \\
+     q_{1}/k_{1}/v_{1}  \\
+     q_{2}/k_{2}/v_{2} 
+ \end{array}
+ \right] \underleftrightarrow{\text{\quad对应\quad}}\left[
+ \begin{array}{ccc}
+     I  \\
+     love  \\
+     cat 
+ \end{array}
+ \right]       
+ \end{equation}
+$$
+
+那么$Q\times K^T$为：
+
+|          | I        | love     | cats     |
+| -------- | -------- | -------- | -------- |
+| **I**    | $q_0k_0$ | $q_0k_1$ | $q_0k_2$ |
+| **love** | $q_1k_0$ | $q_1k_1$ | $q_1k_2$ |
+| **cats** | $q_2k_0$ | $q_2k_1$ | $q_2k_2$ |
+
+
+
+此时$q_0k_0$即为单词「**I**」与「**I**」的注意力分数(query和key的相似度)，同理$q_2k_1$则为单词「**cats**」与「**love**」的注意力分数
+
+
+
+至此我们已经成功得到了$Attention(Q, K)$,
+
+
+
+
 
 ![image-20231101005051329](https://i.imgur.com/CUY9bvM.png)
