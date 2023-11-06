@@ -36,7 +36,7 @@ $Q（query）,K（key）,V（value）$分别为一个输入的原始矩阵和一
 
 本文中注意力的计算公式为：
 $$
-Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
+Attention(Q,K,V)=softmax(\\frac{QK^T}{\\sqrt{d_k}})V
 $$
 其解释说明为： *Dot-product attention is identical to our algorithm, except for the scaling factor of $\frac{1}{\sqrt{d_k}}$*
 
@@ -56,33 +56,33 @@ $$
 $$
  其中每一行可以看作一个向量（也就是一个单词），矩阵可以被记为：
 $$
-\begin{equation}Q=
- \left[
- \begin{array}{ccc}
+\\begin{equation}Q=
+ \\left[
+ \\begin{array}{ccc}
      q_{0}  \\
      q_{1}  \\
      q_{2} 
- \end{array}
- \right]        
- \end{equation}
+ \\end{array}
+ \\right]        
+ \\end{equation}
 $$
 
 $$
-\begin{equation}K=
- \left[
- \begin{array}{ccc}
+\\begin{equation}K=
+ \\left[
+ \\begin{array}{ccc}
      k_{0}  \\
      k_{1}  \\
      k_{2} 
- \end{array}
- \right]        
- \end{equation}
+ \\end{array}
+ \\right]        
+ \\end{equation}
 $$
 
 $$
-\begin{equation}V=
- \left[
- \begin{array}{ccc}
+\\begin{equation}V=
+ \\left[
+ \\begin{array}{ccc}
      v_{0}  \\
      v_{1}  \\
      v_{2} 
@@ -118,7 +118,6 @@ Q\cdot K^T = \begin{equation}
  \end{array}
  \right]        
  \end{equation}
- 
 $$
 在生成的$3\times3$矩阵中每一项都是原有的一个词向量与自己的dot product，即$Attention(Q_n, K_n)$，整个矩阵实现了Q，K两个矩阵的每一向量的两两点乘。
 
