@@ -8,7 +8,7 @@ header-img: img/post/transformer.jpg
 catalog: true
 tags:
     - CV 
-    - transformer
+    - transformerz
 ---
 
 
@@ -17,7 +17,7 @@ tags:
 
 
 
-## 注意力机制
+## 自注意力机制
 
 $Q（query）,K（key）,V（value）$分别为一个输入的原始矩阵和一个可学习的矩阵进行叉乘得来的，假设原有的输入矩阵为$X$,则$Q = X \times W_Q$。 
 
@@ -50,9 +50,9 @@ $$
 \begin{equation}Q=
  \left[
  \begin{array}{ccc}
-     q_{00} & q_{01} & q_{02} & q_{03} \\
-     q_{10} & q_{11} & q_{12} & q_{13} \\
-     q_{20} & q_{21} & q_{22} & q_{23}
+     q_{00} & q_{01} & q_{02}  \\
+     q_{10} & q_{11} & q_{12}  \\
+     q_{20} & q_{21} & q_{22} 
  \end{array}
  \right]        
  \end{equation}
@@ -109,15 +109,22 @@ Q\times K^T = \begin{equation}
      k_{1}  &
      k_{2} 
  \end{array}\right]=\left[\begin{array}{ccc}
-     q_{0}k_{0}  &q_{0}k_{1}&q_{0}k_{2}\\
-     q_{1}k_{0}  &q_{1}k_{1}&q_{1}k_{2}\\
-     q_{2}k_{0}  &q_{2}k_{1}&q_{2}k_{2}
- \end{array}\right]\end{equation}
+     q_{0}\cdot k_{0}  &q_{0}\cdot k_{1}&q_{0}\cdot k_{2}\\
+     q_{1}\cdot k_{0}  &q_{1}\cdot k_{1}&q_{1}\cdot k_{2}\\
+     q_{2}\cdot k_{0}  &q_{2}\cdot k_{1}&q_{2}\cdot k_{2}
+ \end{array}\right]
+ =
+ \left[\begin{array}{ccc}
+     a_{00}  &a_{01}&a_{02}\\
+     a_{10}&a_{11}&a_{12}\\
+     a_{20}&a_{21}&a_{22}
+ \end{array}\right]
+ \end{equation}
 $$
 
 在生成的$3\times3$矩阵中每一项都是原有的一个词向量与自己的dot product，即$Attention(Q_n, K_n)$，整个矩阵实现了Q，K两个矩阵的每一向量的两两点乘。
 
-假设原有的矩阵$X$是一句话:**I love cats**
+假设原有的矩阵$X$是一句话:「**I love cats**」
 
 $$
 \begin{equation}Q/K/V=
@@ -131,7 +138,7 @@ $$
  \begin{array}{ccc}
      I  \\
      love  \\
-     cat 
+     cats 
  \end{array}
  \right]       
  \end{equation}
@@ -139,21 +146,64 @@ $$
 
 那么$Q\times K^T$为：
 
-|          | I        | love     | cats     |
-| -------- | -------- | -------- | -------- |
-| **I**    | $q_0k_0$ | $q_0k_1$ | $q_0k_2$ |
-| **love** | $q_1k_0$ | $q_1k_1$ | $q_1k_2$ |
-| **cats** | $q_2k_0$ | $q_2k_1$ | $q_2k_2$ |
+|          | I                      | love                   | cats           |
+| -------- | ---------------------- | ---------------------- | -------------- |
+| **I**    | $q_0\cdot k_0(a_{00})$ | $q_0\cdot k_1$         | $q_0\cdot k_2$ |
+| **love** | $q_1\cdot k_0$         | $q_1\cdot k_1$         | $q_1\cdot k_2$ |
+| **cats** | $q_2\cdot k_0$         | $q_2\cdot k_1(a_{21})$ | $q_2\cdot k_2$ |
 
 
 
-此时$q_0k_0$即为单词「**I**」与「**I**」的注意力分数(query和key的相似度)，同理$q_2k_1$则为单词「**cats**」与「**love**」的注意力分数
+此时$q_0k_0(a_{00})$即为单词「**I**」与「**I**」的注意力分数(query和key的相似度)，同理$q_2k_1(a_{21})$则为单词「**cats**」与「**love**」的注意力分数
 
 
 
-至此我们已经成功得到了$Attention(Q, K)$,
+至此我们已经成功得到了$Attention(Q, K)$, 先暂时忽略$\sqrt{d_k}和softmax$，让我们看看$Q\times K^T\times V$:
+
+结合（6）我们可以得出：
 
 
+
+$$
+Q\times K^T \times V= \begin{equation} 
+ \left[\begin{array}{ccc}
+     a_{00}  &a_{01}&a_{02}\\
+     a_{10}&a_{11}&a_{12}\\
+     a_{20}&a_{21}&a_{22}
+ \end{array}\right]
+ \times 
+ \left[
+ \begin{array}{ccc}
+     v_{0}  \\
+     v_{1}  \\
+     v_{2} 
+ \end{array}
+ \right]
+ = 
+ \left[\begin{array}{ccc}
+     a_{00}\cdot v_0  +a_{01}\cdot v_1+a_{02}\cdot v_2\\
+     a_{10}\cdot v_0  +a_{11}\cdot v_1+a_{12}\cdot v_2\\
+     a_{20}\cdot v_0  +a_{21}\cdot v_1+a_{22}\cdot v_2
+ \end{array}\right] \underleftrightarrow{\text{  关联最强(最需要注意)  }}\left[
+ \begin{array}{ccc}
+     I  \\
+     love  \\
+     cats 
+ \end{array}
+ \right]       
+ 
+ 
+ 
+ \end{equation}
+$$
+
+
+
+其结果的每一行可以看作是对Value不同项的加权求和，每一行的输出为与X关联最强的元素，在上述例子中， $a_{00}\cdot v_0  +a_{01}\cdot v_1+a_{02}\cdot v_2$是与单词「**I**」关联最强的元素。
+
+
+
+以上过程在李宏毅老师的ppt中有详细说明：https://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Transformer%20(v5).pptx
 
 
 
