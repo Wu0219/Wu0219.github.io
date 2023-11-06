@@ -8,7 +8,7 @@ header-img: img/post/transformer.jpg
 catalog: true
 tags:
     - CV 
-    - transformerz
+    - transformer
 ---
 
 
