@@ -99,7 +99,7 @@ $$
 此时：
 
 $$
-Q\times K^T = \begin{equation}
+\begin{equation}Q\times K^T =
  \left[\begin{array}{ccc}
      q_{0}  \\
      q_{1}  \\
@@ -118,8 +118,7 @@ Q\times K^T = \begin{equation}
      a_{00}  &a_{01}&a_{02}\\
      a_{10}&a_{11}&a_{12}\\
      a_{20}&a_{21}&a_{22}
- \end{array}\right]
- \end{equation}
+ \end{array}\right]\end{equation}
 $$
 
 在生成的$3\times3$矩阵中每一项都是原有的一个词向量与自己的dot product，即$Attention(Q_n, K_n)$，整个矩阵实现了Q，K两个矩阵的每一向量的两两点乘。
@@ -140,8 +139,7 @@ $$
      love  \\
      cats 
  \end{array}
- \right]       
- \end{equation}
+ \right]\end{equation}
 $$
 
 那么$Q\times K^T$为：
@@ -165,7 +163,7 @@ $$
 
 
 $$
-Q\times K^T \times V= \begin{equation} 
+\begin{equation} Q\times K^T \times V=
  \left[\begin{array}{ccc}
      a_{00}  &a_{01}&a_{02}\\
      a_{10}&a_{11}&a_{12}\\
@@ -190,11 +188,7 @@ Q\times K^T \times V= \begin{equation}
      love  \\
      cats 
  \end{array}
- \right]       
- 
- 
- 
- \end{equation}
+ \right]\end{equation}
 $$
 
 
