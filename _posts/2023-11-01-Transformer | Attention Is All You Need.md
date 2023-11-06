@@ -99,7 +99,7 @@ $$
 此时：
 
 $$
-Q\cdot K^T = \begin{equation}
+Q\times K^T = \begin{equation}
  \left[\begin{array}{ccc}
      q_{0}  \\
      q_{1}  \\
