@@ -59,13 +59,13 @@ $$
 $$
 
  其中每一行可以看作一个向量（也就是一个单词），矩阵可以被记为：
- 
+
 $$
 \begin{equation}Q=
  \left[
  \begin{array}{ccc}
-     q_{0}  \\\\
-     q_{1}  \\\\
+     q_{0}  \\
+     q_{1}  \\
      q_{2} 
  \end{array}
  \right]        
@@ -85,37 +85,36 @@ $$
 $$
 
 $$
-
-$$
-
-此时：
-$$
-Q\cdot K^T = \begin{equation}
+\begin{equation}V=
  \left[
  \begin{array}{ccc}
-     q_{0}  \\
-     q_{1}  \\
-     q_{2} 
- \end{array}
- \right]        
- 
- \times 
- \left[
- \begin{array}{ccc}
-     k_{0}  &
-     k_{1}  &
-     k_{2} 
- \end{array}
- \right]    =
- \left[
- \begin{array}{ccc}
-     q_{0}k_{0}  &q_{0}k_{1}&q_{0}k_{2}\\
-     q_{1}k_{0}  &q_{1}k_{1}&q_{1}k_{2}\\
-     q_{2}k_{0}  &q_{2}k_{1}&q_{2}k_{2}
+     v_{0}  \\
+     v_{1}  \\
+     v_{2} 
  \end{array}
  \right]        
  \end{equation}
 $$
+
+此时：
+
+$$
+Q\cdot K^T = \begin{equation}
+ \left[\begin{array}{ccc}
+     q_{0}  \\
+     q_{1}  \\
+     q_{2} 
+ \end{array}\right]\times\left[\begin{array}{ccc}
+     k_{0}  &
+     k_{1}  &
+     k_{2} 
+ \end{array}\right]=\left[\begin{array}{ccc}
+     q_{0}k_{0}  &q_{0}k_{1}&q_{0}k_{2}\\
+     q_{1}k_{0}  &q_{1}k_{1}&q_{1}k_{2}\\
+     q_{2}k_{0}  &q_{2}k_{1}&q_{2}k_{2}
+ \end{array}\right]\end{equation}
+$$
+
 在生成的$3\times3$矩阵中每一项都是原有的一个词向量与自己的dot product，即$Attention(Q_n, K_n)$，整个矩阵实现了Q，K两个矩阵的每一向量的两两点乘。
 
 假设
