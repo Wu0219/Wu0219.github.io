@@ -182,7 +182,7 @@ $$
      a_{00}\cdot v_0  +a_{01}\cdot v_1+a_{02}\cdot v_2\\
      a_{10}\cdot v_0  +a_{11}\cdot v_1+a_{12}\cdot v_2\\
      a_{20}\cdot v_0  +a_{21}\cdot v_1+a_{22}\cdot v_2
- \end{array}\right] \underleftrightarrow{\text{  关联最强(最需要注意)  }}\left[
+ \end{array}\right] \underleftarrow{\text{  关联最强(最需要注意)  }}\left[
  \begin{array}{ccc}
      I  \\
      love  \\
@@ -193,7 +193,7 @@ $$
 
 
 
-其结果的每一行可以看作是对Value不同项的加权求和，每一行的输出为与X关联最强的元素，在上述例子中， $a_{00}\cdot v_0  +a_{01}\cdot v_1+a_{02}\cdot v_2$是与单词「**I**」关联最强的元素。
+其结果的每一行可以看作是对Value不同项的加权求和，每一行的输出为与X关联最强的元素，在上述例子中$v_0,v_1,v_2$分别与「**I**」「**love**」「**cats**」相关联，这一步所做的是针对每一个单词按照不同的比例将这三个单词提取出来，例如 $a_{00}\cdot v_0  +a_{01}\cdot v_1+a_{02}\cdot v_2$是与单词「**I**」关联最强的元素。
 
 
 
