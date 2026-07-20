@@ -1,0 +1,29 @@
+---
+layout: default
+title: Writing — Yuhang Wu
+permalink: /blog/
+---
+
+<div class="wrap-narrow">
+  <header class="page-head">
+    <h1>Writing</h1>
+    <p>Notes on machine learning, music, and whatever I'm figuring out.
+    中英文混排,想到什么写什么。</p>
+  </header>
+
+  <div class="post-list">
+    {% assign current_year = "" %}
+    {% for post in site.posts %}
+      {% capture post_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+      {% if post_year != current_year %}
+        {% assign current_year = post_year %}
+        <h2 class="year-head">{{ post_year }}</h2>
+      {% endif %}
+      <a class="post-row" href="{{ post.url | relative_url }}">
+        <time datetime="{{ post.date | date_to_xmlschema }}" class="mono">{{ post.date | date: "%b %d" }}</time>
+        <span class="post-name">{{ post.title }}</span>
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    {% endfor %}
+  </div>
+</div>

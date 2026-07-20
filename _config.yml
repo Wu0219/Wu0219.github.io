@@ -1,112 +1,39 @@
-# Site settings
-title: Yuhang's Blog
-SEOTitle: Yuhang's Blog
-header-img: img/main_background.jpg
-email: wuyuhang1601@qq.com
-description: "Every failure is leading towards success."
-keyword: "Yuhang, Yuhang Blog, 吴昱杭的博客, wuyuhang, 吴昱杭, yuahng wu, CV, Deep Learning"
-url: "http://Wu0219.github.io"          # your host, for absolute URL
-baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/Wu0219/Wu0219.github.io" # you code repository
+# ─────────────────────────────────────────────
+#  yuhangwu.com — site configuration
+# ─────────────────────────────────────────────
 
-# Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Follow excellent and success will chase you"
-sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+title: Yuhang Wu
+tagline: Sound & Music Computing · AI Research
+description: >-
+  Yuhang (Johann) Wu — MSc student in Sound and Music Computing at Universitat
+  Pompeu Fabra, Barcelona. Research on music information retrieval, LLMs for
+  music, and audio AI. Publications at ISMIR and ACL.
+url: "https://yuhangwu.com"
+baseurl: ""
+lang: en
+timezone: Europe/Madrid
 
+author:
+  name: Yuhang (Johann) Wu
+  email: yuhang.wu01@estudiant.upf.edu
 
+# Social
+github_url: https://github.com/Wu0219
+linkedin_url: https://www.linkedin.com/in/yuhangwu0219/
 
-# SNS settings
-RSS: false
-# weibo_username:     qiubaiying
-#zhihu_username:     qiubaiying
-#github_username:    qiubaiying
-#facebook_username:  baiying.qiu.7
-#jianshu_username:   e71990ada2fd
-#twitter_username:   qiubaiying
-
-
-
-
-# Build settings
-# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
-permalink: pretty
-paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
-anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
-
-
-
-# Gems
-# from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
-
-
-
-
-# Markdown settings
-# replace redcarpet to kramdown,
-# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
-# document: http://jekyllrb.com/docs/configuration/#kramdown
+# Build
+permalink: /blog/:year/:month/:title/
 markdown: kramdown
-highlighter: rouge
 kramdown:
-  input: GFM                            # use Github Flavored Markdown !important
+  input: GFM
   math_engine: mathjax
+highlighter: rouge
 
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
-
-# 评论系统
-# Disqus（https://disqus.com/）
-# disqus_username: qiubaiying
-
-# Gitalk
-gitalk:
-  enable: false    #是否开启Gitalk评论
-  clientID: f2c84e7629bb1446c1a4                            #生成的clientID
-  clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
-  repo: qiubaiying.github.io    #仓库名称
-  owner: qiubaiying    #github用户名
-  admin: qiubaiying
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
-
-
-# 统计
-
-# Analytics settings
-# Baidu Analytics
-ba_track_id: c449dd714fd50fff2524b3ee8630b8f9
-
-# Google Analytics
-# ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-# ga_domain: qiubaiying.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
-
-
-
-
-
-# Featured Tags
-featured-tags: true                     # 是否使用首页标签
-featured-condition-size: 1              # 相同标签数量大于这个数，才会出现在首页
-
-
-
-# Progressive Web Apps
-chrome-tab-theme-color: "#000000"
-service-worker: true
-
-
-
-# Friends
-friends: [
-    {
-        title: "Henggg",
-        href: "https://henggg.cn"
-    },{
-        title: "Yuanyang-Lee",
-        href: "https://goer17.github.io"
-    },{
-        title: "LeeZ",
-        href: "https://lzleee.com"
-    }
-]
+exclude:
+  - README.md
+  - CV
