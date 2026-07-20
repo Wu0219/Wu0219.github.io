@@ -16,6 +16,33 @@
   {% if page.url == '/' or page.url == '/zh/' %}
   <link rel="alternate" hreflang="en" href="{{ site.url }}/">
   <link rel="alternate" hreflang="zh" href="{{ site.url }}/zh/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yuhang Wu",
+    "alternateName": ["吴昱杭", "Johann Wu", "Yuhang (Johann) Wu"],
+    "url": "https://yuhangwu.com/",
+    "image": "https://yuhangwu.com/assets/img/fuji.jpg",
+    "email": "mailto:{{ site.author.email }}",
+    "jobTitle": "MSc Student in Sound and Music Computing",
+    "affiliation": [
+      { "@type": "Organization", "name": "Universitat Pompeu Fabra" },
+      { "@type": "Organization", "name": "BMAT Music Innovation" }
+    ],
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Queen Mary University of London" },
+      { "@type": "CollegeOrUniversity", "name": "Beijing University of Posts and Telecommunications" }
+    ],
+    "birthPlace": { "@type": "Place", "name": "Haikou, Hainan, China" },
+    "homeLocation": { "@type": "Place", "name": "Barcelona, Spain" },
+    "knowsAbout": ["Music Information Retrieval", "Machine Learning", "Large Language Models", "Audio Signal Processing", "Computer Vision"],
+    "sameAs": [
+      "https://www.linkedin.com/in/yuhangwu0219/",
+      "https://github.com/Wu0219"
+    ]
+  }
+  </script>
   {% endif %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 </head>
