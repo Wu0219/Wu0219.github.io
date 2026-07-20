@@ -148,6 +148,28 @@ a:hover { color: var(--accent-ink); }
 }
 .nav-links a:hover { color: var(--accent); }
 
+.nav-links .lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  min-width: 2.4rem;
+  padding: 0 .55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  transition: color .2s, border-color .2s;
+}
+.nav-links .lang-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Chinese pages: serif fallback for hanzi, keep Fraunces for latin */
+html:lang(zh) {
+  --serif: "Fraunces", "Noto Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
 #theme-toggle {
   display: inline-flex;
   align-items: center;
