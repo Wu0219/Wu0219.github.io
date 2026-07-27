@@ -725,9 +725,26 @@ html:lang(zh) .hero h1,
 html:lang(zh) .interest,
 html:lang(zh) .sec-head,
 html:lang(zh) .page-head h1,
-html:lang(zh) .post-title{
+html:lang(zh) .post-title,
+html:lang(zh) .role-card,
+html:lang(zh) .block-label,
+html:lang(zh) .exp__org,
+html:lang(zh) .edu h3,
+html:lang(zh) .skill-group h4,
+html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3, html:lang(zh) h4{
   font-family:"Space Grotesk","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
 }
+
+/* CJK glyphs are taller than Latin caps: the huge display heading needs more
+   line-height (else it clips inside .hero{overflow:hidden}) and no Latin-tuned
+   negative tracking. This restores parity with the English layout. */
+html:lang(zh) .hero h1{line-height:1.06;letter-spacing:0;}
+html:lang(zh) .hero h1 .l2{-webkit-text-stroke-width:3px;text-stroke-width:3px;}
+html:lang(zh) .hero h1 .paren{letter-spacing:0;}
+html:lang(zh) .sec-head{letter-spacing:0;}
+html:lang(zh) .interest{max-width:26ch;line-height:1.4;}
+html:lang(zh) .hello,
+html:lang(zh) .route-intro{letter-spacing:.04em;}
 
 /* ---------- narrow container for text pages ---------- */
 .wrap-narrow{max-width:760px;margin:0 auto;padding:0 20px;}
