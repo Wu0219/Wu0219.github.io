@@ -1,237 +1,241 @@
 ---
 layout: default
-title: Yuhang Wu — Sound & Music Computing · AI Research
+title: Yuhang Wu — Music Technology · Sound & Music Computing
+description: "Yuhang (Johann) Wu — MSc student in Sound & Music Computing at UPF Barcelona, R&D intern at BMAT. Interested in music technology. Published at ISMIR & ACL."
 ---
 
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero wrap">
-  <p class="kicker">Sound · Music · Computing — Barcelona &nbsp;<span class="zh">吴昱杭</span></p>
-  <h1>Yuhang Wu <span class="aka">(Johann)</span></h1>
-  <p class="lede">
-    I'm interested in <strong>music technology</strong>. MSc student in
-    Sound &amp; Music Computing at <strong>Universitat Pompeu Fabra</strong>;
-    R&amp;D intern at <strong>BMAT Music Innovation</strong>.
-  </p>
+<div class="wrap">
 
-  <div class="hero-links">
-    <a class="pill pill--accent" href="mailto:{{ site.author.email }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-      Email
-    </a>
-    <a class="pill" href="{{ site.github_url }}" rel="me noopener" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.9-.39s1.98.13 2.9.39c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.67.8.55C20.22 21.38 23.5 17.08 23.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg>
-      GitHub
-    </a>
-    <a class="pill" href="{{ site.linkedin_url }}" rel="me noopener" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
-      LinkedIn
-    </a>
-  </div>
+  <!-- HERO -->
+  <header class="hero">
+    <span class="hello">// Hello — I'm</span>
+    <h1>Yuhang<br><span class="l2">Wu</span> <span class="paren">(Johann) · 吴昱杭</span></h1>
 
-  <p class="venues">Published at <b>ISMIR 2024</b> · <b>ACL 2024</b> · <b>IEEE ICETCI 2024</b></p>
+    <p class="interest">I'm interested in <span class="mark">music technology.</span></p>
 
-  <div class="wave" aria-hidden="true">{% for i in (1..64) %}{% assign h = i | times: 47 | modulo: 83 | plus: 12 %}{% assign d = i | times: 31 | modulo: 17 | times: 100 %}<span style="--h:.{{ h }};--d:{{ d }}ms"></span>{% endfor %}</div>
-</section>
-
-<!-- ═══════════ ABOUT ═══════════ -->
-<section class="section wrap" id="about">
-  <div class="sec-head"><span class="sec-num">01</span><h2>About</h2></div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm a researcher-engineer from Haikou, Hainan, now based in Barcelona. During my
-        undergraduate years at <strong>BUPT</strong> I started out in computer
-        vision — deep-learning semantic segmentation of remote sensing images —
-        and gradually found my way to the question I now care about most:
-        <strong>can machines genuinely understand music?</strong>
-      </p>
-      <p>
-        At M.A.P I led the benchmark team behind
-        <a href="https://arxiv.org/abs/2402.16153" target="_blank" rel="noopener">ChatMusician</a>
-        (ACL&nbsp;2024), curating 1,000+ music-theory QA pairs later incorporated
-        into the MMLU multimodal subset, and co-authored an
-        <a href="https://arxiv.org/abs/2407.21531" target="_blank" rel="noopener">ISMIR&nbsp;2024 study</a>
-        of LLMs' capability of music understanding and generation.
-      </p>
-      <p>
-        These days I'm an R&amp;D intern at <strong>BMAT</strong>, actively
-        exploring the intersection of academia and industry.
-      </p>
+    <div class="roles">
+      <div class="role-card">
+        <span class="tag">Now / Study</span>
+        <p><strong>MSc student in Sound &amp; Music Computing</strong> at Universitat Pompeu Fabra (UPF), Barcelona.</p>
+      </div>
+      <div class="role-card">
+        <span class="tag">Now / Work</span>
+        <p><strong>R&amp;D intern</strong> at BMAT Music Innovators.</p>
+      </div>
     </div>
-    <aside class="about-side">
-      <figure class="photo-card">
-        <img src="{{ '/assets/img/fuji.jpg' | relative_url }}" alt="Yuhang Wu at Lake Kawaguchi, Mount Fuji behind" loading="lazy">
-      </figure>
-      <h3>Research interests</h3>
-      <div class="chips">
-        <span class="chip chip--hi">Music Information Retrieval</span>
-        <span class="chip chip--hi">LLMs for Music</span>
-        <span class="chip">Audio Watermarking</span>
-        <span class="chip">Generative Audio</span>
-        <span class="chip">Computer Vision</span>
-        <span class="chip">Signal Processing</span>
-      </div>
-    </aside>
-  </div>
-</section>
 
-<!-- ═══════════ PUBLICATIONS ═══════════ -->
-<section class="section wrap" id="publications">
-  <div class="sec-head"><span class="sec-num">02</span><h2>Publications</h2></div>
-  <div class="pub-list">
+    <p class="venues">Published at <b>ISMIR 2024</b> · <b>Findings of ACL 2024</b> · <b>IEEE ICETCI 2024</b></p>
+
+    <div class="btn-row">
+      <a class="btn btn--lime" href="mailto:{{ site.author.email }}"><span class="ar">→</span> Email</a>
+      <a class="btn" href="{{ site.github_url }}" target="_blank" rel="noopener"><span class="ar">→</span> GitHub</a>
+      <a class="btn btn--blue" href="{{ site.linkedin_url }}" target="_blank" rel="noopener"><span class="ar">→</span> LinkedIn</a>
+    </div>
+  </header>
+
+  <!-- EXPEDITION ROUTE -->
+  <section class="sec" id="route">
+    <span class="sec-head"><span class="num">✦</span> The Route</span>
+    <p class="route-intro">// Haikou → Beijing → Barcelona</p>
+    <div class="map-panel">
+      {% include route-map.html %}
+    </div>
+    <div class="map-legend">
+      <span><i style="background:var(--lime)"></i>Haikou · origin</span>
+      <span><i style="background:var(--cobalt)"></i>Beijing · study</span>
+      <span><i style="background:#D13B2E"></i>Barcelona · basecamp</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec" id="about">
+    <span class="sec-head"><span class="num">01</span> About</span>
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="drop">From <strong>Haikou, Hainan</strong>, now based in Barcelona. During undergrad at BUPT I started out in computer vision — deep-learning semantic segmentation of remote sensing images — which gradually led me to the question I now care about most: <em>can machines genuinely understand music?</em></p>
+        <p>At M.A.P I led the benchmark team behind <strong>ChatMusician</strong> (Findings of ACL 2024), curating 1,000+ music-theory QA pairs later incorporated into the MMLU multimodal subset, and co-authored an ISMIR 2024 study of LLMs' capability of music understanding and generation.</p>
+        <p>Now an <strong>R&amp;D intern at BMAT</strong>, actively exploring the intersection of academia and industry.</p>
+
+        <div class="chips-block">
+          <div class="chips-label">// Research interests</div>
+          <div class="chips">
+            <span class="chip">Music Information Retrieval</span>
+            <span class="chip">LLMs for Music</span>
+            <span class="chip">Audio Watermarking</span>
+            <span class="chip">Generative Audio</span>
+            <span class="chip">Computer Vision</span>
+            <span class="chip">Signal Processing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portrait-col">
+        <figure class="portrait">
+          <img src="{{ '/assets/img/yuhang.jpg' | relative_url }}" alt="Yuhang Wu">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="sec" id="publications">
+    <span class="sec-head"><span class="num">02</span> Publications</span>
 
     <article class="pub">
-      <span class="pub-venue">ISMIR 2024 · San Francisco</span>
-      <h3><a href="https://arxiv.org/abs/2407.21531" target="_blank" rel="noopener">Can LLMs “Reason” in Music? An Evaluation of LLMs’ Capability of Music Understanding and Generation</a></h3>
-      <p class="pub-authors">Z. Zhou, <b>Y. Wu</b>, Z. Wu, X. Zhang, R. Yuan, Y. Ma, L. Wang, E. Benetos, W. Xue</p>
+      <div class="pub__top">
+        <span class="venue">ISMIR 2024</span>
+        <span class="place">San Francisco</span>
+      </div>
+      <h3>Can LLMs "Reason" in Music? An Evaluation of LLMs' Capability of Music Understanding and Generation</h3>
+      <p class="authors">Z. Zhou, <b>Y. Wu</b>, Z. Wu, X. Zhang, R. Yuan, Y. Ma, L. Wang, E. Benetos, W. Xue</p>
       <div class="pub-links">
-        <a href="https://arxiv.org/abs/2407.21531" target="_blank" rel="noopener">arXiv</a>
-        <a href="https://arxiv.org/pdf/2407.21531" target="_blank" rel="noopener">PDF</a>
+        <a class="pill" href="https://arxiv.org/abs/2407.21531" target="_blank" rel="noopener">arXiv ↗</a>
+        <a class="pill" href="https://arxiv.org/pdf/2407.21531" target="_blank" rel="noopener">PDF ↗</a>
       </div>
     </article>
 
     <article class="pub">
-      <span class="pub-venue">ACL 2024 · Bangkok</span>
-      <h3><a href="https://arxiv.org/abs/2402.16153" target="_blank" rel="noopener">ChatMusician: Understanding and Generating Music Intrinsically with LLM</a></h3>
-      <p class="pub-authors">R. Yuan, H. Lin, Y. Wang, Z. Tian, S. Wu, T. Shen, G. Zhang, <b>Y. Wu</b>, et&nbsp;al.</p>
+      <div class="pub__top">
+        <span class="venue">Findings of ACL 2024</span>
+        <span class="place">Bangkok</span>
+      </div>
+      <h3>ChatMusician: Understanding and Generating Music Intrinsically with LLM</h3>
+      <p class="authors">R. Yuan, H. Lin, Y. Wang, Z. Tian, S. Wu, T. Shen, G. Zhang, <b>Y. Wu</b>, et al.</p>
       <div class="pub-links">
-        <a href="https://arxiv.org/abs/2402.16153" target="_blank" rel="noopener">arXiv</a>
-        <a href="https://arxiv.org/pdf/2402.16153" target="_blank" rel="noopener">PDF</a>
+        <a class="pill" href="https://arxiv.org/abs/2402.16153" target="_blank" rel="noopener">arXiv ↗</a>
+        <a class="pill" href="https://arxiv.org/pdf/2402.16153" target="_blank" rel="noopener">PDF ↗</a>
       </div>
     </article>
 
     <article class="pub">
-      <span class="pub-venue">IEEE ICETCI 2024 · Changchun</span>
+      <div class="pub__top">
+        <span class="venue">IEEE ICETCI 2024</span>
+        <span class="place">Changchun</span>
+      </div>
       <h3>Research on Fire Detection Based on the YOLOv9 Algorithm</h3>
-      <p class="pub-authors">L. Song, <b>Y. Wu</b>, W. Zhang</p>
+      <p class="authors">L. Song, <b>Y. Wu</b>, W. Zhang</p>
+    </article>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="sec" id="experience">
+    <span class="sec-head"><span class="num">03</span> Experience</span>
+
+    <article class="exp">
+      <div class="exp__meta">
+        <div class="exp__date">Mar 2026 – Present</div>
+        <span class="exp__loc">Barcelona</span>
+      </div>
+      <div class="exp__body">
+        <h3 class="exp__org">BMAT Music Innovators</h3>
+        <p class="exp__role">R&amp;D Intern</p>
+        <p class="exp__desc">Interning in R&amp;D, actively exploring the intersection of academia and industry.</p>
+      </div>
     </article>
 
-  </div>
-</section>
+    <article class="exp">
+      <div class="exp__meta">
+        <div class="exp__date">Aug 2024 – Jul 2025</div>
+        <span class="exp__loc">Beijing</span>
+      </div>
+      <div class="exp__body">
+        <h3 class="exp__org">Chinese Academy of Sciences, Institute of Automation</h3>
+        <p class="exp__role">Research Assistant · Audio Watermarking</p>
+        <p class="exp__desc">Watermarking in TTS / music GenAI systems: reviewed the literature on shortcomings of existing watermarking systems, reproduced a classic baseline and constructed a complete workflow.</p>
+      </div>
+    </article>
 
-<!-- ═══════════ EXPERIENCE ═══════════ -->
-<section class="section wrap" id="experience">
-  <div class="sec-head"><span class="sec-num">03</span><h2>Experience</h2></div>
-  <div class="timeline">
+    <article class="exp">
+      <div class="exp__meta">
+        <div class="exp__date">Aug 2023 – May 2024</div>
+        <span class="exp__loc">Remote</span>
+      </div>
+      <div class="exp__body">
+        <h3 class="exp__org">Multimodal Art Projection (M.A.P)</h3>
+        <p class="exp__role">Team Leader (Benchmark) → Team Member (LLM Music Evaluation)</p>
+        <p class="exp__desc">Spearheaded construction of the MusicTheoryBenchmark — 1,000+ music theory QA pairs curated to rigorous academic standards, later incorporated into the MMLU multimodal subset. Then evaluated LLMs (GPT-4, Llama, Qwen, Gemma) on music understanding and generation over ~3,000 samples.</p>
+      </div>
+    </article>
 
-    <div class="t-item">
-      <p class="t-meta"><b>Mar 2026 — Present</b> · Barcelona</p>
-      <h3>BMAT Music Innovation <span>— R&amp;D Intern</span></h3>
-      <p>Interning in R&amp;D, actively exploring the intersection of academia
-      and industry.</p>
+    <article class="exp">
+      <div class="exp__meta">
+        <div class="exp__date">Nov 2023 – Mar 2024</div>
+        <span class="exp__loc">Beijing</span>
+      </div>
+      <div class="exp__body">
+        <h3 class="exp__org">Beijing University of Posts and Telecommunications</h3>
+        <p class="exp__role">Research Assistant · Sight-Singing Scoring</p>
+        <p class="exp__desc">Deep-learning automatic scoring for sight-singing, with data-synthesis methods generating unlimited training samples to reduce dependence on fixed datasets.</p>
+      </div>
+    </article>
+
+    <article class="exp">
+      <div class="exp__meta">
+        <div class="exp__date">Mar 2023 – Aug 2023</div>
+        <span class="exp__loc">Beijing</span>
+      </div>
+      <div class="exp__body">
+        <h3 class="exp__org">Chinese Academy of Sciences, Aerospace Information Research Institute</h3>
+        <p class="exp__role">Research Assistant · Computer Vision</p>
+        <p class="exp__desc">Semantic segmentation for remote sensing: reproduced state-of-the-art methods, adapted network architectures, and validated across 10+ open and proprietary datasets.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- EDUCATION + SKILLS -->
+  <section class="sec" id="education">
+    <span class="sec-head"><span class="num">04</span> Education &amp; Skills</span>
+    <div class="edu-skills">
+
+      <div>
+        <h3 class="block-label">Education</h3>
+        <div class="edu">
+          <span class="edu__yr">2025 – 2027 (expected)</span>
+          <h3>Universitat Pompeu Fabra — MSc in Sound &amp; Music Computing</h3>
+          <p>Barcelona. MIR, machine learning for music, generative algorithms, computational musicology.</p>
+        </div>
+        <div class="edu">
+          <span class="edu__yr">2021 – 2025</span>
+          <h3>Queen Mary University of London &amp; BUPT — B.Eng. Internet of Things</h3>
+          <p>Beijing · joint programme. <span class="honor">First Class Honours · GPA 90/100 · top 8% (rank 15/186)</span></p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="block-label">Skills</h3>
+        <div class="skill-group">
+          <h4>Programming</h4>
+          <div class="skill-tags">
+            <span class="stag">Python</span><span class="stag">C/C++</span><span class="stag">Java</span><span class="stag">SQL</span><span class="stag">LaTeX</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>ML &amp; AI</h4>
+          <div class="skill-tags">
+            <span class="stag">PyTorch</span><span class="stag">OpenMMLab</span><span class="stag">LLMs / Prompting</span><span class="stag">Computer Vision</span><span class="stag">Semantic Segmentation</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Audio &amp; Music</h4>
+          <div class="skill-tags">
+            <span class="stag">MIR</span><span class="stag">Signal Processing</span><span class="stag">Pure Data</span><span class="stag">Sonic Visualiser</span><span class="stag">MuseScore</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Tools</h4>
+          <div class="skill-tags">
+            <span class="stag">Git</span><span class="stag">Docker</span><span class="stag">Linux</span><span class="stag">Jupyter</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Languages</h4>
+          <div class="skill-tags">
+            <span class="stag">English · TOEFL 98</span><span class="stag">Chinese · native</span>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="t-item">
-      <p class="t-meta"><b>Aug 2024 — Jul 2025</b> · Beijing</p>
-      <h3>Chinese Academy of Sciences, Institute of Automation <span>— Research Assistant, Audio Watermarking</span></h3>
-      <p>Watermarking in TTS / music GenAI systems: reviewed the literature on
-      shortcomings of existing watermarking systems, reproduced a classic
-      baseline and constructed a complete workflow.</p>
-    </div>
-
-    <div class="t-item">
-      <p class="t-meta"><b>Aug 2023 — May 2024</b> · Remote, Hong Kong</p>
-      <h3>Multimodal Art Projection (M.A.P) <span>— Team Leader (Benchmark) → Team Member (LLM Music Evaluation)</span></h3>
-      <p>Spearheaded construction of the MusicTheoryBenchmark — 1,000+ music
-      theory QA pairs curated to rigorous academic standards, later incorporated
-      into the MMLU multimodal subset. Then evaluated LLMs (GPT-4, Llama, Qwen,
-      Gemma) on music understanding and generation over ~3,000 samples,
-      contributing over 80% of the objective experimental data behind the
-      ISMIR 2024 paper.</p>
-    </div>
-
-    <div class="t-item">
-      <p class="t-meta"><b>Nov 2023 — Mar 2024</b> · Beijing</p>
-      <h3>Beijing University of Posts and Telecommunications <span>— Research Assistant, Sight-Singing Scoring</span></h3>
-      <p>Deep-learning automatic scoring for sight-singing, with data-synthesis
-      methods generating unlimited training samples to break dependence on
-      fixed datasets.</p>
-    </div>
-
-    <div class="t-item">
-      <p class="t-meta"><b>Mar 2023 — Aug 2023</b> · Beijing</p>
-      <h3>Chinese Academy of Sciences, Aerospace Information Research Institute <span>— Research Assistant, Computer Vision</span></h3>
-      <p>Semantic segmentation for remote sensing: reproduced state-of-the-art
-      methods, adapted network architectures, and validated across 10+ open and
-      proprietary datasets.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════ PHOTO BAND ═══════════ -->
-<div class="photo-band" aria-hidden="true">
-  <img src="{{ '/assets/img/horizon.jpg' | relative_url }}" alt="" loading="lazy">
 </div>
-
-<!-- ═══════════ EDUCATION + SKILLS ═══════════ -->
-<section class="section wrap" id="education">
-  <div class="sec-head"><span class="sec-num">04</span><h2>Education &amp; Skills</h2></div>
-  <div class="duo">
-
-    <div class="edu">
-      <div class="edu-item">
-        <p class="t-meta"><b>2025 — 2027 (exp.)</b> · Barcelona</p>
-        <h3>Universitat Pompeu Fabra</h3>
-        <p>MSc in Sound and Music Computing — MIR, machine learning for music,
-        generative algorithms, computational musicology.</p>
-      </div>
-      <div class="edu-item">
-        <p class="t-meta"><b>2021 — 2025</b> · Beijing</p>
-        <h3>Queen Mary University of London &amp; BUPT</h3>
-        <p>B.Eng. Internet of Things (joint programme) — First Class Honours,
-        GPA 90/100, top 8% of 186.</p>
-      </div>
-    </div>
-
-    <div class="skills">
-      <div class="skill-group">
-        <h3>Programming</h3>
-        <div class="chips">
-          <span class="chip">Python</span><span class="chip">C / C++</span>
-          <span class="chip">Java</span><span class="chip">SQL</span>
-          <span class="chip">LaTeX</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>ML &amp; AI</h3>
-        <div class="chips">
-          <span class="chip">PyTorch</span><span class="chip">OpenMMLab</span>
-          <span class="chip">LLMs / Prompting</span><span class="chip">Computer Vision</span>
-          <span class="chip">Semantic Segmentation</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>Audio &amp; Music</h3>
-        <div class="chips">
-          <span class="chip">MIR</span><span class="chip">Signal Processing</span>
-          <span class="chip">Pure Data</span><span class="chip">Sonic Visualiser</span>
-          <span class="chip">MuseScore</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>Tools</h3>
-        <div class="chips">
-          <span class="chip">Git</span><span class="chip">Docker</span>
-          <span class="chip">Linux</span><span class="chip">Jupyter</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════ WRITING ═══════════ -->
-<section class="section wrap" id="writing">
-  <div class="sec-head"><span class="sec-num">05</span><h2>Writing</h2></div>
-  <div class="post-list">
-    {% for post in site.posts limit: 5 %}
-    <a class="post-row" href="{{ post.url | relative_url }}">
-      <time datetime="{{ post.date | date_to_xmlschema }}" class="mono">{{ post.date | date: "%b %Y" }}</time>
-      <span class="post-name">{{ post.title }}</span>
-      <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-    </a>
-    {% endfor %}
-  </div>
-  <a class="more-link" href="{{ '/blog/' | relative_url }}">All posts →</a>
-</section>
