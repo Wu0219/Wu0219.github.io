@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>郑堃钰 ZHENG KUNYU</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f2efe6; --ink:#111; --blue:#2f5bff; --lime:#d8f24a; --coral:#ff6b4a; --cream:#fffdf5;
+  --sans:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono",Consolas,"Cascadia Code",monospace;
+  --bd:3px solid var(--ink);
+  --sh:6px 6px 0 var(--ink);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:22px 22px 70px}
+
+/* 顶栏 */
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;border:var(--bd);border-radius:14px;
+  background:var(--cream);padding:12px 18px;box-shadow:var(--sh);margin-bottom:22px;flex-wrap:wrap}
+.brand{font:800 17px/1 var(--sans);letter-spacing:-.02em}
+.tnav{display:flex;gap:8px;flex-wrap:wrap}
+.tnav a{font:600 12.5px/1 var(--sans);text-decoration:none;color:var(--ink);border:2px solid var(--ink);
+  border-radius:100px;padding:7px 13px;transition:.16s}
+.tnav a:hover{background:var(--ink);color:var(--cream)}
+
+/* Bento 栅格 */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.b{border:var(--bd);border-radius:18px;padding:24px;background:var(--cream);box-shadow:var(--sh);
+  transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s}
+.b:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}.c2{grid-column:span 2}
+@media(max-width:900px){.c4,.c3,.c2{grid-column:span 6}}
+
+/* 名片格 */
+.hero{background:var(--blue);color:var(--cream);display:flex;flex-direction:column;justify-content:space-between;min-height:290px}
+.hero .eyebrow{font:700 12px/1 var(--mono);letter-spacing:.2em;opacity:.85}
+.hero h1{font-size:clamp(44px,7vw,78px);line-height:.96;letter-spacing:-.04em;font-weight:800;margin:16px 0 10px}
+.hero .en{font:600 17px/1 var(--mono);letter-spacing:.06em;opacity:.9}
+.hero .role{margin-top:18px;font-size:17px;line-height:1.55;max-width:460px;opacity:.95}
+
+/* 大数字格 */
+.num{display:flex;flex-direction:column;justify-content:center;min-height:140px}
+.num b{font-size:clamp(46px,6vw,68px);line-height:.9;letter-spacing:-.05em;font-weight:800}
+.num span{font-size:13.5px;font-weight:600;margin-top:12px;line-height:1.4}
+.lime{background:var(--lime)}
+.coral{background:var(--coral);color:var(--cream)}
+.dark{background:var(--ink);color:var(--cream)}
+
+/* 通用小标题 */
+.tag{display:inline-block;font:700 11px/1 var(--mono);letter-spacing:.18em;border:2px solid currentColor;
+  border-radius:100px;padding:6px 11px;margin-bottom:16px}
+h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
+
+/* 经历条目 */
+.job{border-top:2px solid var(--ink);padding:20px 0}
+.job:first-of-type{border-top:0;padding-top:6px}
+.job:last-child{padding-bottom:0}
+.jtop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.when{font:700 12px/1 var(--mono);background:var(--ink);color:var(--cream);padding:6px 10px;border-radius:6px;white-space:nowrap}
+.org{font-size:14px;font-weight:600;color:#5a5a5a;margin-top:7px}
+ul{list-style:none;margin-top:13px}
+li{position:relative;padding-left:22px;margin-bottom:8px;font-size:15px;line-height:1.65;color:#2c2c2c}
+li::before{content:"→";position:absolute;left:0;font-weight:800;color:var(--blue)}
+strong{font-weight:800;background:var(--lime);padding:0 4px;border-radius:3px}
+.coral strong,.dark strong,.hero strong{background:rgba(255,255,255,.25);color:inherit}
+
+/* 奖项 */
+.aw{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px dotted rgba(0,0,0,.2)}
+.aw:last-child{border-bottom:0;padding-bottom:0}
+.badge{font:800 11px/1 var(--mono);padding:8px 10px;border-radius:6px;border:2px solid var(--ink);white-space:nowrap}
+.badge.g{background:var(--lime)}
+.badge.s{background:var(--cream)}
+
+/* 证书墙 */
+.wall{display:flex;flex-wrap:wrap;gap:10px}
+.k{border:2px solid var(--ink);border-radius:100px;padding:9px 16px;font-size:13.5px;font-weight:600;background:var(--cream)}
+.k.hi{background:var(--lime)}
+
+/* 联系 */
+.ct{display:grid;gap:14px}
+.ct a,.ct div{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  border-bottom:2px solid rgba(255,255,255,.3);padding-bottom:12px;text-decoration:none;color:inherit;font-size:16px}
+.ct .lab{font:700 11px/1 var(--mono);letter-spacing:.16em;opacity:.7}
+.ct a:hover{opacity:.75}
+.mailbtn{display:inline-block;margin-top:24px;background:var(--lime);color:var(--ink);border:2px solid var(--cream);
+  border-radius:100px;padding:13px 26px;font-size:14px;font-weight:800;text-decoration:none;transition:.18s}
+.mailbtn:hover{background:var(--cream);transform:translateY(-2px)}
+
+footer{margin-top:22px;border:var(--bd);border-radius:14px;background:var(--cream);box-shadow:var(--sh);
+  padding:16px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  font:700 12px/1 var(--mono);letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">郑堃钰 / ZHENG KUNYU</div>
+    <div class="tnav">
+      <a href="#exp">EXPERIENCE</a><a href="#edu">EDUCATION</a><a href="#campus">CAMPUS</a><a href="#contact">CONTACT</a>
+    </div>
+  </div>
+
+  <div class="bento">
+
+    <div class="b c4 hero">
+      <div>
+        <div class="eyebrow">ENGLISH · INTERPRETING · 2026</div>
+        <h1>郑堃钰</h1>
+        <div class="en">ZHENG KUNYU / CHLOE</div>
+      </div>
+      <div class="role">英语专业八级。海南大学（211）英语本科，台湾元智大学应用外语系交换。做陪同口译、涉外接待和跨文化沟通。</div>
+    </div>
+
+    <div class="b c2 num lime"><b>5</b><span>城市代表团<br>英语随行</span></div>
+    <div class="b c2 num coral"><b>8h</b><span>单日连续<br>现场口译</span></div>
+
+    <div class="b c2 num dark"><b>TEM-8</b><span>英语专业最高等级</span></div>
+    <div class="b c2 num"><b>2</b><span>届省级翻译大赛<br>统筹执行</span></div>
+
+    <div class="b c6">
+      <span class="tag">ABOUT ME</span>
+      <p style="font-size:20px;line-height:1.7;font-weight:500;max-width:820px">
+        具备扎实的<strong>组织协调</strong>与<strong>跨文化沟通</strong>能力。拥有境外交换背景及学生组织经历，英语口语流利，能快速适应多元环境；性格开朗，熟悉 YouTube、Instagram 等海外社交平台的使用与生活分享。
+      </p>
+    </div>
+
+    <div class="b c6" id="exp">
+      <span class="tag">01 / EXPERIENCE</span>
+      <h2>实践经历</h2>
+
+      <div class="job">
+        <div class="jtop"><h3>项目助理</h3><span class="when">2026.05.18 → 06.02</span></div>
+        <div class="org">委内瑞拉旅游管理研修班 · 海南省商务厅国际合作交流中心承办</div>
+        <ul>
+          <li>在涉及<strong>北京、天津、琼海、三亚、海口 5 城市</strong>的考察行程中，担任西语学员代表团的主要英语联络人之一。</li>
+          <li>负责涉外信息对接，包括行政文书的翻译转换，并向学员进行双语日程通知与统筹。</li>
+          <li>负责现场接待与机场接机，在每日长达 <strong>8 小时</strong>的现场执行中，使用英语进行口头沟通与后勤协调。</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="jtop"><h3>涉外陪同翻译</h3><span class="when">2025.05.30 → 05.31</span></div>
+        <div class="org">澳普斯顿电梯有限公司 · Hainan Upstander Lift Co., Ltd</div>
+        <ul>
+          <li>在 <strong>8 小时</strong>的现场随行中，为企业高管及新西兰外商提供口译支持，协助宴会与现场考察期间的沟通对接。</li>
+          <li>引导国际访客完成企业参访全程，确保专业、高品质的接待体验。</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="jtop"><h3>秘书处助理</h3><span class="when">2025 → 2026</span></div>
+        <div class="org">海南省翻译协会 · Translation Association of Hainan</div>
+        <ul>
+          <li>负责连续<strong>两届</strong>「海南省大学生翻译大赛」的统筹与执行，包括报名费收取登记、试卷准备与排版打印、参赛人员数据录入。</li>
+          <li>在现场高效协调相关高校参赛团队，并为评审工作提供专业支持。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="b c3" id="edu">
+      <span class="tag">02 / EDUCATION</span>
+      <h2>教育背景</h2>
+      <div class="job">
+        <div class="jtop"><h3>海南大学</h3><span class="when">2021 → 2025</span></div>
+        <div class="org">本科 · 英语专业 · 国家 211 工程</div>
+      </div>
+      <div class="job">
+        <div class="jtop"><h3>元智大学（台湾）</h3><span class="when">2023.09 → 2024.01</span></div>
+        <div class="org">交换学习 · 应用外语学系</div>
+      </div>
+    </div>
+
+    <div class="b c3 lime">
+      <span class="tag">03 / AWARDS</span>
+      <h2>境外交流获奖</h2>
+      <div style="margin-top:16px">
+        <div class="aw"><span class="badge s">一等奖 · 前5%</span><span style="font-weight:600">应用外语学系「英语海报比赛」</span></div>
+        <div class="aw"><span class="badge s">三等奖</span><span style="font-weight:600">元智大学「电影字幕翻译大赛」</span></div>
+      </div>
+      <p style="margin-top:16px;font-size:14.5px;color:#3a3a2a">半年台湾交换期间，在完全不同的语境里系统性地把英语用出去。</p>
+    </div>
+
+    <div class="b c6" id="campus">
+      <span class="tag">04 / CAMPUS</span>
+      <h2>校园经历</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px" class="cg">
+        <div class="job" style="border-top:0;padding-top:6px">
+          <div class="jtop"><h3>班级学习委员</h3><span class="when">2021.09 → 2025.06</span></div>
+          <ul>
+            <li>负责班级日常教学事务，严格执行课堂考勤与学籍数据统计，及时向学院反馈班级学风情况。</li>
+            <li>独立筹划「海南大学 525 心理健康情景剧大赛」，全流程负责剧本编写、<strong>15 人</strong>演员招募及排练舞台呈现。</li>
+          </ul>
+        </div>
+        <div class="job" style="border-top:0;padding-top:6px">
+          <div class="jtop"><h3>书院朋辈导师</h3><span class="when">2024.09 → 2025.06</span></div>
+          <ul>
+            <li>负责对接 <strong>10 名</strong>大一新生入学过渡工作，通过线下宿舍对接与一对一访谈形式，<strong>100% 覆盖</strong>所负责新生，确保其快速熟悉校园环境与基本规章。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="b c3">
+      <span class="tag">05 / CREDENTIALS</span>
+      <h2>证书技能</h2>
+      <div class="wall" style="margin-top:16px">
+        <span class="k hi">英语专业八级 TEM-8</span>
+        <span class="k hi">英语专业四级 TEM-4</span>
+        <span class="k">CET-6</span><span class="k">CET-4</span><span class="k">C1 驾驶证</span>
+        <span class="k">陪同口译</span><span class="k">字幕翻译</span><span class="k">涉外接待</span><span class="k">活动统筹</span>
+      </div>
+    </div>
+
+    <!-- CONTACT —— 公开版本：仅保留邮箱，不含手机号与微信 -->
+    <div class="b c3 dark" id="contact">
+      <span class="tag">06 / CONTACT</span>
+      <h2 style="color:var(--cream)">联系方式</h2>
+      <p style="margin-top:14px;font-size:15px;line-height:1.7;color:rgba(255,253,245,.72)">
+        口译、涉外接待、活动统筹与双语文书相关合作，欢迎邮件联系。
+      </p>
+      <div class="ct" style="margin-top:22px">
+        <a href="mailto:2606961378@qq.com" style="border-bottom:0;padding-bottom:0">
+          <span class="lab">EMAIL</span><span>2606961378@qq.com</span>
+        </a>
+      </div>
+      <a class="mailbtn" href="mailto:2606961378@qq.com">写邮件给我 →</a>
+    </div>
+    <!-- /CONTACT -->
+
+  </div>
+
+  <footer>
+    <span>© 2026 ZHENG KUNYU</span>
+    <span>HAIKOU · CHINA</span>
+  </footer>
+</div>
+<style>@media(max-width:760px){.cg{grid-template-columns:1fr!important;gap:0!important}}</style>
+</body>
+</html>
