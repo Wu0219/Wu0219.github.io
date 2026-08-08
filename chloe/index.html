@@ -3,8 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>郑堃钰 ZHENG KUNYU</title>
+<title>郑堃钰 Zheng Kunyu — 英语口译 · 涉外接待 · 跨文化沟通</title>
+
+<meta name="description" content="郑堃钰（Chloe），英语专业八级，海南大学（211）英语本科，台湾元智大学应用外语系交换。专注陪同口译、涉外接待与跨文化沟通。作品集与简历下载。">
+<meta name="theme-color" content="#2f5bff">
+<meta name="author" content="Zheng Kunyu">
+
+<!-- 社交分享卡片：微信/QQ/LinkedIn 抓取用 -->
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Zheng Kunyu">
+<meta property="og:title" content="郑堃钰 Zheng Kunyu — 英语口译 · 涉外接待">
+<meta property="og:description" content="英语专业八级 · 海南大学（211）英语本科 · 台湾元智大学交换。陪同口译、涉外接待与跨文化沟通。">
+<meta property="og:url" content="https://yuhangwu.com/chloe/">
+<meta property="og:image" content="https://yuhangwu.com/chloe/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="郑堃钰 Zheng Kunyu — 英语口译 · 涉外接待">
+<meta name="twitter:description" content="英语专业八级 · 陪同口译、涉外接待与跨文化沟通。">
+<meta name="twitter:image" content="https://yuhangwu.com/chloe/og-cover.png">
+
+<link rel="canonical" href="https://yuhangwu.com/chloe/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232f5bff'/><text x='50' y='71' font-size='54' font-weight='700' text-anchor='middle' fill='%23fffdf5' font-family='Segoe UI,sans-serif'>ZK</text></svg>">
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -16,16 +40,22 @@
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
 .wrap{max-width:1140px;margin:0 auto;padding:22px 22px 70px}
 
 /* 顶栏 */
 .top{display:flex;align-items:center;justify-content:space-between;gap:14px;border:var(--bd);border-radius:14px;
   background:var(--cream);padding:12px 18px;box-shadow:var(--sh);margin-bottom:22px;flex-wrap:wrap}
 .brand{font:800 17px/1 var(--sans);letter-spacing:-.02em}
-.tnav{display:flex;gap:8px;flex-wrap:wrap}
+.tnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .tnav a{font:600 12.5px/1 var(--sans);text-decoration:none;color:var(--ink);border:2px solid var(--ink);
   border-radius:100px;padding:7px 13px;transition:.16s}
 .tnav a:hover{background:var(--ink);color:var(--cream)}
+.langs{display:flex;border:2px solid var(--ink);border-radius:100px;overflow:hidden;margin-left:4px}
+.langs button{border:0;background:var(--cream);color:var(--ink);font:700 12px/1 var(--sans);
+  padding:8px 12px;cursor:pointer;transition:.16s}
+.langs button+button{border-left:2px solid var(--ink)}
+.langs button[aria-pressed="true"]{background:var(--blue);color:var(--cream)}
 
 /* Bento 栅格 */
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
@@ -36,11 +66,15 @@ body{background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webki
 @media(max-width:900px){.c4,.c3,.c2{grid-column:span 6}}
 
 /* 名片格 */
-.hero{background:var(--blue);color:var(--cream);display:flex;flex-direction:column;justify-content:space-between;min-height:290px}
+.hero{background:var(--blue);color:var(--cream);display:flex;gap:26px;align-items:flex-start;min-height:290px}
+.hero .txt{flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:242px}
 .hero .eyebrow{font:700 12px/1 var(--mono);letter-spacing:.2em;opacity:.85}
-.hero h1{font-size:clamp(44px,7vw,78px);line-height:.96;letter-spacing:-.04em;font-weight:800;margin:16px 0 10px}
-.hero .en{font:600 17px/1 var(--mono);letter-spacing:.06em;opacity:.9}
-.hero .role{margin-top:18px;font-size:17px;line-height:1.55;max-width:460px;opacity:.95}
+.hero h1{font-size:clamp(40px,6.4vw,72px);line-height:.96;letter-spacing:-.04em;font-weight:800;margin:16px 0 10px}
+.hero .en{font:600 16px/1 var(--mono);letter-spacing:.06em;opacity:.9}
+.hero .role{margin-top:18px;font-size:16.5px;line-height:1.6;opacity:.95}
+.portrait{width:150px;flex-shrink:0;border:3px solid var(--cream);border-radius:14px;overflow:hidden;background:var(--cream)}
+.portrait img{width:100%;height:auto}
+@media(max-width:560px){.hero{flex-direction:column;gap:18px}.portrait{width:118px}}
 
 /* 大数字格 */
 .num{display:flex;flex-direction:column;justify-content:center;min-height:140px}
@@ -50,7 +84,6 @@ body{background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webki
 .coral{background:var(--coral);color:var(--cream)}
 .dark{background:var(--ink);color:var(--cream)}
 
-/* 通用小标题 */
 .tag{display:inline-block;font:700 11px/1 var(--mono);letter-spacing:.18em;border:2px solid currentColor;
   border-radius:100px;padding:6px 11px;margin-bottom:16px}
 h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
@@ -73,7 +106,6 @@ strong{font-weight:800;background:var(--lime);padding:0 4px;border-radius:3px}
 .aw{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px dotted rgba(0,0,0,.2)}
 .aw:last-child{border-bottom:0;padding-bottom:0}
 .badge{font:800 11px/1 var(--mono);padding:8px 10px;border-radius:6px;border:2px solid var(--ink);white-space:nowrap}
-.badge.g{background:var(--lime)}
 .badge.s{background:var(--cream)}
 
 /* 证书墙 */
@@ -81,19 +113,53 @@ strong{font-weight:800;background:var(--lime);padding:0 4px;border-radius:3px}
 .k{border:2px solid var(--ink);border-radius:100px;padding:9px 16px;font-size:13.5px;font-weight:600;background:var(--cream)}
 .k.hi{background:var(--lime)}
 
+/* 简历下载 */
+.dl{display:flex;flex-direction:column;gap:11px;margin-top:18px}
+.dlbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;
+  border:2px solid var(--ink);border-radius:12px;padding:14px 18px;background:var(--cream);color:var(--ink);
+  font-size:15px;font-weight:700;transition:.16s}
+.dlbtn:hover{background:var(--blue);color:var(--cream);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.dlbtn .fmt{font:700 10.5px/1 var(--mono);letter-spacing:.14em;opacity:.65}
+
 /* 联系 */
-.ct{display:grid;gap:14px}
-.ct a,.ct div{display:flex;justify-content:space-between;align-items:center;gap:12px;
-  border-bottom:2px solid rgba(255,255,255,.3);padding-bottom:12px;text-decoration:none;color:inherit;font-size:16px}
+.ct{display:grid;gap:14px;margin-top:20px}
+.ct .row{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  border-bottom:2px solid rgba(255,255,255,.3);padding-bottom:12px;font-size:16px}
 .ct .lab{font:700 11px/1 var(--mono);letter-spacing:.16em;opacity:.7}
-.ct a:hover{opacity:.75}
-.mailbtn{display:inline-block;margin-top:24px;background:var(--lime);color:var(--ink);border:2px solid var(--cream);
+.mailbtn{display:inline-block;margin-top:22px;background:var(--lime);color:var(--ink);border:2px solid var(--cream);
   border-radius:100px;padding:13px 26px;font-size:14px;font-weight:800;text-decoration:none;transition:.18s}
 .mailbtn:hover{background:var(--cream);transform:translateY(-2px)}
+.copybtn{margin-left:10px;background:none;border:2px solid rgba(255,255,255,.4);color:var(--cream);
+  border-radius:100px;padding:6px 12px;font:700 11px/1 var(--sans);cursor:pointer;transition:.16s}
+.copybtn:hover{background:rgba(255,255,255,.15)}
 
 footer{margin-top:22px;border:var(--bd);border-radius:14px;background:var(--cream);box-shadow:var(--sh);
   padding:16px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
   font:700 12px/1 var(--mono);letter-spacing:.1em}
+
+@media(max-width:760px){.cg{grid-template-columns:1fr!important;gap:0!important}}
+
+/* 打印 / 另存 PDF：去掉重墨底色与阴影，避免糊成一片 */
+@media print{
+  @page{margin:12mm}
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  .top,.langs,.dl,.copybtn,.mailbtn{display:none!important}
+  .bento{display:block}
+  .b{border:1px solid #999!important;box-shadow:none!important;border-radius:6px;
+     padding:12px 14px;margin-bottom:10px;background:#fff!important;color:#000!important;
+     break-inside:avoid;page-break-inside:avoid;transform:none!important}
+  .hero,.lime,.coral,.dark{background:#fff!important;color:#000!important}
+  .hero .role,.hero .en,.hero .eyebrow{opacity:1;color:#333}
+  .when{background:#eee!important;color:#000!important}
+  .num{min-height:0}
+  .num b{font-size:26pt}
+  strong{background:none!important;font-weight:700;text-decoration:underline}
+  li::before{color:#000}
+  .portrait{width:100px}
+  a{text-decoration:none;color:#000}
+  footer{border:0;box-shadow:none;padding:8px 0}
+}
 </style>
 </head>
 <body>
@@ -102,136 +168,234 @@ footer{margin-top:22px;border:var(--bd);border-radius:14px;background:var(--crea
   <div class="top">
     <div class="brand">郑堃钰 / ZHENG KUNYU</div>
     <div class="tnav">
-      <a href="#exp">EXPERIENCE</a><a href="#edu">EDUCATION</a><a href="#campus">CAMPUS</a><a href="#contact">CONTACT</a>
+      <a href="#exp"      data-cn="实践经历" data-en="EXPERIENCE" data-es="EXPERIENCIA">实践经历</a>
+      <a href="#edu"      data-cn="教育背景" data-en="EDUCATION"  data-es="FORMACIÓN">教育背景</a>
+      <a href="#campus"   data-cn="校园经历" data-en="CAMPUS"     data-es="UNIVERSIDAD">校园经历</a>
+      <a href="#contact"  data-cn="联系"     data-en="CONTACT"    data-es="CONTACTO">联系</a>
+      <span class="langs">
+        <button id="l-cn" aria-pressed="true"  onclick="setLang('cn')">中</button>
+        <button id="l-en" aria-pressed="false" onclick="setLang('en')">EN</button>
+        <button id="l-es" aria-pressed="false" onclick="setLang('es')">ES</button>
+      </span>
     </div>
   </div>
 
   <div class="bento">
 
     <div class="b c4 hero">
-      <div>
-        <div class="eyebrow">ENGLISH · INTERPRETING · 2026</div>
-        <h1>郑堃钰</h1>
-        <div class="en">ZHENG KUNYU / CHLOE</div>
+      <div class="txt">
+        <div>
+          <div class="eyebrow" data-cn="ENGLISH · INTERPRETING · 2026" data-en="ENGLISH · INTERPRETING · 2026" data-es="INGLÉS · INTERPRETACIÓN · 2026">ENGLISH · INTERPRETING · 2026</div>
+          <h1 data-cn="郑堃钰" data-en="Zheng Kunyu" data-es="Zheng Kunyu">郑堃钰</h1>
+          <div class="en" data-cn="ZHENG KUNYU / CHLOE" data-en="郑堃钰 / CHLOE" data-es="郑堃钰 / CHLOE">ZHENG KUNYU / CHLOE</div>
+        </div>
+        <div class="role"
+          data-cn="英语专业八级。海南大学（211）英语本科，台湾元智大学应用外语系交换。做陪同口译、涉外接待和跨文化沟通。"
+          data-en="TEM-8 certified — the highest level for English majors in China. B.A. in English, Hainan University (Project 211); exchange semester at Yuan Ze University, Taiwan. Escort interpreting, foreign-affairs reception and cross-cultural communication."
+          data-es="Nivel TEM-8, el más alto para especialistas en inglés en China. Licenciada en Filología Inglesa por la Universidad de Hainan (Proyecto 211), con intercambio en la Universidad Yuan Ze (Taiwán). Interpretación de enlace, recepción de delegaciones y comunicación intercultural. <strong>Idioma de trabajo: inglés.</strong>">
+          英语专业八级。海南大学（211）英语本科，台湾元智大学应用外语系交换。做陪同口译、涉外接待和跨文化沟通。
+        </div>
       </div>
-      <div class="role">英语专业八级。海南大学（211）英语本科，台湾元智大学应用外语系交换。做陪同口译、涉外接待和跨文化沟通。</div>
+      <div class="portrait"><img src="photo.jpg" alt="郑堃钰 Zheng Kunyu" width="480" height="480"></div>
     </div>
 
-    <div class="b c2 num lime"><b>5</b><span>城市代表团<br>英语随行</span></div>
-    <div class="b c2 num coral"><b>8h</b><span>单日连续<br>现场口译</span></div>
+    <div class="b c2 num lime"><b>5</b><span data-cn="城市代表团<br>英语随行" data-en="cities as<br>delegation liaison" data-es="ciudades como<br>enlace de delegación">城市代表团<br>英语随行</span></div>
+    <div class="b c2 num coral"><b>8h</b><span data-cn="单日连续<br>现场口译" data-en="continuous<br>daily interpreting" data-es="interpretación<br>continua diaria">单日连续<br>现场口译</span></div>
 
-    <div class="b c2 num dark"><b>TEM-8</b><span>英语专业最高等级</span></div>
-    <div class="b c2 num"><b>2</b><span>届省级翻译大赛<br>统筹执行</span></div>
+    <div class="b c2 num dark"><b>TEM-8</b><span data-cn="英语专业最高等级" data-en="highest level for English majors" data-es="máximo nivel en inglés">英语专业最高等级</span></div>
+    <div class="b c2 num"><b>2</b><span data-cn="届省级翻译大赛<br>统筹执行" data-en="editions of the provincial<br>translation contest run" data-es="ediciones del concurso<br>provincial coordinadas">届省级翻译大赛<br>统筹执行</span></div>
 
     <div class="b c6">
-      <span class="tag">ABOUT ME</span>
-      <p style="font-size:20px;line-height:1.7;font-weight:500;max-width:820px">
+      <span class="tag" data-cn="ABOUT ME" data-en="ABOUT ME" data-es="SOBRE MÍ">ABOUT ME</span>
+      <p style="font-size:20px;line-height:1.7;font-weight:500;max-width:860px"
+        data-cn="具备扎实的<strong>组织协调</strong>与<strong>跨文化沟通</strong>能力。拥有境外交换背景及学生组织经历，英语口语流利，能快速适应多元环境；性格开朗，熟悉 YouTube、Instagram 等海外社交平台的使用与生活分享。"
+        data-en="Solid <strong>coordination</strong> and <strong>cross-cultural communication</strong> skills, built on an overseas exchange background and substantial student-organisation experience. Fluent spoken English and quick adaptation to diverse environments; highly active and familiar with overseas social platforms including YouTube and Instagram."
+        data-es="Sólida capacidad de <strong>coordinación</strong> y <strong>comunicación intercultural</strong>, respaldada por una experiencia de intercambio en el extranjero y una amplia trayectoria en organizaciones estudiantiles. Inglés hablado fluido y rápida adaptación a entornos diversos; persona extrovertida y familiarizada con plataformas sociales internacionales como YouTube e Instagram.">
         具备扎实的<strong>组织协调</strong>与<strong>跨文化沟通</strong>能力。拥有境外交换背景及学生组织经历，英语口语流利，能快速适应多元环境；性格开朗，熟悉 YouTube、Instagram 等海外社交平台的使用与生活分享。
       </p>
     </div>
 
     <div class="b c6" id="exp">
-      <span class="tag">01 / EXPERIENCE</span>
-      <h2>实践经历</h2>
+      <span class="tag">01 / <span data-cn="EXPERIENCE" data-en="EXPERIENCE" data-es="EXPERIENCIA">EXPERIENCE</span></span>
+      <h2 data-cn="实践经历" data-en="Professional Experience" data-es="Experiencia profesional">实践经历</h2>
 
       <div class="job">
-        <div class="jtop"><h3>项目助理</h3><span class="when">2026.05.18 → 06.02</span></div>
-        <div class="org">委内瑞拉旅游管理研修班 · 海南省商务厅国际合作交流中心承办</div>
+        <div class="jtop">
+          <h3 data-cn="项目助理" data-en="Project &amp; Operations Assistant" data-es="Asistente de proyecto">项目助理</h3>
+          <span class="when">2026.05.18 → 06.02</span>
+        </div>
+        <div class="org"
+          data-cn="委内瑞拉旅游管理研修班 · 海南省商务厅国际合作交流中心承办"
+          data-en="Seminar on Tourism Management for Venezuela (China Aid) · Intl. Cooperation Centre, Hainan Dept. of Commerce"
+          data-es="Seminario de Gestión Turística para Venezuela (Cooperación China) · Centro de Cooperación Internacional, Consejería de Comercio de Hainan">委内瑞拉旅游管理研修班 · 海南省商务厅国际合作交流中心承办</div>
         <ul>
-          <li>在涉及<strong>北京、天津、琼海、三亚、海口 5 城市</strong>的考察行程中，担任西语学员代表团的主要英语联络人之一。</li>
-          <li>负责涉外信息对接，包括行政文书的翻译转换，并向学员进行双语日程通知与统筹。</li>
-          <li>负责现场接待与机场接机，在每日长达 <strong>8 小时</strong>的现场执行中，使用英语进行口头沟通与后勤协调。</li>
+          <li data-cn="在涉及<strong>北京、天津、琼海、三亚、海口 5 城市</strong>的考察行程中，担任西语学员代表团的主要英语联络人之一。"
+              data-en="Primary English liaison for a Spanish-speaking delegation across a <strong>five-city study tour</strong> (Beijing, Tianjin, Qionghai, Sanya, Haikou)."
+              data-es="Enlace principal en inglés para una delegación hispanohablante durante una gira de estudio por <strong>5 ciudades</strong> (Pekín, Tianjin, Qionghai, Sanya y Haikou).">在涉及<strong>北京、天津、琼海、三亚、海口 5 城市</strong>的考察行程中，担任西语学员代表团的主要英语联络人之一。</li>
+          <li data-cn="负责涉外信息对接，包括行政文书的翻译转换，并向学员进行双语日程通知与统筹。"
+              data-en="Translated administrative documentation and delivered bilingual schedule briefings to participants."
+              data-es="Traducción de documentación administrativa y comunicación bilingüe de la agenda a los participantes.">负责涉外信息对接，包括行政文书的翻译转换，并向学员进行双语日程通知与统筹。</li>
+          <li data-cn="负责现场接待与机场接机，在每日长达 <strong>8 小时</strong>的现场执行中，使用英语进行口头沟通与后勤协调。"
+              data-en="Ran on-site reception and airport pickups — up to <strong>eight continuous hours</strong> of daily English communication and logistics coordination."
+              data-es="Recepción in situ y traslados al aeropuerto, con hasta <strong>8 horas diarias</strong> de comunicación oral y coordinación logística en inglés.">负责现场接待与机场接机，在每日长达 <strong>8 小时</strong>的现场执行中，使用英语进行口头沟通与后勤协调。</li>
         </ul>
       </div>
 
       <div class="job">
-        <div class="jtop"><h3>涉外陪同翻译</h3><span class="when">2025.05.30 → 05.31</span></div>
-        <div class="org">澳普斯顿电梯有限公司 · Hainan Upstander Lift Co., Ltd</div>
+        <div class="jtop">
+          <h3 data-cn="涉外陪同翻译" data-en="Escort Interpreter" data-es="Intérprete de acompañamiento">涉外陪同翻译</h3>
+          <span class="when">2025.05.30 → 05.31</span>
+        </div>
+        <div class="org" data-cn="澳普斯顿电梯有限公司 · Hainan Upstander Lift Co., Ltd"
+                         data-en="Hainan Upstander Lift Co., Ltd"
+                         data-es="Hainan Upstander Lift Co., Ltd">澳普斯顿电梯有限公司 · Hainan Upstander Lift Co., Ltd</div>
         <ul>
-          <li>在 <strong>8 小时</strong>的现场随行中，为企业高管及新西兰外商提供口译支持，协助宴会与现场考察期间的沟通对接。</li>
-          <li>引导国际访客完成企业参访全程，确保专业、高品质的接待体验。</li>
+          <li data-cn="在 <strong>8 小时</strong>的现场随行中，为企业高管及新西兰外商提供口译支持，协助宴会与现场考察期间的沟通对接。"
+              data-en="Provided <strong>eight hours</strong> of continuous interpretation for executives and New Zealand clients during banquets and site visits."
+              data-es="<strong>8 horas</strong> de interpretación continua para directivos de la empresa y clientes neozelandeses durante banquetes y visitas a las instalaciones.">在 <strong>8 小时</strong>的现场随行中，为企业高管及新西兰外商提供口译支持，协助宴会与现场考察期间的沟通对接。</li>
+          <li data-cn="引导国际访客完成企业参访全程，确保专业、高品质的接待体验。"
+              data-en="Guided international guests through corporate tours, ensuring a professional and high-quality hospitality experience."
+              data-es="Acompañamiento de visitantes internacionales durante los recorridos corporativos, garantizando una atención profesional y de alta calidad.">引导国际访客完成企业参访全程，确保专业、高品质的接待体验。</li>
         </ul>
       </div>
 
       <div class="job">
-        <div class="jtop"><h3>秘书处助理</h3><span class="when">2025 → 2026</span></div>
-        <div class="org">海南省翻译协会 · Translation Association of Hainan</div>
+        <div class="jtop">
+          <h3 data-cn="秘书处助理" data-en="Organisation &amp; Activities Assistant" data-es="Asistente de secretaría">秘书处助理</h3>
+          <span class="when">2025 → 2026</span>
+        </div>
+        <div class="org" data-cn="海南省翻译协会 · Translation Association of Hainan"
+                         data-en="Translation Association of Hainan"
+                         data-es="Asociación de Traductores de Hainan">海南省翻译协会 · Translation Association of Hainan</div>
         <ul>
-          <li>负责连续<strong>两届</strong>「海南省大学生翻译大赛」的统筹与执行，包括报名费收取登记、试卷准备与排版打印、参赛人员数据录入。</li>
-          <li>在现场高效协调相关高校参赛团队，并为评审工作提供专业支持。</li>
+          <li data-cn="负责连续<strong>两届</strong>「海南省大学生翻译大赛」的统筹与执行，包括报名费收取登记、试卷准备与排版打印、参赛人员数据录入。"
+              data-en="Ran registration, fee collection, secure examination-paper preparation and participant data entry across <strong>two consecutive editions</strong> of the Hainan College Students Translation Competition."
+              data-es="Coordinación y ejecución de <strong>dos ediciones consecutivas</strong> del Concurso Provincial de Traducción para Estudiantes Universitarios de Hainan: inscripciones, cobro de cuotas, preparación y maquetación de los exámenes y registro de datos.">负责连续<strong>两届</strong>「海南省大学生翻译大赛」的统筹与执行，包括报名费收取登记、试卷准备与排版打印、参赛人员数据录入。</li>
+          <li data-cn="在现场高效协调相关高校参赛团队，并为评审工作提供专业支持。"
+              data-en="Coordinated participating university teams on site and supported the judging panel."
+              data-es="Coordinación in situ de los equipos universitarios participantes y apoyo profesional al jurado.">在现场高效协调相关高校参赛团队，并为评审工作提供专业支持。</li>
         </ul>
       </div>
     </div>
 
     <div class="b c3" id="edu">
-      <span class="tag">02 / EDUCATION</span>
-      <h2>教育背景</h2>
+      <span class="tag">02 / <span data-cn="EDUCATION" data-en="EDUCATION" data-es="FORMACIÓN">EDUCATION</span></span>
+      <h2 data-cn="教育背景" data-en="Education" data-es="Formación">教育背景</h2>
       <div class="job">
-        <div class="jtop"><h3>海南大学</h3><span class="when">2021 → 2025</span></div>
-        <div class="org">本科 · 英语专业 · 国家 211 工程</div>
+        <div class="jtop">
+          <h3 data-cn="海南大学" data-en="Hainan University" data-es="Universidad de Hainan">海南大学</h3>
+          <span class="when">2021 → 2025</span>
+        </div>
+        <div class="org" data-cn="本科 · 英语专业 · 国家 211 工程"
+                         data-en="B.A. · English · Project 211"
+                         data-es="Grado · Filología Inglesa · Proyecto 211">本科 · 英语专业 · 国家 211 工程</div>
       </div>
       <div class="job">
-        <div class="jtop"><h3>元智大学（台湾）</h3><span class="when">2023.09 → 2024.01</span></div>
-        <div class="org">交换学习 · 应用外语学系</div>
+        <div class="jtop">
+          <h3 data-cn="元智大学（台湾）" data-en="Yuan Ze University (Taiwan)" data-es="Universidad Yuan Ze (Taiwán)">元智大学（台湾）</h3>
+          <span class="when">2023.09 → 2024.01</span>
+        </div>
+        <div class="org" data-cn="交换学习 · 应用外语学系"
+                         data-en="Exchange Student · Applied Linguistics"
+                         data-es="Intercambio · Lingüística Aplicada">交换学习 · 应用外语学系</div>
       </div>
     </div>
 
     <div class="b c3 lime">
-      <span class="tag">03 / AWARDS</span>
-      <h2>境外交流获奖</h2>
+      <span class="tag">03 / <span data-cn="AWARDS" data-en="AWARDS" data-es="PREMIOS">AWARDS</span></span>
+      <h2 data-cn="境外交流获奖" data-en="Awards on exchange" data-es="Premios en el intercambio">境外交流获奖</h2>
       <div style="margin-top:16px">
-        <div class="aw"><span class="badge s">一等奖 · 前5%</span><span style="font-weight:600">应用外语学系「英语海报比赛」</span></div>
-        <div class="aw"><span class="badge s">三等奖</span><span style="font-weight:600">元智大学「电影字幕翻译大赛」</span></div>
+        <div class="aw">
+          <span class="badge s" data-cn="一等奖 · 前5%" data-en="1ST · TOP 5%" data-es="1.er · TOP 5%">一等奖 · 前5%</span>
+          <span style="font-weight:600" data-cn="应用外语学系「英语海报比赛」"
+                data-en="English Poster Competition, Dept. of Applied Linguistics"
+                data-es="Concurso de Pósteres en Inglés, Dpto. de Lingüística Aplicada">应用外语学系「英语海报比赛」</span>
+        </div>
+        <div class="aw">
+          <span class="badge s" data-cn="三等奖" data-en="3RD" data-es="3.er">三等奖</span>
+          <span style="font-weight:600" data-cn="元智大学「电影字幕翻译大赛」"
+                data-en="English Subtitle Translation Competition"
+                data-es="Concurso de Traducción de Subtítulos">元智大学「电影字幕翻译大赛」</span>
+        </div>
       </div>
-      <p style="margin-top:16px;font-size:14.5px;color:#3a3a2a">半年台湾交换期间，在完全不同的语境里系统性地把英语用出去。</p>
     </div>
 
     <div class="b c6" id="campus">
-      <span class="tag">04 / CAMPUS</span>
-      <h2>校园经历</h2>
+      <span class="tag">04 / <span data-cn="CAMPUS" data-en="CAMPUS" data-es="UNIVERSIDAD">CAMPUS</span></span>
+      <h2 data-cn="校园经历" data-en="University Involvement" data-es="Actividad universitaria">校园经历</h2>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px" class="cg">
         <div class="job" style="border-top:0;padding-top:6px">
-          <div class="jtop"><h3>班级学习委员</h3><span class="when">2021.09 → 2025.06</span></div>
+          <div class="jtop">
+            <h3 data-cn="班级学习委员" data-en="Class Academic Officer" data-es="Delegada académica">班级学习委员</h3>
+            <span class="when">2021.09 → 2025.06</span>
+          </div>
           <ul>
-            <li>负责班级日常教学事务，严格执行课堂考勤与学籍数据统计，及时向学院反馈班级学风情况。</li>
-            <li>独立筹划「海南大学 525 心理健康情景剧大赛」，全流程负责剧本编写、<strong>15 人</strong>演员招募及排练舞台呈现。</li>
+            <li data-cn="负责班级日常教学事务，严格执行课堂考勤与学籍数据统计，及时向学院反馈班级学风情况。"
+                data-en="Managed day-to-day academic affairs, attendance tracking and student records, reporting the class academic climate to the faculty."
+                data-es="Gestión de asuntos académicos diarios, control de asistencia y registros de estudiantes, informando a la facultad sobre el clima académico de la clase.">负责班级日常教学事务，严格执行课堂考勤与学籍数据统计，及时向学院反馈班级学风情况。</li>
+            <li data-cn="独立筹划「海南大学 525 心理健康情景剧大赛」，全流程负责剧本编写、<strong>15 人</strong>演员招募及排练舞台呈现。"
+                data-en="Independently produced the class entry for the university 525 Mental-Health Drama Contest — scriptwriting, casting <strong>15 performers</strong>, rehearsal and staging."
+                data-es="Producción íntegra de la obra de la clase para el Concurso de Teatro sobre Salud Mental 525: guion, selección de <strong>15 intérpretes</strong>, ensayos y puesta en escena.">独立筹划「海南大学 525 心理健康情景剧大赛」，全流程负责剧本编写、<strong>15 人</strong>演员招募及排练舞台呈现。</li>
           </ul>
         </div>
         <div class="job" style="border-top:0;padding-top:6px">
-          <div class="jtop"><h3>书院朋辈导师</h3><span class="when">2024.09 → 2025.06</span></div>
+          <div class="jtop">
+            <h3 data-cn="书院朋辈导师" data-en="Peer Mentor" data-es="Mentora entre pares">书院朋辈导师</h3>
+            <span class="when">2024.09 → 2025.06</span>
+          </div>
           <ul>
-            <li>负责对接 <strong>10 名</strong>大一新生入学过渡工作，通过线下宿舍对接与一对一访谈形式，<strong>100% 覆盖</strong>所负责新生，确保其快速熟悉校园环境与基本规章。</li>
+            <li data-cn="负责对接 <strong>10 名</strong>大一新生入学过渡工作，通过线下宿舍对接与一对一访谈形式，<strong>100% 覆盖</strong>所负责新生，确保其快速熟悉校园环境与基本规章。"
+                data-en="Supported <strong>10 first-year students</strong> through their transition via dormitory visits and one-on-one interviews, achieving <strong>100% coverage</strong> of assigned mentees."
+                data-es="Acompañamiento de <strong>10 estudiantes de primer curso</strong> en su transición a la universidad mediante visitas a residencias y entrevistas individuales, con una <strong>cobertura del 100%</strong>.">负责对接 <strong>10 名</strong>大一新生入学过渡工作，通过线下宿舍对接与一对一访谈形式，<strong>100% 覆盖</strong>所负责新生，确保其快速熟悉校园环境与基本规章。</li>
           </ul>
         </div>
       </div>
     </div>
 
     <div class="b c3">
-      <span class="tag">05 / CREDENTIALS</span>
-      <h2>证书技能</h2>
+      <span class="tag">05 / <span data-cn="CREDENTIALS" data-en="CREDENTIALS" data-es="TITULACIONES">CREDENTIALS</span></span>
+      <h2 data-cn="证书技能" data-en="Credentials &amp; Skills" data-es="Titulaciones y competencias">证书技能</h2>
       <div class="wall" style="margin-top:16px">
-        <span class="k hi">英语专业八级 TEM-8</span>
-        <span class="k hi">英语专业四级 TEM-4</span>
-        <span class="k">CET-6</span><span class="k">CET-4</span><span class="k">C1 驾驶证</span>
-        <span class="k">陪同口译</span><span class="k">字幕翻译</span><span class="k">涉外接待</span><span class="k">活动统筹</span>
+        <span class="k hi" data-cn="英语专业八级 TEM-8" data-en="TEM-8" data-es="TEM-8">英语专业八级 TEM-8</span>
+        <span class="k hi" data-cn="英语专业四级 TEM-4" data-en="TEM-4" data-es="TEM-4">英语专业四级 TEM-4</span>
+        <span class="k">CET-6</span><span class="k">CET-4</span>
+        <span class="k" data-cn="C1 驾驶证" data-en="Driving Licence C1" data-es="Carné de conducir C1">C1 驾驶证</span>
+        <span class="k" data-cn="陪同口译" data-en="Escort Interpreting" data-es="Interpretación de enlace">陪同口译</span>
+        <span class="k" data-cn="字幕翻译" data-en="Subtitle Translation" data-es="Traducción de subtítulos">字幕翻译</span>
+        <span class="k" data-cn="涉外接待" data-en="Foreign-Affairs Reception" data-es="Recepción de delegaciones">涉外接待</span>
+        <span class="k" data-cn="活动统筹" data-en="Event Coordination" data-es="Coordinación de eventos">活动统筹</span>
+      </div>
+
+      <h2 style="margin-top:26px;font-size:20px" data-cn="简历下载" data-en="Download CV" data-es="Descargar CV">简历下载</h2>
+      <div class="dl">
+        <a class="dlbtn" href="downloads/cv-zheng-kunyu-cn.pdf" download>
+          <span data-cn="中文简历" data-en="Chinese CV" data-es="CV en chino">中文简历</span><span class="fmt">PDF · 1P</span>
+        </a>
+        <a class="dlbtn" href="downloads/cv-zheng-kunyu-en.pdf" download>
+          <span data-cn="英文简历" data-en="English CV" data-es="CV en inglés">英文简历</span><span class="fmt">PDF · 1P</span>
+        </a>
       </div>
     </div>
 
-    <!-- CONTACT —— 公开版本：仅保留邮箱，不含手机号与微信 -->
     <div class="b c3 dark" id="contact">
-      <span class="tag">06 / CONTACT</span>
-      <h2 style="color:var(--cream)">联系方式</h2>
-      <p style="margin-top:14px;font-size:15px;line-height:1.7;color:rgba(255,253,245,.72)">
+      <span class="tag">06 / <span data-cn="CONTACT" data-en="CONTACT" data-es="CONTACTO">CONTACT</span></span>
+      <h2 style="color:var(--cream)" data-cn="联系方式" data-en="Get in touch" data-es="Contacto">联系方式</h2>
+      <p style="margin-top:14px;font-size:15px;line-height:1.7;color:rgba(255,253,245,.72)"
+        data-cn="口译、涉外接待、活动统筹与双语文书相关合作，欢迎邮件联系。"
+        data-en="For interpreting, foreign-affairs reception, event coordination or bilingual documentation enquiries, please get in touch by email."
+        data-es="Para colaboraciones de interpretación, recepción de delegaciones, coordinación de eventos o documentación bilingüe, escríbeme por correo.">
         口译、涉外接待、活动统筹与双语文书相关合作，欢迎邮件联系。
       </p>
-      <div class="ct" style="margin-top:22px">
-        <a href="mailto:2606961378@qq.com" style="border-bottom:0;padding-bottom:0">
-          <span class="lab">EMAIL</span><span>2606961378@qq.com</span>
-        </a>
+      <div class="ct">
+        <div class="row" style="border-bottom:0;padding-bottom:0">
+          <span class="lab">EMAIL</span>
+          <!-- 邮箱拆分成多段，避免 Cloudflare 的邮箱混淆把它替换成 [email protected] -->
+          <span><span id="m1">2606961378</span><span>&#64;</span><span id="m2">qq.com</span></span>
+        </div>
       </div>
-      <a class="mailbtn" href="mailto:2606961378@qq.com">写邮件给我 →</a>
+      <a class="mailbtn" id="mailto" href="#" data-cn="写邮件给我 →" data-en="Send an email →" data-es="Enviar un correo →">写邮件给我 →</a>
+      <button class="copybtn" id="copy" data-cn="复制" data-en="Copy" data-es="Copiar">复制</button>
     </div>
-    <!-- /CONTACT -->
 
   </div>
 
@@ -240,6 +404,52 @@ footer{margin-top:22px;border:var(--bd);border-radius:14px;background:var(--crea
     <span>HAIKOU · CHINA</span>
   </footer>
 </div>
-<style>@media(max-width:760px){.cg{grid-template-columns:1fr!important;gap:0!important}}</style>
+
+<script>
+(function () {
+  // ── 邮箱：在 JS 中拼装 mailto，避免在 HTML 源码里出现可被改写的 mailto: ──
+  var addr = document.getElementById('m1').textContent + '@' + document.getElementById('m2').textContent;
+  document.getElementById('mailto').href = 'mailto:' + addr;
+
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function () {
+    var done = function () {
+      var old = copy.textContent;
+      copy.textContent = '✓';
+      setTimeout(function () { copy.textContent = old; }, 1400);
+    };
+    if (navigator.clipboard) { navigator.clipboard.writeText(addr).then(done, done); }
+    else {
+      var t = document.createElement('textarea');
+      t.value = addr; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); done();
+    }
+  });
+
+  // ── 三语切换 ──
+  var LANGS = { cn: 'zh-CN', en: 'en', es: 'es' };
+  window.setLang = function (l) {
+    document.querySelectorAll('[data-cn]').forEach(function (el) {
+      var v = el.dataset[l];
+      if (v !== undefined) el.innerHTML = v;
+    });
+    document.documentElement.lang = LANGS[l] || 'zh-CN';
+    Object.keys(LANGS).forEach(function (k) {
+      document.getElementById('l-' + k).setAttribute('aria-pressed', String(k === l));
+    });
+    try { localStorage.setItem('chloe-lang', l); } catch (e) {}
+  };
+
+  // 记住上次选择；否则按浏览器语言猜一次
+  var saved = null;
+  try { saved = localStorage.getItem('chloe-lang'); } catch (e) {}
+  if (!saved) {
+    var n = (navigator.language || 'zh').toLowerCase();
+    saved = n.indexOf('es') === 0 ? 'es' : (n.indexOf('zh') === 0 ? 'cn' : 'en');
+  }
+  if (saved !== 'cn') setLang(saved);
+})();
+</script>
 </body>
 </html>
