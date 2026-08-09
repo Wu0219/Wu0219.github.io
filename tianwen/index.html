@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>王天文 Wang Tianwen | 软件工程 · 云平台 · 后端开发</title>
+<meta name="description" content="王天文 Wang Tianwen — 软件工程与管理信息系统双学士，巴塞罗那自治大学（UAB）在读硕士。曾任中国电信集团（世界500强）软件工程师与云计算工程师，专注 Java / Spring Boot 后端体系、云平台方案与系统性能优化。">
+<meta name="theme-color" content="#0a2540">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="王天文 Wang Tianwen | 软件工程 · 云平台 · 后端开发">
+<meta property="og:description" content="软件工程与管理信息系统双学士 · UAB 在读硕士 · 中国电信（世界500强）软件工程师与云计算工程师。Java / Spring Boot / 云平台方案。">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a2540'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='30' font-weight='bold' fill='%23d4af5a' text-anchor='middle'%3EWT%3C/text%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a2540; --navy2:#123456; --navy3:#1c4970;
+  --gold:#b8912f; --gold2:#d4af5a;
+  --ink:#1b2430; --ink2:#4e5a68; --ink3:#7b8794;
+  --bg:#fff; --bg2:#f5f7f9; --line:#dfe4e9;
+  --sans:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans SC","Helvetica Neue",sans-serif;
+  --serif:Georgia,"Times New Roman","Songti SC",serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.75 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:0 40px}
+@media(max-width:700px){.wrap{padding:0 22px}}
+
+.utility{background:var(--navy2);color:rgba(255,255,255,.72);font-size:12.5px}
+.utility .wrap{display:flex;justify-content:space-between;align-items:center;min-height:36px;gap:16px}
+.utility .l{display:flex;gap:22px}
+.lang{display:flex;gap:2px}
+.lang button{background:none;border:0;color:rgba(255,255,255,.6);font:600 12px/1 var(--sans);
+  padding:6px 9px;cursor:pointer;letter-spacing:.04em;transition:.18s;white-space:nowrap}
+.lang button[aria-pressed="true"]{color:var(--gold2);border-bottom:2px solid var(--gold)}
+.lang button:hover{color:#fff}
+@media(max-width:760px){.utility .l{display:none}}
+
+header{position:sticky;top:0;z-index:90;background:var(--navy);border-bottom:3px solid var(--gold)}
+.hb{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff}
+.emblem{width:44px;height:44px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
+  font:700 17px/1 var(--serif);color:var(--gold2);flex-shrink:0;letter-spacing:.02em}
+.logo .t1{font-size:19px;font-weight:600;letter-spacing:.02em;line-height:1.2;display:block}
+.logo .t2{font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-top:3px;display:block}
+nav{display:flex;gap:2px}
+nav a{color:rgba(255,255,255,.82);text-decoration:none;font-size:14px;font-weight:500;padding:28px 15px;
+  border-bottom:3px solid transparent;margin-bottom:-3px;transition:.2s;white-space:nowrap}
+nav a:hover{color:#fff;border-bottom-color:var(--gold)}
+@media(max-width:1000px){nav{display:none}}
+
+.hero{background:linear-gradient(105deg,var(--navy) 0%,var(--navy2) 55%,var(--navy3) 100%);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-6%;top:-30%;width:620px;height:620px;
+  border:1px solid rgba(212,175,90,.16);border-radius:50%}
+.hero::before{content:"";position:absolute;right:4%;top:-14%;width:420px;height:420px;
+  border:1px solid rgba(212,175,90,.1);border-radius:50%}
+.hero .wrap{position:relative;z-index:2;padding-top:84px;padding-bottom:74px}
+.crumb{font-size:12px;letter-spacing:.18em;color:var(--gold2);text-transform:uppercase;font-weight:600}
+.hero h1{font:400 clamp(34px,5vw,58px)/1.22 var(--serif);letter-spacing:.005em;margin:22px 0 0;max-width:920px}
+.hero .lead{font-size:18.5px;color:rgba(255,255,255,.8);max-width:760px;margin-top:26px;line-height:1.8}
+.goldrule{width:64px;height:3px;background:var(--gold);margin:30px 0 0}
+.hactions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:14.5px;font-weight:600;
+  padding:15px 30px;transition:.22s;letter-spacing:.02em}
+.btn.p{background:var(--gold);color:var(--navy)}
+.btn.p:hover{background:var(--gold2)}
+.btn.s{border:1px solid rgba(255,255,255,.4);color:#fff}
+.btn.s:hover{background:rgba(255,255,255,.1);border-color:#fff}
+
+.band{background:var(--bg2);border-bottom:1px solid var(--line)}
+.band .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:44px 26px;border-right:1px solid var(--line);text-align:center}
+.metric:first-child{padding-left:0}
+.metric:last-child{border-right:0;padding-right:0}
+.metric b{display:block;font:400 44px/1 var(--serif);color:var(--navy)}
+.metric .u{color:var(--gold);font-size:.58em}
+.metric span{display:block;font-size:13px;color:var(--ink2);margin-top:12px;letter-spacing:.02em}
+@media(max-width:860px){.band .wrap{grid-template-columns:repeat(2,1fr)}
+  .metric{padding:32px 14px!important;border-bottom:1px solid var(--line)}
+  .metric:nth-child(2n){border-right:0}}
+
+section{padding:80px 0;border-bottom:1px solid var(--line)}
+section.alt{background:var(--bg2)}
+.shead{margin-bottom:46px;max-width:820px}
+.sno{font:600 12px/1 var(--sans);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+h2{font:400 clamp(27px,3.4vw,38px)/1.3 var(--serif);color:var(--navy);margin:14px 0 0}
+.shead p{color:var(--ink2);margin-top:16px;font-size:17px}
+.shead .goldrule{margin-top:22px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+@media(max-width:860px){.split{grid-template-columns:1fr;gap:36px}}
+
+.cap{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:#fff}
+@media(max-width:860px){.cap{grid-template-columns:1fr}}
+.capc{padding:38px 32px;border-right:1px solid var(--line);transition:.25s}
+.capc:last-child{border-right:0}
+.capc:hover{background:var(--bg2)}
+.capc .n{font:400 30px/1 var(--serif);color:var(--gold)}
+.capc h4{font-size:18px;font-weight:600;color:var(--navy);margin:16px 0 10px}
+.capc p{font-size:14.5px;color:var(--ink2);line-height:1.75}
+
+.row{display:grid;grid-template-columns:236px 1fr;gap:44px;padding:38px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:2px solid var(--navy)}
+@media(max-width:820px){.row{grid-template-columns:1fr;gap:14px}}
+.rmeta .date{font-size:13.5px;font-weight:600;color:var(--navy);letter-spacing:.03em}
+.rmeta .place{font-size:13px;color:var(--ink3);margin-top:7px;line-height:1.6}
+.rmeta .badge{display:inline-block;margin-top:12px;font-size:11px;font-weight:600;letter-spacing:.1em;
+  border:1px solid var(--gold);color:var(--gold);padding:4px 10px;text-transform:uppercase}
+.rbody h3{font-size:21px;font-weight:600;color:var(--navy)}
+.rbody .org{font-size:15px;color:var(--ink2);margin-top:8px;font-weight:500}
+ul{list-style:none;margin-top:18px}
+li{position:relative;padding-left:24px;margin-bottom:11px;color:var(--ink2);font-size:15.5px;line-height:1.78}
+li::before{content:"";position:absolute;left:0;top:11px;width:10px;height:1px;background:var(--gold)}
+strong{font-weight:600;color:var(--ink)}
+
+.eitem{border-left:3px solid var(--navy);padding:4px 0 4px 22px;margin-bottom:28px}
+.eitem:last-child{margin-bottom:0}
+.eitem h4{font-size:19px;font-weight:600;color:var(--navy)}
+.eitem .d{font-size:13.5px;color:var(--ink3);margin-top:6px}
+.eitem .m{font-size:15px;color:var(--ink2);margin-top:8px}
+
+.htab{width:100%;border-collapse:collapse}
+.htab td{padding:16px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15.5px;color:var(--ink2)}
+.htab tr:first-child td{border-top:1px solid var(--line)}
+.htab td:first-child{width:106px;white-space:nowrap}
+.htab .prize{display:inline-block;background:var(--navy);color:var(--gold2);font-size:11.5px;font-weight:600;
+  letter-spacing:.06em;padding:5px 10px}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.sk{background:#fff;padding:28px 24px}
+.sk .k{font-size:11.5px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;font-weight:600}
+.sk .v{font-size:15.5px;color:var(--ink2);margin-top:12px;line-height:1.7}
+.sk .v b{color:var(--navy);font-weight:600}
+
+.ctc{background:var(--navy);color:#fff}
+.ctc .wrap{padding:74px 40px}
+.ctc h2{color:#fff}
+.ctc .shead p{color:rgba(255,255,255,.72)}
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);margin-top:8px}
+@media(max-width:820px){.cgrid{grid-template-columns:1fr}}
+.cc{background:var(--navy);padding:32px 28px}
+.cc .k{font-size:11.5px;letter-spacing:.18em;color:var(--gold2);text-transform:uppercase;font-weight:600}
+.cc .v{font-size:18px;margin-top:14px;word-break:break-all}
+.cc a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(212,175,90,.6);padding-bottom:2px}
+.cc a:hover{color:var(--gold2)}
+
+footer{background:#061a2c;color:rgba(255,255,255,.55);font-size:13px}
+footer .wrap{padding:44px 40px 52px}
+.ftop{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ftop .fl{max-width:420px}
+.ftop .fname{color:#fff;font:400 21px/1 var(--serif);letter-spacing:.02em}
+.ftop p{margin-top:12px;line-height:1.75}
+.flinks{display:flex;gap:30px;flex-wrap:wrap}
+.flinks a{color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px}
+.flinks a:hover{color:var(--gold2)}
+.fbot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;font-size:12.5px}
+
+@media print{
+  .utility,header,.hactions,footer .flinks{display:none!important}
+  body{font-size:11pt}
+  .hero,.ctc,footer{background:#fff!important;color:#000!important}
+  .hero h1,.ctc h2,.ftop .fname{color:#0a2540!important}
+  .hero .lead,.ctc .shead p,.cc .v,footer{color:#333!important}
+  .cc{background:#fff!important;border:1px solid #ccc}
+  .cc a{color:#0a2540!important}
+  .hero::before,.hero::after{display:none}
+  section{padding:18pt 0;break-inside:avoid}
+  .row{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="wrap">
+    <div class="l">
+      <span data-cn="西班牙 · 巴塞罗那" data-en="Barcelona, Spain" data-es="Barcelona, España">西班牙 · 巴塞罗那</span>
+      <span data-cn="工作语言：中文 · 英语" data-en="Working languages: Chinese · English" data-es="Idiomas de trabajo: chino · inglés">工作语言：中文 · 英语</span>
+    </div>
+    <div class="lang">
+      <button id="bcn" aria-pressed="true"  onclick="setLang('cn')">中文</button>
+      <button id="ben" aria-pressed="false" onclick="setLang('en')">ENGLISH</button>
+      <button id="bes" aria-pressed="false" onclick="setLang('es')">ESPAÑOL</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap hb">
+    <a class="logo" href="#top">
+      <span class="emblem">WT</span>
+      <span>
+        <span class="t1" data-cn="王天文" data-en="Wang Tianwen" data-es="Wang Tianwen">王天文</span>
+        <span class="t2" data-cn="Wang Tianwen · Software Engineering" data-en="Software Engineering &amp; Cloud" data-es="Ingeniería de Software y Cloud">Wang Tianwen · Software Engineering</span>
+      </span>
+    </a>
+    <nav>
+      <a href="#about"    data-cn="概览"    data-en="Overview"     data-es="Perfil">概览</a>
+      <a href="#services" data-cn="专业能力" data-en="Capabilities" data-es="Capacidades">专业能力</a>
+      <a href="#exp"      data-cn="工作经历" data-en="Experience"   data-es="Experiencia">工作经历</a>
+      <a href="#projects" data-cn="项目"    data-en="Projects"     data-es="Proyectos">项目</a>
+      <a href="#edu"      data-cn="教育背景" data-en="Education"    data-es="Formación">教育背景</a>
+      <a href="#skills"   data-cn="技术栈"  data-en="Skills"       data-es="Competencias">技术栈</a>
+      <a href="#contact"  data-cn="联系"    data-en="Contact"      data-es="Contacto">联系</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div class="crumb" data-cn="软件工程 · 云平台 · 后端开发" data-en="Software Engineering · Cloud · Backend" data-es="Ingeniería de Software · Cloud · Backend">软件工程 · 云平台 · 后端开发</div>
+    <h1 data-cn="把客户的业务需求，<br>变成跑得稳的系统。"
+        data-en="Turning business requirements<br>into systems that run reliably."
+        data-es="Convertir requisitos de negocio<br>en sistemas que funcionan con fiabilidad.">把客户的业务需求，<br>变成跑得稳的系统。</h1>
+    <div class="goldrule"></div>
+    <p class="lead" data-cn="王天文，软件工程与管理信息系统双学士，现于西班牙巴塞罗那自治大学（UAB）攻读硕士学位。曾在中国电信集团（世界 500 强）先后担任云计算工程师与软件工程师，覆盖云平台运维、系统接口设计、业务模型设计与开发全流程。"
+       data-en="Wang Tianwen — dual bachelor's degrees in Software Engineering and Management Information Systems, currently pursuing a master's degree at Universitat Autònoma de Barcelona (UAB), Spain. Previously a Cloud Computing Engineer and Software Engineer at China Telecom (Fortune Global 500), covering cloud platform operations, system interface design, and end-to-end business model development."
+       data-es="Wang Tianwen — doble grado en Ingeniería de Software y Sistemas de Información de Gestión, actualmente cursando un máster en la Universitat Autònoma de Barcelona (UAB). Anteriormente Ingeniero de Cloud Computing e Ingeniero de Software en China Telecom (Fortune Global 500), abarcando operaciones de plataformas cloud, diseño de interfaces de sistemas y desarrollo integral de modelos de negocio.">
+      王天文，软件工程与管理信息系统双学士，现于西班牙巴塞罗那自治大学（UAB）攻读硕士学位。曾在中国电信集团（世界 500 强）先后担任云计算工程师与软件工程师，覆盖云平台运维、系统接口设计、业务模型设计与开发全流程。
+    </p>
+    <div class="hactions">
+      <a class="btn p" href="#exp" data-cn="查看工作经历 →" data-en="View experience →" data-es="Ver experiencia →">查看工作经历 →</a>
+      <a class="btn s" href="#contact" data-cn="联系方式" data-en="Get in touch" data-es="Contactar">联系方式</a>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <div class="metric"><b>20<span class="u">%</span></b><span data-cn="系统响应时间缩短" data-en="Faster system response" data-es="Respuesta del sistema más rápida">系统响应时间缩短</span></div>
+    <div class="metric"><b>15<span class="u">%</span></b><span data-cn="查询性能提升" data-en="Query performance gain" data-es="Mejora del rendimiento de consultas">查询性能提升</span></div>
+    <div class="metric"><b>25<span class="u">%</span></b><span data-cn="开发周期压缩" data-en="Shorter development cycle" data-es="Ciclo de desarrollo reducido">开发周期压缩</span></div>
+    <!-- 「万」是中文特有量词，英/西版本必须换成 200K，否则外国读者看不懂 -->
+    <div class="metric"><b data-cn="20<span class='u'>万</span>" data-en="200<span class='u'>K</span>" data-es="200<span class='u'>K</span>">20<span class="u">万</span></b><span data-cn="并发用户支撑" data-en="Concurrent users supported" data-es="Usuarios concurrentes soportados">并发用户支撑</span></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="概览" data-en="Overview" data-es="Perfil">概览</div>
+      <h2 data-cn="以可量化的运行指标衡量工程价值" data-en="Engineering measured by quantifiable operational metrics" data-es="Ingeniería medida por métricas operativas cuantificables">以可量化的运行指标衡量工程价值</h2>
+      <div class="goldrule"></div>
+    </div>
+    <div class="split">
+      <p style="font-size:17.5px;line-height:1.9;color:var(--ink2)"
+         data-cn="具备将客户业务需求<strong>转化为可落地技术方案</strong>的经验，并在系统响应速度、查询性能及服务可用性等运行指标上取得可量化的改善。"
+         data-en="Experienced in <strong>translating client business requirements into deployable technical solutions</strong>, with quantifiable improvements in system response time, query performance and service availability."
+         data-es="Con experiencia en <strong>traducir los requisitos de negocio del cliente en soluciones técnicas implementables</strong>, logrando mejoras cuantificables en tiempo de respuesta, rendimiento de consultas y disponibilidad del servicio.">
+        具备将客户业务需求<strong>转化为可落地技术方案</strong>的经验，并在系统响应速度、查询性能及服务可用性等运行指标上取得可量化的改善。
+      </p>
+      <p style="font-size:17.5px;line-height:1.9;color:var(--ink2)"
+         data-cn="熟悉 <strong>Java / Spring Boot</strong> 后端体系与 <strong>SQL</strong> 数据处理。中英文均可作为工作语言（雅思 6.0），具备跨国团队与跨文化项目环境下的沟通经验。"
+         data-en="Proficient in the <strong>Java / Spring Boot</strong> backend stack and <strong>SQL</strong> data processing. Both Chinese and English serve as working languages (IELTS 6.0), with experience communicating in cross-border teams and multicultural project settings."
+         data-es="Dominio del stack backend <strong>Java / Spring Boot</strong> y procesamiento de datos con <strong>SQL</strong>. Chino e inglés como idiomas de trabajo (IELTS 6.0), con experiencia de comunicación en equipos internacionales y entornos de proyecto multiculturales.">
+        熟悉 <strong>Java / Spring Boot</strong> 后端体系与 <strong>SQL</strong> 数据处理。中英文均可作为工作语言（雅思 6.0），具备跨国团队与跨文化项目环境下的沟通经验。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="alt">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="专业能力" data-en="Capabilities" data-es="Capacidades">专业能力</div>
+      <h2 data-cn="三条核心能力线" data-en="Three core capability areas" data-es="Tres áreas de competencia principales">三条核心能力线</h2>
+      <div class="goldrule"></div>
+    </div>
+    <div class="cap">
+      <div class="capc">
+        <div class="n">01</div>
+        <h4 data-cn="后端系统开发" data-en="Backend System Development" data-es="Desarrollo de Sistemas Backend">后端系统开发</h4>
+        <p data-cn="基于 Java / Spring Boot 的业务功能模块、系统接口与数据模型设计开发。已交付 6 个业务模块、3 个系统接口与 5 个数据模型。"
+           data-en="Business modules, system interfaces and data models built on Java / Spring Boot. Delivered 6 business modules, 3 system interfaces and 5 data models."
+           data-es="Módulos de negocio, interfaces de sistema y modelos de datos sobre Java / Spring Boot. Entregados 6 módulos, 3 interfaces y 5 modelos de datos.">
+          基于 Java / Spring Boot 的业务功能模块、系统接口与数据模型设计开发。已交付 6 个业务模块、3 个系统接口与 5 个数据模型。</p>
+      </div>
+      <div class="capc">
+        <div class="n">02</div>
+        <h4 data-cn="云平台方案与运维" data-en="Cloud Solutions &amp; Operations" data-es="Soluciones Cloud y Operaciones">云平台方案与运维</h4>
+        <p data-cn="可扩展、高安全性云平台框架的设计与实现，支撑 20 万并发用户稳定运行；优化运维流程，降低系统停机时间。"
+           data-en="Design and implementation of scalable, high-security cloud platform frameworks supporting 200,000 concurrent users; operational process optimisation reducing system downtime."
+           data-es="Diseño e implementación de arquitecturas cloud escalables y de alta seguridad para 200.000 usuarios concurrentes; optimización de procesos operativos que reduce el tiempo de inactividad.">
+          可扩展、高安全性云平台框架的设计与实现，支撑 20 万并发用户稳定运行；优化运维流程，降低系统停机时间。</p>
+      </div>
+      <div class="capc">
+        <div class="n">03</div>
+        <h4 data-cn="需求分析与方案交付" data-en="Requirements Analysis &amp; Delivery" data-es="Análisis de Requisitos y Entrega">需求分析与方案交付</h4>
+        <p data-cn="直接对接客户完成业务需求分析，交付定制化技术解决方案，并对交付质量与上线周期负责。"
+           data-en="Direct client engagement for requirements analysis, delivering customised technical solutions with accountability for quality and release timelines."
+           data-es="Interlocución directa con clientes para el análisis de requisitos, entregando soluciones técnicas a medida con responsabilidad sobre calidad y plazos de entrega.">
+          直接对接客户完成业务需求分析，交付定制化技术解决方案，并对交付质量与上线周期负责。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="exp">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="工作经历" data-en="Experience" data-es="Experiencia">工作经历</div>
+      <h2 data-cn="中国电信集团 · 世界 500 强" data-en="China Telecom · Fortune Global 500" data-es="China Telecom · Fortune Global 500">中国电信集团 · 世界 500 强</h2>
+      <div class="goldrule"></div>
+    </div>
+
+    <div class="row">
+      <div class="rmeta">
+        <div class="date">2024.09 — <span data-cn="至今" data-en="Present" data-es="Actualidad">至今</span></div>
+        <div class="place" data-cn="中国" data-en="China" data-es="China">中国</div>
+        <span class="badge" data-cn="世界500强" data-en="Fortune 500" data-es="Fortune 500">世界500强</span>
+      </div>
+      <div class="rbody">
+        <h3 data-cn="软件工程师" data-en="Software Engineer" data-es="Ingeniero de Software">软件工程师</h3>
+        <div class="org" data-cn="中国电信集团有限公司" data-en="China Telecom Corporation Limited" data-es="China Telecom Corporation Limited">中国电信集团有限公司</div>
+        <ul>
+          <li data-cn="独立完成 <strong>6 个业务功能模块</strong>的开发与上线，推动系统响应时间缩短 <strong>20%</strong>，显著提升平台运行效率与用户使用体验。"
+              data-en="Independently developed and shipped <strong>6 business modules</strong>, cutting system response time by <strong>20%</strong> and markedly improving platform efficiency and user experience."
+              data-es="Desarrollo e implantación autónoma de <strong>6 módulos de negocio</strong>, reduciendo el tiempo de respuesta del sistema en un <strong>20%</strong> y mejorando notablemente la eficiencia de la plataforma y la experiencia de usuario.">独立完成 <strong>6 个业务功能模块</strong>的开发与上线，推动系统响应时间缩短 <strong>20%</strong>，显著提升平台运行效率与用户使用体验。</li>
+          <li data-cn="设计并优化 <strong>3 个系统接口与 5 个数据模型</strong>，使查询性能提升 <strong>15%</strong>，改善了高频业务场景下的数据调用稳定性。"
+              data-en="Designed and optimised <strong>3 system interfaces and 5 data models</strong>, improving query performance by <strong>15%</strong> and stabilising data access in high-frequency business scenarios."
+              data-es="Diseño y optimización de <strong>3 interfaces de sistema y 5 modelos de datos</strong>, mejorando el rendimiento de consultas en un <strong>15%</strong> y estabilizando el acceso a datos en escenarios de alta frecuencia.">设计并优化 <strong>3 个系统接口与 5 个数据模型</strong>，使查询性能提升 <strong>15%</strong>，改善了高频业务场景下的数据调用稳定性。</li>
+          <li data-cn="基于 Java 设计开发 <strong>4 个软件模块</strong>，使开发周期压缩 <strong>25%</strong>，在保证交付质量的前提下确保项目按期上线。"
+              data-en="Built <strong>4 software modules</strong> in Java, compressing the development cycle by <strong>25%</strong> while maintaining delivery quality and on-schedule release."
+              data-es="Desarrollo de <strong>4 módulos de software</strong> en Java, comprimiendo el ciclo de desarrollo un <strong>25%</strong> sin comprometer la calidad ni los plazos de entrega.">基于 Java 设计开发 <strong>4 个软件模块</strong>，使开发周期压缩 <strong>25%</strong>，在保证交付质量的前提下确保项目按期上线。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="rmeta">
+        <div class="date">2024.06 — 2024.08</div>
+        <div class="place" data-cn="中国" data-en="China" data-es="China">中国</div>
+        <span class="badge" data-cn="云计算" data-en="Cloud" data-es="Cloud">云计算</span>
+      </div>
+      <div class="rbody">
+        <h3 data-cn="云计算工程师" data-en="Cloud Computing Engineer" data-es="Ingeniero de Cloud Computing">云计算工程师</h3>
+        <div class="org" data-cn="中国电信集团有限公司" data-en="China Telecom Corporation Limited" data-es="China Telecom Corporation Limited">中国电信集团有限公司</div>
+        <ul>
+          <li data-cn="对接 <strong>2 家客户</strong>完成业务需求分析，并交付定制化云计算解决方案，帮助客户运营效率提升 <strong>40%</strong>。"
+              data-en="Engaged <strong>2 enterprise clients</strong> for requirements analysis and delivered tailored cloud solutions, raising their operational efficiency by <strong>40%</strong>."
+              data-es="Interlocución con <strong>2 clientes corporativos</strong> para el análisis de requisitos y entrega de soluciones cloud a medida, elevando su eficiencia operativa un <strong>40%</strong>.">对接 <strong>2 家客户</strong>完成业务需求分析，并交付定制化云计算解决方案，帮助客户运营效率提升 <strong>40%</strong>。</li>
+          <li data-cn="参与可扩展、高安全性云平台系统框架的设计与实现，支撑 <strong>20 万并发用户</strong>的稳定高性能运行。"
+              data-en="Contributed to the design and implementation of a scalable, high-security cloud platform framework supporting <strong>200,000 concurrent users</strong> at stable high performance."
+              data-es="Participación en el diseño e implementación de una arquitectura cloud escalable y de alta seguridad que soporta <strong>200.000 usuarios concurrentes</strong> con alto rendimiento estable.">参与可扩展、高安全性云平台系统框架的设计与实现，支撑 <strong>20 万并发用户</strong>的稳定高性能运行。</li>
+          <li data-cn="优化云计算服务的运维流程，使系统停机时间减少 <strong>15%</strong>，提升整体服务可用性。"
+              data-en="Optimised cloud service operations processes, reducing system downtime by <strong>15%</strong> and improving overall service availability."
+              data-es="Optimización de los procesos operativos del servicio cloud, reduciendo el tiempo de inactividad un <strong>15%</strong> y mejorando la disponibilidad global del servicio.">优化云计算服务的运维流程，使系统停机时间减少 <strong>15%</strong>，提升整体服务可用性。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="alt">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="项目经历" data-en="Projects" data-es="Proyectos">项目经历</div>
+      <h2 data-cn="研究与工程项目" data-en="Research &amp; engineering projects" data-es="Proyectos de investigación e ingeniería">研究与工程项目</h2>
+      <div class="goldrule"></div>
+    </div>
+
+    <div class="row">
+      <div class="rmeta">
+        <div class="date">2025.09 — 2026.09</div>
+        <div class="place" data-cn="巴塞罗那自治大学 UAB" data-en="UAB, Barcelona" data-es="UAB, Barcelona">巴塞罗那自治大学 UAB</div>
+        <span class="badge" data-cn="硕士论文课题" data-en="Master's Thesis" data-es="Trabajo Fin de Máster">硕士论文课题</span>
+      </div>
+      <div class="rbody">
+        <h3 data-cn="系统框架恢复与检测" data-en="System Framework Recovery &amp; Anomaly Detection" data-es="Recuperación de Frameworks y Detección de Anomalías">系统框架恢复与检测</h3>
+        <ul>
+          <li data-cn="围绕系统的<strong>故障恢复与异常检测</strong>方向开展研究，并完成相应系统框架的设计与实现。"
+              data-en="Research on <strong>fault recovery and anomaly detection</strong>, including the design and implementation of the corresponding system framework."
+              data-es="Investigación sobre <strong>recuperación de fallos y detección de anomalías</strong>, incluyendo el diseño e implementación del framework de sistema correspondiente.">围绕系统的<strong>故障恢复与异常检测</strong>方向开展研究，并完成相应系统框架的设计与实现。</li>
+          <li data-cn="框架以保障系统可靠运行、支持故障识别与恢复为核心目标。"
+              data-en="The framework targets reliable system operation with built-in fault identification and recovery."
+              data-es="El framework persigue una operación fiable del sistema con identificación y recuperación de fallos integradas.">框架以保障系统可靠运行、支持故障识别与恢复为核心目标。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="rmeta">
+        <div class="date">2024.09 — 2024.12</div>
+        <div class="place" data-cn="华侨大学" data-en="Huaqiao University" data-es="Universidad de Huaqiao">华侨大学</div>
+        <span class="badge" data-cn="项目负责人" data-en="Project Lead" data-es="Responsable de Proyecto">项目负责人</span>
+      </div>
+      <div class="rbody">
+        <h3 data-cn="校园雨水预警系统" data-en="Campus Rainfall Early-Warning System" data-es="Sistema de Alerta Temprana de Lluvias">校园雨水预警系统</h3>
+        <ul>
+          <li data-cn="带领团队基于 <strong>Spring Boot</strong> 框架完成雨水预警系统的整体开发。"
+              data-en="Led the team in delivering the complete rainfall early-warning system on the <strong>Spring Boot</strong> framework."
+              data-es="Dirección del equipo en el desarrollo integral del sistema de alerta de lluvias sobre el framework <strong>Spring Boot</strong>.">带领团队基于 <strong>Spring Boot</strong> 框架完成雨水预警系统的整体开发。</li>
+          <li data-cn="设计并实现数据采集模块，结合 <strong>WebSocket</strong> 打通实时监控与数据分析链路，保障数据流的持续传输与实时展示。"
+              data-en="Designed and implemented the data acquisition module, using <strong>WebSocket</strong> to connect real-time monitoring with the analytics pipeline for continuous streaming and live display."
+              data-es="Diseño e implementación del módulo de adquisición de datos, empleando <strong>WebSocket</strong> para conectar la monitorización en tiempo real con el flujo analítico, garantizando transmisión continua y visualización en vivo.">设计并实现数据采集模块，结合 <strong>WebSocket</strong> 打通实时监控与数据分析链路，保障数据流的持续传输与实时展示。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="edu">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="教育背景" data-en="Education" data-es="Formación">教育背景</div>
+      <h2 data-cn="学历与获奖" data-en="Academic background &amp; awards" data-es="Formación académica y premios">学历与获奖</h2>
+      <div class="goldrule"></div>
+    </div>
+    <div class="split">
+      <div>
+        <div class="eitem">
+          <h4 data-cn="巴塞罗那自治大学（UAB）" data-en="Universitat Autònoma de Barcelona (UAB)" data-es="Universitat Autònoma de Barcelona (UAB)">巴塞罗那自治大学（UAB）</h4>
+          <div class="d">2025.09 — 2026.09 · <span data-cn="西班牙" data-en="Spain" data-es="España">西班牙</span></div>
+          <div class="m" data-cn="硕士研究生" data-en="Master's degree candidate" data-es="Estudiante de máster">硕士研究生</div>
+        </div>
+        <div class="eitem">
+          <h4 data-cn="华侨大学" data-en="Huaqiao University" data-es="Universidad de Huaqiao">华侨大学</h4>
+          <div class="d">2021.09 — 2025.07 · <span data-cn="中国" data-en="China" data-es="China">中国</span></div>
+          <div class="m" data-cn="软件工程 工学学士 ／ 管理信息系统 理学学士（双学位）<br>联合培养：美国宾夕法尼亚州斯利伯里洛克大学<br>平均成绩 75/100"
+                          data-en="B.Eng. in Software Engineering / B.Sc. in Management Information Systems (dual degree)<br>Joint programme: Slippery Rock University of Pennsylvania, USA<br>GPA 75/100"
+                          data-es="Grado en Ingeniería de Software / Grado en Sistemas de Información de Gestión (doble titulación)<br>Programa conjunto: Slippery Rock University of Pennsylvania, EE. UU.<br>Nota media 75/100">
+            软件工程 工学学士 ／ 管理信息系统 理学学士（双学位）<br>联合培养：美国宾夕法尼亚州斯利伯里洛克大学<br>平均成绩 75/100</div>
+        </div>
+      </div>
+      <div>
+        <div class="sno" style="margin-bottom:18px" data-cn="获奖情况" data-en="Awards" data-es="Premios">获奖情况</div>
+        <table class="htab">
+          <tr>
+            <td><span class="prize" data-cn="优秀奖" data-en="MERIT" data-es="MENCIÓN">优秀奖</span></td>
+            <td data-cn="全国大学生创新创业大赛 <span style='color:var(--ink3)'>· 2024.12</span>"
+                data-en="National College Student Innovation &amp; Entrepreneurship Competition <span style='color:var(--ink3)'>· Dec 2024</span>"
+                data-es="Concurso Nacional Universitario de Innovación y Emprendimiento <span style='color:var(--ink3)'>· Dic 2024</span>">全国大学生创新创业大赛 <span style="color:var(--ink3)">· 2024.12</span></td>
+          </tr>
+          <tr>
+            <td><span class="prize" data-cn="二等奖" data-en="2ND" data-es="2.º">二等奖</span></td>
+            <td data-cn="校级英语短剧比赛 <span style='color:var(--ink3)'>· 2023.10</span>"
+                data-en="University English Drama Competition <span style='color:var(--ink3)'>· Oct 2023</span>"
+                data-es="Concurso Universitario de Teatro en Inglés <span style='color:var(--ink3)'>· Oct 2023</span>">校级英语短剧比赛 <span style="color:var(--ink3)">· 2023.10</span></td>
+          </tr>
+          <tr>
+            <td><span class="prize" data-cn="三等奖" data-en="3RD" data-es="3.º">三等奖</span></td>
+            <td data-cn="校级英语征文比赛 <span style='color:var(--ink3)'>· 2023.03</span>"
+                data-en="University English Essay Competition <span style='color:var(--ink3)'>· Mar 2023</span>"
+                data-es="Concurso Universitario de Redacción en Inglés <span style='color:var(--ink3)'>· Mar 2023</span>">校级英语征文比赛 <span style="color:var(--ink3)">· 2023.03</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="alt">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="技术栈" data-en="Skills" data-es="Competencias">技术栈</div>
+      <h2 data-cn="技术能力与语言" data-en="Technical skills &amp; languages" data-es="Competencias técnicas e idiomas">技术能力与语言</h2>
+      <div class="goldrule"></div>
+    </div>
+    <div class="skills">
+      <div class="sk">
+        <div class="k" data-cn="后端开发" data-en="Backend" data-es="Backend">后端开发</div>
+        <div class="v"><b>Java</b> (Spring, Spring Boot, Java EE)<br><b>Python</b></div>
+      </div>
+      <div class="sk">
+        <div class="k" data-cn="数据与前端" data-en="Data &amp; Frontend" data-es="Datos y Frontend">数据与前端</div>
+        <div class="v"><b>SQL</b> · <b>JavaScript</b> · <b>HTML</b></div>
+      </div>
+      <div class="sk">
+        <div class="k" data-cn="工程方向" data-en="Engineering" data-es="Ingeniería">工程方向</div>
+        <div class="v" data-cn="云平台方案设计与运维 · 系统接口与数据模型设计 · WebSocket 实时数据链路 · 客户需求分析"
+                       data-en="Cloud solution design &amp; operations · System interface and data model design · WebSocket real-time pipelines · Client requirements analysis"
+                       data-es="Diseño y operación de soluciones cloud · Diseño de interfaces y modelos de datos · Pipelines en tiempo real con WebSocket · Análisis de requisitos de cliente">
+          云平台方案设计与运维 · 系统接口与数据模型设计 · WebSocket 实时数据链路 · 客户需求分析</div>
+      </div>
+      <div class="sk">
+        <div class="k" data-cn="语言" data-en="Languages" data-es="Idiomas">语言</div>
+        <div class="v" data-cn="<b>普通话</b>（母语）<br><b>英语</b>（流利，雅思 6.0）"
+                       data-en="<b>Mandarin Chinese</b> (native)<br><b>English</b> (fluent, IELTS 6.0)"
+                       data-es="<b>Chino mandarín</b> (nativo)<br><b>Inglés</b> (fluido, IELTS 6.0)">
+          <b>普通话</b>（母语）<br><b>英语</b>（流利，雅思 6.0）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT —— 公开版本：仅保留邮箱，不含手机号 -->
+<section class="ctc" id="contact" style="border-bottom:0">
+  <div class="wrap">
+    <div class="shead">
+      <div class="sno" data-cn="联系" data-en="Contact" data-es="Contacto">联系</div>
+      <h2 data-cn="欢迎就工作机会与我联系" data-en="Open to opportunities" data-es="Abierto a oportunidades">欢迎就工作机会与我联系</h2>
+      <div class="goldrule"></div>
+      <p data-cn="后端开发、云平台、系统工程相关职位与合作，欢迎邮件联系。现居巴塞罗那，接受远程与迁移。"
+         data-en="For backend development, cloud platform and systems engineering roles or collaboration, please get in touch by email. Currently based in Barcelona; open to remote and relocation."
+         data-es="Para puestos o colaboraciones en desarrollo backend, plataformas cloud e ingeniería de sistemas, contacta por correo electrónico. Actualmente en Barcelona; abierto a teletrabajo y reubicación.">
+        后端开发、云平台、系统工程相关职位与合作，欢迎邮件联系。现居巴塞罗那，接受远程与迁移。</p>
+    </div>
+    <div class="cgrid">
+      <div class="cc"><div class="k">Email</div><div class="v"><a href="mailto:tianwen_W@outlook.com">tianwen_W@outlook.com</a></div></div>
+      <div class="cc"><div class="k" data-cn="所在地" data-en="Location" data-es="Ubicación">所在地</div><div class="v" data-cn="西班牙 · 巴塞罗那" data-en="Barcelona, Spain" data-es="Barcelona, España">西班牙 · 巴塞罗那</div></div>
+    </div>
+  </div>
+</section>
+<!-- /CONTACT -->
+
+<footer>
+  <div class="wrap">
+    <div class="ftop">
+      <div class="fl">
+        <div class="fname" data-cn="王天文 · Wang Tianwen" data-en="Wang Tianwen · 王天文" data-es="Wang Tianwen · 王天文">王天文 · Wang Tianwen</div>
+        <p data-cn="软件工程与云平台。巴塞罗那自治大学在读硕士，曾任中国电信集团软件工程师。"
+           data-en="Software engineering and cloud platforms. Master's candidate at UAB; former Software Engineer at China Telecom."
+           data-es="Ingeniería de software y plataformas cloud. Estudiante de máster en la UAB; ex Ingeniero de Software en China Telecom.">
+          软件工程与云平台。巴塞罗那自治大学在读硕士，曾任中国电信集团软件工程师。</p>
+      </div>
+      <div class="flinks">
+        <a href="#about"    data-cn="概览" data-en="Overview" data-es="Perfil">概览</a>
+        <a href="#services" data-cn="专业能力" data-en="Capabilities" data-es="Capacidades">专业能力</a>
+        <a href="#exp"      data-cn="工作经历" data-en="Experience" data-es="Experiencia">工作经历</a>
+        <a href="#projects" data-cn="项目" data-en="Projects" data-es="Proyectos">项目</a>
+        <a href="#skills"   data-cn="技术栈" data-en="Skills" data-es="Competencias">技术栈</a>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>© 2026 WANG TIANWEN</span>
+      <span data-cn="巴塞罗那 · 西班牙" data-en="BARCELONA · SPAIN" data-es="BARCELONA · ESPAÑA">巴塞罗那 · 西班牙</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+var LANGMAP = {cn:'zh-CN', en:'en', es:'es'};
+function setLang(l){
+  document.querySelectorAll('[data-cn]').forEach(function(el){
+    if(el.dataset[l]) el.innerHTML = el.dataset[l];
+  });
+  document.documentElement.lang = LANGMAP[l] || 'zh-CN';
+  ['cn','en','es'].forEach(function(k){
+    var b = document.getElementById('b'+k);
+    if(b) b.setAttribute('aria-pressed', k === l);
+  });
+  try{ localStorage.setItem('wt-lang', l); }catch(e){}
+}
+try{
+  var saved = localStorage.getItem('wt-lang');
+  if(saved && saved !== 'cn') setLang(saved);
+}catch(e){}
+</script>
+</body>
+</html>
