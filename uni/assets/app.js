@@ -516,9 +516,39 @@
     });
     H.push('<table class="rp-tb">' + det.join('') + '</table>');
 
-    H.push('<div class="rp-foot">评分方法：住宿、地段、校园、专业前景四组指标按权重合成质量分，' +
-           '除以净支出相对当地同类学生基准的比值，再由主观感受修正。' +
-           '境外金额按购买力平价折算，可与国内直接比较。<br>校值 · yuhangwu.com/uni</div>');
+    var secN = r.intern.has ? ['六', '七'] : ['五', '六'];
+
+    H.push('<h3>' + secN[0] + '、计算方法</h3>' +
+      '<p class="rp-p">综合得分由质量分与成本比之商构成，再由主观感受修正：</p>' +
+      '<div class="rp-eq">综合得分 ＝ (住宿 × 地段 × 校园 × 前景)<sup>0.75</sup> × 净收益修正 ÷ 成本比<sup>0.75</sup> × 主观感受<sup>0.45</sup></div>' +
+      '<p class="rp-p">成本比为净支出与所在城市同类学生基准花销之比。' +
+      '四组质量指标各由若干条目加权平均得到，以当地中位水平为 1.00。' +
+      '指数 0.75 用于抑制多项指标连乘产生的复合放大，使极端组合不至于偏离过远。</p>' +
+      '<p class="rp-p">跨国比较采用世界银行国际比较项目（ICP）的居民消费购买力平价换算因子，' +
+      '按下式折算为人民币等值购买力：</p>' +
+      '<div class="rp-eq">人民币等值 ＝ 当地金额 ÷ PPP<sub>当地</sub> × PPP<sub>中国</sub></div>' +
+      '<p class="rp-p">其中 PPP 为该经济体本币兑国际元的换算因子。' +
+      '本报告使用 PPP<sub>中国</sub> ＝ ' + D.GLOBAL.PPP_ANCHOR +
+      '，当前所在地 PPP ＝ ' + r.country.ppp + '，折算系数 ' + f2(r.pppMul) + '。</p>');
+
+    H.push('<h3>' + secN[1] + '、参考来源</h3><table class="rp-tb rp-ref">' +
+      [['购买力平价换算因子',
+        '世界银行 国际比较项目（ICP）2021 轮，指标 PA.NUS.PRVT.PP：居民及为居民服务的非营利机构最终消费支出购买力平价（本币／国际元）',
+        'data.worldbank.org/indicator/PA.NUS.PRVT.PP'],
+       ['英国生活费基准',
+        'Save the Student《National Student Money Survey 2025》：英国在校学生月度总支出与房租中位数',
+        'savethestudent.org'],
+       ['西班牙及欧洲房租基准',
+        'HousingAnywhere 房租指数 2025 年第三季度：主要城市学生单间月租均价',
+        'housinganywhere.com']
+      ].map(function (x) {
+        return '<tr><td>' + esc(x[0]) + '</td><td colspan="2">' + esc(x[1]) +
+               '<br><span class="rp-url">' + esc(x[2]) + '</span></td></tr>';
+      }).join('') + '</table>' +
+      '<p class="rp-note">上述来源用于设定各地区的生活费与住宿基准，以及跨国购买力折算。' +
+      '各评分条目的权重与评级区间由本工具设定，不来自上述来源。</p>');
+
+    H.push('<div class="rp-foot">校值 · 大学生活性价比测评 · yuhangwu.com/uni</div>');
 
     $('printReport').innerHTML = H.join('');
   }
