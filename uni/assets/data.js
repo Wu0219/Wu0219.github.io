@@ -715,7 +715,7 @@
      * 总分也会变成 客观^0.6，把所有分数往 1 压（实测范围从 0.21~3.80
      * 缩到 0.39~2.22），已校准的阈值全部失效。写成乘数形式，
      * 主观中性时总分恰好等于客观分，阈值可以继续沿用。 */
-    SUBJ_WEIGHT: 0.45
+    SUBJ_WEIGHT: 0.45,
     INTERN_QUALITY: INTERN_QUALITY,
     INTERN_RELEVANCE: INTERN_RELEVANCE,
     INTERN_TERM: INTERN_TERM,
