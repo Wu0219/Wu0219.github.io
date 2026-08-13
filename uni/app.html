@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>校值 · 大学生活性价比测评</title>
 <meta name="description" content="校值 · 大学生活性价比测评。住宿、地段、校园、专业前景、实习、花销与主观感受七组维度评分，境外按购买力平价折算人民币，输出可导出的详细报告。">
-<link rel="stylesheet" href="assets/styles.css?v=13">
-<link rel="stylesheet" href="assets/themes.css?v=13">
+<link rel="stylesheet" href="assets/styles.css?v=14">
+<link rel="stylesheet" href="assets/themes.css?v=14">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 </head>
 <body>
@@ -78,9 +78,13 @@
   <div id="shareBox">
     <img id="shareImg" alt="分享图，长按可保存">
     <div style="text-align:center;font-size:13px;color:var(--dim)">长按图片保存</div>
-    <label style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;color:var(--dim);cursor:pointer">
+    <label id="lblHideMoney" style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;color:var(--dim);cursor:pointer">
       <input type="checkbox" id="hideMoney" style="width:auto;accent-color:var(--ac)">
       隐藏具体金额，用星级代替
+    </label>
+    <label style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;color:var(--dim);cursor:pointer">
+      <input type="checkbox" id="withQR" style="width:auto;accent-color:var(--ac)">
+      附上二维码，方便别人扫码来测
     </label>
     <div class="btns" style="justify-content:center">
       <button id="btnDl" class="primary">下载图片</button>
@@ -89,11 +93,11 @@
   </div>
 </div>
 
-<script src="assets/analytics.js?v=13"></script>
-<script src="assets/data.js?v=13"></script>
-<script src="assets/model.js?v=13"></script>
-<script src="assets/qrcode.js?v=13"></script>
-<script src="assets/app.js?v=13"></script>
+<script src="assets/analytics.js?v=14"></script>
+<script src="assets/data.js?v=14"></script>
+<script src="assets/model.js?v=14"></script>
+<script src="assets/qrcode.js?v=14"></script>
+<script src="assets/app.js?v=14"></script>
 
 </body>
 </html>

@@ -241,7 +241,7 @@
     return v100 < 30 ? '较差' : v100 < 45 ? '一般' : v100 < 60 ? '还行' : v100 < 78 ? '不错' : '很好';
   }
 
-  function drawShare(hideMoney) {
+  function drawShare(hideMoney, withQR) {
     var r = refresh._r;
     /* 固定 3:4 —— 小红书信息流里封面按 3:4 展示，比例不对会比别人矮一截。 */
     var W = 780, H = 1040, dpr = 2;
@@ -378,17 +378,32 @@
       x.fillText(M.fmt.pct(top1.pct), W - P - 20, y + 46);
     }
 
-    /* 底部：不放二维码也不放域名。
+    /* 底部。默认只放品牌搜索词不放二维码 ——
      * 小红书把二维码和明文网址列为违规导流载体（图片会被 OCR 扫），
-     * 命中就是笔记不收录甚至账号降权。改成品牌搜索词，
-     * 平台罚的是导流行为，不是提到一个名字。 */
-    x.textAlign = 'center';
-    x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
-    x.fillText('微信搜「校值」测你的大学', W / 2, H - 74);
-    x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
-    x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，六维打分', W / 2, H - 46);
-    x.fillStyle = C_FAINT; x.font = '400 11.5px ' + SANS;
-    x.fillText('主观权重模型 · 仅供参考', W / 2, H - 22);
+     * 命中就是笔记不收录甚至账号降权，平台罚的是导流行为不是提到一个名字。
+     * 勾选「附上二维码」后才画，适合私下发给朋友或买家的场合。 */
+    if (withQR) {
+      var qr = QR.make(SHARE_URL, { ecc: 'H' });
+      var qs = Math.floor(104 / (qr.size + 8)), qFull = (qr.size + 8) * qs;
+      var qx = W - P - qFull, qy = H - 30 - qFull;
+      x.fillStyle = '#fff'; roundRect(x, qx - 6, qy - 6, qFull + 12, qFull + 12, 6); x.fill();
+      QR.draw(x, qr, qx, qy, qs, '#000', 'none');
+      x.textAlign = 'left';
+      x.fillStyle = C_TX; x.font = '700 24px ' + SANS;
+      x.fillText('扫码测测你的大学', P, H - 78);
+      x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
+      x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销', P, H - 50);
+      x.fillStyle = C_FAINT; x.font = '400 12.5px ' + SANS;
+      x.fillText('微信搜「校值」也能找到', P, H - 26);
+    } else {
+      x.textAlign = 'center';
+      x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
+      x.fillText('微信搜「校值」测你的大学', W / 2, H - 74);
+      x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
+      x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，六维打分', W / 2, H - 46);
+      x.fillStyle = C_FAINT; x.font = '400 11.5px ' + SANS;
+      x.fillText('校值 · 大学生活性价比测评', W / 2, H - 22);
+    }
 
     return cv;
   }
@@ -424,7 +439,7 @@
   /* ---------------- 详细图片报告 ----------------
    * 一张长图，内容等同于一份完整报告。做成图片而不是 PDF，
    * 是因为微信里长按就能存，而打印到 PDF 在手机上基本走不通。 */
-  function drawReport() {
+  function drawReport(withQR) {
     var r = M.compute(state);
     var f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
     var money = M.fmt.money, cur = r.cur;
@@ -669,6 +684,13 @@
       y += 22;
       x.strokeStyle = C_BD; x.beginPath(); x.moveTo(P, y); x.lineTo(W - P, y); x.stroke();
       y += 24;
+      if (withQR) {
+        var qr2 = QR.make(SHARE_URL, { ecc: 'H' });
+        var qs2 = Math.floor(112 / (qr2.size + 8)), qF2 = (qr2.size + 8) * qs2;
+        x.fillStyle = '#fff'; roundRect(x, W / 2 - qF2 / 2 - 6, y - 6, qF2 + 12, qF2 + 12, 6); x.fill();
+        QR.draw(x, qr2, W / 2 - qF2 / 2, y, qs2, '#000', 'none');
+        y += qF2 + 20;
+      }
       x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS; x.textAlign = 'center';
       x.fillText('校值 · 大学生活性价比测评 · 微信搜「校值」', W / 2, y);
       x.textAlign = 'left';
@@ -686,17 +708,40 @@
   }
 
   function renderShare() {
-    var hide = $('hideMoney').checked;
-    try { localStorage.setItem('uni-hide-money', hide ? '1' : '0'); } catch (e) {}
+    var hide = $('hideMoney').checked, qr = $('withQR').checked;
+    try {
+      localStorage.setItem('uni-hide-money', hide ? '1' : '0');
+      localStorage.setItem('uni-with-qr', qr ? '1' : '0');
+    } catch (e) {}
     var url;
-    try { url = drawShare(hide).toDataURL('image/png'); }
+    try { url = drawShare(hide, qr).toDataURL('image/png'); }
     catch (e) { toast('生成失败：' + e.message); return null; }
     $('shareImg').src = url;
     return url;
   }
 
-  try { $('hideMoney').checked = localStorage.getItem('uni-hide-money') === '1'; } catch (e) {}
-  $('hideMoney').onchange = function () { var u = renderShare(); if (u) bindDownload(u); };
+  try {
+    $('hideMoney').checked = localStorage.getItem('uni-hide-money') === '1';
+    $('withQR').checked = localStorage.getItem('uni-with-qr') === '1';
+  } catch (e) {}
+  // 勾选变化立刻重画当前这张图，不用关掉重来
+  var lastKind = 'share';
+  function reRender() {
+    var u = lastKind === 'report' ? renderReport() : renderShare();
+    if (u) bindDownload(u);
+  }
+  $('hideMoney').onchange = reRender;
+  $('withQR').onchange = reRender;
+
+  function renderReport() {
+    var qr = $('withQR').checked;
+    try { localStorage.setItem('uni-with-qr', qr ? '1' : '0'); } catch (e) {}
+    var url;
+    try { url = drawReport(qr).toDataURL('image/png'); }
+    catch (e) { toast('生成失败：' + e.message); return null; }
+    $('shareImg').src = url;
+    return url;
+  }
 
   function bindDownload(url) {
     $('btnDl').onclick = function () {
@@ -707,20 +752,20 @@
   }
 
   $('btnShare').onclick = function () {
+    lastKind = 'share';
+    $('lblHideMoney').style.display = '';
     var url = renderShare();
     if (!url) return;
-    $('hideMoney').parentNode.style.display = '';
     bindDownload(url);
     $('shareMask').classList.add('on');
   };
 
   $('btnReport').onclick = function () {
-    var url;
-    try { url = drawReport().toDataURL('image/png'); }
-    catch (e) { toast('生成失败：' + e.message); return; }
-    $('shareImg').src = url;
-    // 详细报告本来就是给自己存档的，不提供隐藏金额开关
-    $('hideMoney').parentNode.style.display = 'none';
+    lastKind = 'report';
+    // 详细报告是给自己存档的，隐藏金额没有意义，这个开关就不显示
+    $('lblHideMoney').style.display = 'none';
+    var url = renderReport();
+    if (!url) return;
     bindDownload(url);
     $('shareMask').classList.add('on');
   };
