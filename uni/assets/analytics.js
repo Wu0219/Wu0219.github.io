@@ -18,8 +18,14 @@
     // | 'umami' | 'baidu' | 'none'
     provider: 'cf',
 
-    // 与 yuhangwu.com 主站同一个 token，统计合并在一处看
-    cfToken:  '0a7f28af98dc4cf585b39b8d3fb0d54f',
+    /* Cloudflare 的 token 是按站点发的，不同域名必须用各自的 token，
+     * 否则数据会并进同一个站点条目里分不开。按当前域名自动选。
+     * 新增域名：去 Cloudflare → Web Analytics → Add a site 拿 token 填进来。 */
+    cfTokens: {
+      'yuhangwu.com':    '0a7f28af98dc4cf585b39b8d3fb0d54f',
+      'uni.fanqirui.cn': '7e70a507c6b54eb2a8fbae86b98e8f53'
+    },
+    cfToken:  '',
     gaId:     '',                       // 形如 G-XXXXXXXXXX
     umamiSrc: '', umamiId: '',          // 自建 Umami
     baiduId:  ''                        // 百度统计的 hm.js? 后面那串
@@ -36,6 +42,18 @@
     if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
     document.head.appendChild(s);
     return s;
+  }
+
+  /* 按当前域名挑 token。本地打开（file:// 或 localhost）时挑不到，
+   * 直接不加载统计，免得把调试流量算进正式数据。 */
+  if (!CFG.cfToken && CFG.cfTokens) {
+    var host = location.hostname;
+    CFG.cfToken = CFG.cfTokens[host] || '';
+    if (!CFG.cfToken) {
+      Object.keys(CFG.cfTokens).forEach(function (h) {
+        if (host === h || host.slice(-(h.length + 1)) === '.' + h) CFG.cfToken = CFG.cfTokens[h];
+      });
+    }
   }
 
   switch (CFG.provider) {
