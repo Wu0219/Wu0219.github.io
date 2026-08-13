@@ -168,7 +168,7 @@
   inv('诊断只给出真正能改的项', function () {
     var rows = M.diagnose(build('CN', 'tier2', {}));
     var bad = rows.filter(function (r) {
-      return r.key === 'major' || r.key === 'schoolTier' || r.key === 'localJobs';
+      return r.key === 'major' || r.key === 'localJobs';
     });
     return bad.length ? '出现了不可改项: ' + bad.map(function (b) { return b.key; }).join(',') : null;
   });
@@ -185,7 +185,7 @@
         roomSize: opt('roomSize', '四人间'), bathroom: opt('bathroom', '楼层公共卫生间'),
         shower: opt('shower', '楼层公共浴室'), power: opt('power', '深夜断电'),
         roommate: opt('roommate', '基本和谐'), climate: opt('climate', '有独立空调'),
-        major: opt('major', '计算机'), schoolTier: opt('schoolTier', '985'),
+        major: opt('major', '计算机'), 
         localJobs: opt('localJobs', '本地就是'), internship: opt('internship', '大二起'),
         internQuality: 4, internDaysPerWeek: 3, internHours: 9, internCommute: 1.5,
         internDailyPay: 250, convertProb: 3 }) },
@@ -197,7 +197,7 @@
         roomSize: opt('roomSize', '双人间'), bathroom: opt('bathroom', '房间内独立'),
         shower: opt('shower', '房间内独立'), power: opt('power', '24 小时'),
         roommate: opt('roommate', '基本和谐'), housing: opt('housing', '校外合租'),
-        major: opt('major', '金融'), schoolTier: opt('schoolTier', '211'),
+        major: opt('major', '金融'), 
         localJobs: opt('localJobs', '本地就是') }) },
 
     { g: '国内一线', name: '深圳普通一本·远郊校区·六人间·家里给1500·无实习',
@@ -207,7 +207,7 @@
         roomSize: opt('roomSize', '六人间'), shower: opt('shower', '公共澡堂，定时'),
         power: opt('power', '断电且断网'), curfew: opt('curfew', '22:30'),
         roommate: opt('roommate', '各过各的'), climate: opt('climate', '只有风扇'),
-        major: opt('major', '经管'), schoolTier: opt('schoolTier', '普通一本'),
+        major: opt('major', '经管'), 
         localJobs: opt('localJobs', '基本要去') }) },
 
     /* ---------- 国内 · 新一线 / 二线 ---------- */
@@ -215,7 +215,7 @@
       s: build('CN', 'newt1', {
         monthlyLiving: 1800, monthlyHousing: 180, location: locIdx('unitown'), commute: 1,
         roomSize: opt('roomSize', '四人间'), major: opt('major', '电子信息'),
-        schoolTier: opt('schoolTier', '985'), localJobs: opt('localJobs', '本地有成规模'),
+        localJobs: opt('localJobs', '本地有成规模'),
         internQuality: 2, internDaysPerWeek: 2, internHours: 8, internCommute: 1.5,
         internDailyPay: 120, convertProb: 2 }) },
 
@@ -225,7 +225,7 @@
         roomSize: opt('roomSize', '六人间'), shower: opt('shower', '楼层公共浴室'),
         power: opt('power', '断电且断网'), curfew: opt('curfew', '22:30'),
         strictness: opt('strictness', '强制早操'), roommate: opt('roommate', '各过各的'),
-        major: opt('major', '农林'), schoolTier: opt('schoolTier', '普通二本'),
+        major: opt('major', '农林'), 
         localJobs: opt('localJobs', '本地几乎没有'), internship: opt('internship', '学校不支持') }) },
 
     /* ---------- 国内 · 三线 / 县城 ---------- */
@@ -237,14 +237,14 @@
         curfew: opt('curfew', '22:00 前'), strictness: opt('strictness', '早操 + 晚自习'),
         roommate: opt('roommate', '有明显摩擦'), climate: opt('climate', '什么都没有'),
         canteen: opt('canteen', '选择极少'), facility: opt('facility', '老旧'),
-        major: opt('major', '旅游'), schoolTier: opt('schoolTier', '专科'),
+        major: opt('major', '旅游'), 
         localJobs: opt('localJobs', '本地几乎没有') }) },
 
     { g: '国内三线', name: '三线师范·城郊·四人间·1300·家教兼职（低成本还行）',
       s: build('CN', 'tier3', {
         monthlyLiving: 1150, monthlyHousing: 120, location: locIdx('fringe'), commute: 1,
         roomSize: opt('roomSize', '四人间'), roommate: opt('roommate', '作息一致'),
-        major: opt('major', '师范'), schoolTier: opt('schoolTier', '普通一本'),
+        major: opt('major', '师范'), 
         localJobs: opt('localJobs', '本地有一些'),
         internQuality: 1, internRelevance: 1, internTerm: 0,
         internDaysPerWeek: 2, internHours: 3, internCommute: 0.5,
@@ -284,7 +284,7 @@
         bathroom: opt('bathroom', '宿舍单元内共用'), shower: opt('shower', '宿舍单元内共用'),
         power: opt('power', '24 小时'), curfew: opt('curfew', '无门禁'),
         strictness: opt('strictness', '完全自主'), roommate: opt('roommate', '各过各的'),
-        major: opt('major', '计算机'), schoolTier: opt('schoolTier', '双一流学科'),
+        major: opt('major', '计算机'), 
         localJobs: opt('localJobs', '本地有成规模') }) },
 
     { g: '境外欧洲', name: '西班牙小城本科·大学城·€600/月·超省',
@@ -293,7 +293,7 @@
         housing: opt('housing', '校外合租'), roomSize: opt('roomSize', '单人间'),
         power: opt('power', '24 小时'), curfew: opt('curfew', '无门禁'),
         strictness: opt('strictness', '完全自主'),
-        major: opt('major', '外语'), schoolTier: opt('schoolTier', '普通一本'),
+        major: opt('major', '外语'), 
         localJobs: opt('localJobs', '基本要去') }) },
 
     { g: '境外欧洲', name: '伦敦授课硕士·市中心·£1600/月·无实习（最贵场景）',
@@ -302,7 +302,7 @@
         housing: opt('housing', '校外合租'), roomSize: opt('roomSize', '单人间'),
         bathroom: opt('bathroom', '宿舍单元内共用'), power: opt('power', '24 小时'),
         curfew: opt('curfew', '无门禁'), strictness: opt('strictness', '完全自主'),
-        major: opt('major', '金融'), schoolTier: opt('schoolTier', '985 / QS 51-100'),
+        major: opt('major', '金融'), 
         localJobs: opt('localJobs', '本地就是') }) },
 
     { g: '境外北美', name: '美国大学城本科·$1400/月·校内宿舍双人间',
@@ -311,7 +311,7 @@
         roomSize: opt('roomSize', '双人间'), power: opt('power', '24 小时'),
         curfew: opt('curfew', '无门禁'), strictness: opt('strictness', '完全自主'),
         canteen: opt('canteen', '正常水平'),
-        major: opt('major', '计算机'), schoolTier: opt('schoolTier', '双一流学科'),
+        major: opt('major', '计算机'), 
         localJobs: opt('localJobs', '基本要去') }) },
 
     { g: '境外亚洲', name: '东京授课硕士·地方城市·¥JP95000/月·便利店兼职',
@@ -322,7 +322,7 @@
         bathroom: opt('bathroom', '房间内独立'), shower: opt('shower', '房间内独立'),
         power: opt('power', '24 小时'), curfew: opt('curfew', '无门禁'),
         strictness: opt('strictness', '完全自主'),
-        major: opt('major', '电子信息'), schoolTier: opt('schoolTier', '双一流学科'),
+        major: opt('major', '电子信息'), 
         localJobs: opt('localJobs', '本地有一些'),
         internQuality: 1, internRelevance: 0, internTerm: 0,
         internDaysPerWeek: 3, internHours: 5, internCommute: 0.5,
@@ -333,7 +333,7 @@
         monthlyLiving: 750, monthlyHousing: 1150, location: locIdx('urban'), commute: 0,
         roomSize: opt('roomSize', '双人间'), power: opt('power', '24 小时'),
         curfew: opt('curfew', '无门禁'), strictness: opt('strictness', '完全自主'),
-        major: opt('major', '计算机'), schoolTier: opt('schoolTier', 'C9'),
+        major: opt('major', '计算机'), 
         localJobs: opt('localJobs', '本地就是'), internship: opt('internship', '大二起'),
         internQuality: 4, internDaysPerWeek: 5, internHours: 8, internCommute: 1,
         internDailyPay: 90, convertProb: 4 }) },
@@ -345,7 +345,7 @@
         housing: opt('housing', '校外合租'), roomSize: opt('roomSize', '双人间'),
         power: opt('power', '24 小时'), curfew: opt('curfew', '无门禁'),
         strictness: opt('strictness', '完全自主'),
-        major: opt('major', '金融'), schoolTier: opt('schoolTier', '211'),
+        major: opt('major', '金融'), 
         localJobs: opt('localJobs', '本地就是') }) },
 
     { g: '境外亚洲', name: '泰国曼谷本科·฿20000/月·物价低',
@@ -353,7 +353,7 @@
         monthlyLiving: 12000, monthlyHousing: 8000, location: locIdx('urban'), commute: 1,
         roomSize: opt('roomSize', '单人间'), bathroom: opt('bathroom', '房间内独立'),
         power: opt('power', '24 小时'), curfew: opt('curfew', '无门禁'),
-        major: opt('major', '经管'), schoolTier: opt('schoolTier', '普通一本'),
+        major: opt('major', '经管'), 
         localJobs: opt('localJobs', '本地有一些') }) },
 
     /* ---------- 实习分支 ---------- */

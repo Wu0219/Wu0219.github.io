@@ -283,7 +283,7 @@
   function lowIdx(o)  { var b = 0, v = Infinity;  o.forEach(function (x, i) { if (x.v < v) { v = x.v; b = i; } }); return b; }
 
   // 不可改变的项：填了也没用，不该出现在「值得改善」里
-  var IMMUTABLE = { major: 1, schoolTier: 1, localJobs: 1 };
+  var IMMUTABLE = { major: 1, localJobs: 1 };
 
   function buildLevers() {
     var L = [];
