@@ -118,7 +118,7 @@
   <footer class="foot">
     <div><b>怎么用：</b>先在顶部选国家，点预设快速填一份，再逐项改成你自己的情况。得分 1.00 = 在<b>所在国</b>刚好对得起你的年限与付出；想提分，先看右侧「最值得改善的项」。</div>
     <div><b>比较中西 offer：</b>分别在两个国家各填一份，每填完一份点顶部「存入中西对照」，然后去 <b>🌍 中西对照</b> 标签页 —— 那里会算出「另一边要拿多少钱才追得平」，并把差额拆成薪资 / 工时 / 环境 / 成长 / 风险 / 期望六项。两边都建议打开「按税后口径计算」。</div>
-    <div><b>数据去哪了：</b>哪也没去。全部计算和存储都在你的浏览器里（localStorage），这个页面不发任何网络请求。</div>
+    <div><b>数据去哪了：</b>你填的每一个数字都只存在你自己的浏览器里（localStorage），不会上传，服务端也没有任何接口。页面唯一的外部请求是 Cloudflare Web Analytics 的访问量统计（无 Cookie、不采集个人信息、不读取你填的内容）。想要完全零请求的版本，<a href="https://github.com/Wu0219/worth-calculator" target="_blank" rel="noopener">下载源码</a>本地打开即可。</div>
     <div><b>免责：</b>这是一个主观权重模型，不是统计拟合。它回答「当下这一年划不划算」，不回答「五年后值不值」。别拿它做人生决策，拿它做体检。</div>
     <div style="margin-top:8px">
       源码与完整模型文档 <a href="https://github.com/Wu0219/worth-calculator" target="_blank" rel="noopener">Wu0219/worth-calculator</a> ·
@@ -136,5 +136,9 @@
 <script src="assets/data.js"></script>
 <script src="assets/model.js"></script>
 <script src="assets/app.js"></script>
+
+<!-- Cloudflare Web Analytics —— 仅部署副本包含，源码仓库 Wu0219/worth-calculator 不含此段。
+     这个子目录页不走 Jekyll 布局（无 front matter），所以拿不到 _layouts/default.html 里的 beacon，需要单独加。 -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0a7f28af98dc4cf585b39b8d3fb0d54f"}'></script>
 </body>
 </html>
