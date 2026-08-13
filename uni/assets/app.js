@@ -13,11 +13,44 @@
   var state = load() || M.defaultState('CN');
   var closed = {};
 
+  /* 对比模式：两份填写并排。默认关闭。打开后 state 始终指向正在编辑的那一份，
+   * 另一份存在 slots 里 —— 这样底下所有读写 state 的代码一行都不用改。 */
+  var compare = false, active = 'A', slots = { A: state, B: null };
+  function nameOf(k) {
+    var s = slots[k];
+    return (s && s.schoolName || '').trim() || (k === 'A' ? '第一份' : '第二份');
+  }
+  function setActive(k) {
+    slots[active] = state; active = k; state = slots[k];
+    renderAB(); renderForm(); refresh();
+  }
+  function renderAB() {
+    var bar = $('abBar');
+    bar.className = compare ? 'on' : '';
+    if (!compare) { bar.innerHTML = ''; return; }
+    slots[active] = state;
+    bar.innerHTML = ['A', 'B'].map(function (k) {
+      return '<div class="ab' + (k === active ? ' on' : '') + '" data-k="' + k + '">' +
+             '<div class="k">' + k + '</div><div class="n">' + esc(nameOf(k)) + '</div></div>';
+    }).join('');
+    [].forEach.call(bar.children, function (e) {
+      e.onclick = function () { if (this.dataset.k !== active) setActive(this.dataset.k); };
+    });
+  }
+
   function load() {
     try { var s = JSON.parse(localStorage.getItem(LS_KEY)); return s && s.country ? s : null; }
     catch (e) { return null; }
   }
-  function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} }
+  function save() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+      // 对比模式下另一份也要存，否则刷新后 B 就没了
+      slots[active] = state;
+      localStorage.setItem(LS_KEY + '-b', slots.B ? JSON.stringify(slots.B) : '');
+      localStorage.setItem(LS_KEY + '-cmp', compare ? '1' : '0');
+    } catch (e) {}
+  }
 
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, cls, html) {
@@ -116,13 +149,14 @@
   }
 
   /* ---------------- 雷达图 ---------------- */
-  function radar(r) {
+  function radar(r, rB) {
     /* 颜色从主题变量读，别写死 —— 写死 t1 的深色配色后，
      * 六个浅色主题下标签在白底上只有 2.7:1，看不清。 */
     var cs = getComputedStyle(document.documentElement);
     var cGrid = (cs.getPropertyValue('--bd') || '#26333d').trim();
     var cLbl  = (cs.getPropertyValue('--dim') || '#8fa1ad').trim();
     var cAc   = (cs.getPropertyValue('--ac') || '#35d39a').trim();
+    var cWarn = (cs.getPropertyValue('--warn') || '#e0a33d').trim();
     var dims = D.RADAR_DIMS, n = dims.length, cx = 130, cy = 118, R = 82;
     var pts = [], grid = '', axes = '', labels = '';
     for (var g = 1; g <= 4; g++) {
@@ -142,9 +176,20 @@
       var lx = cx + Math.cos(a) * (R + 20), ly = cy + Math.sin(a) * (R + 20);
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" fill="'+cLbl+'" font-size="11.5" text-anchor="middle">' + dims[i].label + '</text>';
     }
+    var poly2 = '';
+    if (rB) {
+      var p2 = [];
+      for (i = 0; i < n; i++) {
+        a = -Math.PI / 2 + i * 2 * Math.PI / n;
+        var v2 = Math.max(0, Math.min(100, rB.radar[dims[i].key])) / 100;
+        p2.push((cx + Math.cos(a) * R * v2).toFixed(1) + ',' + (cy + Math.sin(a) * R * v2).toFixed(1));
+      }
+      poly2 = '<polygon points="' + p2.join(' ') + '" fill="none" stroke="' + cWarn +
+              '" stroke-width="2" stroke-dasharray="5 4"/>';
+    }
     $('radar').innerHTML = '<svg width="260" height="240">' + grid + axes +
       '<polygon points="' + pts.join(' ') + '" fill="'+cAc+'" fill-opacity="0.18" stroke="'+cAc+'" stroke-width="2"/>' +
-      labels + '</svg>';
+      poly2 + labels + '</svg>';
     $('radarLegend').innerHTML = dims.map(function (d) {
       return d.label + ' ' + Math.round(r.radar[d.key]);
     }).join(' · ') + ' &nbsp;(50 = 当地正常)';
@@ -167,7 +212,10 @@
     $('scoreDesc').textContent = r.rating.desc;
 
 
-    radar(r);
+    var rB = (compare && slots[active === 'A' ? 'B' : 'A']) ?
+             M.compute(slots[active === 'A' ? 'B' : 'A']) : null;
+    radar(r, rB);
+    renderCmp(r, rB);
 
     var cur = r.cur, ppp = r.pppMul;
     var kv = [
@@ -436,6 +484,28 @@
   }
 
   /* ---------------- 事件 ---------------- */
+  function renderCmp(r, rB) {
+    var box = $('cmpBox');
+    if (!compare || !rB) { box.className = ''; box.innerHTML = ''; return; }
+    box.className = 'on';
+    var f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
+    var me = active, other = active === 'A' ? 'B' : 'A';
+    var pair = [[me, r], [other, rB]].sort(function (p, q) { return q[1].score - p[1].score; });
+    var d = Math.abs(r.score - rB.score);
+    box.innerHTML = pair.map(function (p, i) {
+      return '<div class="cmp-row"><span class="nm">' + (i === 0 ? '🥇 ' : '') + esc(nameOf(p[0])) +
+             '</span><span class="sc" style="color:' + p[1].rating.color + '">' + f2(p[1].score) +
+             '</span></div>';
+    }).join('') +
+    '<div class="cmp-gap">' + esc(nameOf(pair[0][0])) + ' 高出 ' + f2(d) + ' 分' +
+    (d < 0.12 ? '，基本打平' : '') + '。' +
+    D.RADAR_DIMS.map(function (dm) {
+      var a1 = r.radar[dm.key], b1 = rB.radar[dm.key];
+      return Math.abs(a1 - b1) < 8 ? null :
+        dm.label + (a1 > b1 ? ' 你领先 ' : ' 对方领先 ') + Math.round(Math.abs(a1 - b1));
+    }).filter(Boolean).join(' · ') + '</div>';
+  }
+
   /* ---------------- 详细图片报告 ----------------
    * 一张长图，内容等同于一份完整报告。做成图片而不是 PDF，
    * 是因为微信里长按就能存，而打印到 PDF 在手机上基本走不通。 */
@@ -751,6 +821,17 @@
     };
   }
 
+  $('btnCompare').onclick = function () {
+    compare = !compare;
+    this.className = compare ? 'primary' : '';
+    this.textContent = compare ? '退出对比' : '对比模式';
+    if (compare && !slots.B) {
+      // 以当前这份为起点复制一份，改起来比从零填快得多
+      slots.B = M.assign(state, { schoolName: '', majorName: '' });
+    }
+    renderAB(); refresh();
+  };
+
   $('btnShare').onclick = function () {
     lastKind = 'share';
     $('lblHideMoney').style.display = '';
@@ -782,6 +863,16 @@
     state = M.defaultState(state.country); renderForm(); refresh(); toast('已重置');
   };
 
+  try {
+    var bRaw = localStorage.getItem(LS_KEY + '-b');
+    if (bRaw) slots.B = JSON.parse(bRaw);
+    if (localStorage.getItem(LS_KEY + '-cmp') === '1' && slots.B) {
+      compare = true;
+      $('btnCompare').className = 'primary';
+      $('btnCompare').textContent = '退出对比';
+    }
+  } catch (e) {}
+  renderAB();
   renderForm();
   refresh();
 })();
