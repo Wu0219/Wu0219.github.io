@@ -581,20 +581,24 @@
    * v2 上移后最高档约占 17%，「正常」档仍然锚在 1.00 附近。
    * 注意：样本是刻意挑的有意思的场景，不是随机抽样，
    * 阈值属于「暂定、待真实数据回流后再校准」。 */
+  /* 每档都有一个可自称的「名号」（title）+ 一句中性的水平描述（label）。
+   * 只给 label 的话，人群众数那一档是「当地正常水平」——
+   * 没有人会为「我很正常」发一条朋友圈，中间档等于没有传播力。
+   * title 用于分享图和标题，label 保留给需要客观表述的地方。 */
   var RATINGS = [
-    { max: 0.55, key: 'bad', label: '性价比很低', emoji: '😵', color: '#e0413a',
+    { max: 0.55, key: 'bad', title: '渡劫型', label: '性价比很低', emoji: '😵', color: '#e0413a',
       desc: '花的钱和过的日子明显不匹配。先看诊断里最拖后腿的那一项 —— 住宿和地段通常是能动的，专业和学校不能。' },
-    { max: 0.78, key: 'low', label: '偏亏', emoji: '😟', color: '#e8763a',
+    { max: 0.78, key: 'low', title: '为爱发电型', label: '偏亏', emoji: '😟', color: '#e8763a',
       desc: '你在为这段大学生活付溢价。如果换宿舍、换住法、或把花销压回当地水平，分数会明显上来。' },
-    { max: 0.95, key: 'below', label: '略低于当地水平', emoji: '😐', color: '#d9a13a',
+    { max: 0.95, key: 'below', title: '差一口气型', label: '略低于当地水平', emoji: '😐', color: '#d9a13a',
       desc: '不算糟，但同样的钱在当地能换到更好的居住条件。值得花一个周末认真比较一下校外租房。' },
-    { max: 1.30, key: 'mid', label: '当地正常水平', emoji: '🙂', color: '#4aa3e0',
-      desc: '典型的大学生活：不亏也不赚。想往上走，看看诊断里哪一项一档就能拉动最多。' },
-    { max: 1.75, key: 'good', label: '相当划算', emoji: '😀', color: '#2f9e6e',
+    { max: 1.30, key: 'mid', title: '标准大学生', label: '当地正常水平', emoji: '🙂', color: '#4aa3e0',
+      desc: '不亏不赚，把钱花在了该花的地方 —— 这其实是最多人待的位置。想往上走，看看诊断里哪一项拨一档能拉动最多。' },
+    { max: 1.75, key: 'good', title: '悄悄划算型', label: '相当划算', emoji: '😀', color: '#2f9e6e',
       desc: '花的钱换来了高于当地平均的居住与发展条件。这个组合值得守住。' },
-    { max: 2.60, key: 'great', label: '非常值', emoji: '🤩', color: '#7b4fd9',
+    { max: 2.60, key: 'great', title: '别人家的大学', label: '非常值', emoji: '🤩', color: '#7b4fd9',
       desc: '住得好、位置好、前景好，同时没有为此多花钱。这三样能同时成立的学校不多。' },
-    { max: Infinity, key: 'dream', label: '别声张', emoji: '👑', color: '#c9971f',
+    { max: Infinity, key: 'dream', title: '别声张', label: '天花板', emoji: '👑', color: '#c9971f',
       desc: '要么你的实习已经把生活费全覆盖了还带转正预期，要么条件好得不像话。' +
             '如果你没有实习却拿到这个分，回去核对一下花销那一栏 —— 多半是漏填了。' }
   ];

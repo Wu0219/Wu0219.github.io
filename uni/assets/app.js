@@ -160,7 +160,8 @@
     $('stageTag').textContent = state.stage === 1 ? '授课型硕士' : '本科生';
     $('scoreNum').textContent = f2(r.score);
     $('scoreNum').style.color = r.rating.color;
-    $('scoreRating').innerHTML = r.rating.emoji + ' ' + esc(r.rating.label);
+    $('scoreRating').innerHTML = r.rating.emoji + ' ' + esc(r.rating.title || r.rating.label) +
+      '<span style="color:var(--faint);font-weight:400;font-size:13px"> · ' + esc(r.rating.label) + '</span>';
     $('scoreRating').style.color = r.rating.color;
     $('scoreMark').style.left = Math.max(0, Math.min(100, r.score / 3.0 * 100)) + '%';
     $('scoreDesc').textContent = r.rating.desc;
@@ -242,72 +243,82 @@
 
   function drawShare(hideMoney) {
     var r = refresh._r;
-    // 先画在一张足够高的画布上，画完按实际内容裁掉多余部分 ——
-    // 内容高度会随「有没有实习」变化，写死高度就会留一大块空白。
-    var W = 780, H = 1400, dpr = 2;
+    /* 固定 3:4 —— 小红书信息流里封面按 3:4 展示，比例不对会比别人矮一截。 */
+    var W = 780, H = 1040, dpr = 2;
     var cv = document.createElement('canvas');
     cv.width = W * dpr; cv.height = H * dpr;
     var x = cv.getContext('2d'); x.scale(dpr, dpr);
     var SANS = '"Microsoft YaHei","PingFang SC",-apple-system,sans-serif';
     var MONO = 'Consolas,"SF Mono",monospace';
 
-    x.fillStyle = '#0f1418'; x.fillRect(0, 0, W, H);
+    /* 配色跟随用户当前选的主题。写死深色的话，选了「俏皮糖果」的用户
+     * 生成出来还是一张黑客风的图，九套主题等于白做。 */
+    var cs2 = getComputedStyle(document.documentElement);
+    function V(name, dflt) { return (cs2.getPropertyValue(name) || dflt).trim() || dflt; }
+    var C_BG = V('--bg', '#0f1418'), C_CARD = V('--elev', '#161d23'),
+        C_BD = V('--bd', '#26333d'), C_TX = V('--tx', '#dde5ea'),
+        C_DIM = V('--dim', '#8fa1ad'), C_FAINT = V('--faint', '#61717c'),
+        C_AC = V('--ac', '#35d39a'), C_WARN = V('--warn', '#e0a33d');
+
+    x.fillStyle = C_BG; x.fillRect(0, 0, W, H);
     // 顶部渐变条
     var g = x.createLinearGradient(0, 0, W, 0);
     g.addColorStop(0, '#35d39a'); g.addColorStop(1, '#4aa3e0');
     x.fillStyle = g; x.fillRect(0, 0, W, 6);
 
     var P = 46, y = 62;
-    x.fillStyle = '#dde5ea'; x.font = '700 30px ' + SANS;
+    x.fillStyle = C_TX; x.font = '700 30px ' + SANS;
     x.fillText('大学上得值不值', P, y); y += 30;
-    x.fillStyle = '#61717c'; x.font = '400 14px ' + SANS;
+    x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS;
     x.fillText('大学生活性价比测评 · 本科 / 授课型硕士', P, y); y += 40;
 
     // 学校 / 专业
     var school = (state.schoolName || '').trim() || '（未填写学校）';
     var major = (state.majorName || '').trim();
-    x.fillStyle = '#dde5ea'; x.font = '600 22px ' + SANS;
+    x.fillStyle = C_TX; x.font = '600 22px ' + SANS;
     x.fillText(school.length > 22 ? school.slice(0, 22) + '…' : school, P, y); y += 26;
-    x.fillStyle = '#8fa1ad'; x.font = '400 15px ' + SANS;
+    x.fillStyle = C_DIM; x.font = '400 15px ' + SANS;
     var line2 = [major, r.country.label + ' · ' + r.region.label, r.loc.label]
       .filter(Boolean).join('  ·  ');
     x.fillText(line2.length > 40 ? line2.slice(0, 40) + '…' : line2, P, y); y += 34;
 
-    // 主分数卡
-    x.fillStyle = '#161d23'; roundRect(x, P, y, W - P * 2, 200, 14); x.fill();
-    x.strokeStyle = '#26333d'; x.lineWidth = 1; x.stroke();
+    /* 主分数卡：名号是第一视觉层级，分数退到第二。
+     * 缩略图里只看得清一个东西，而「1.42」对路人毫无意义 ——
+     * 不知道满分多少、是高是低；「标准大学生🙂」才是能被读懂和转发的。 */
+    x.fillStyle = C_CARD; roundRect(x, P, y, W - P * 2, 250, 14); x.fill();
+    x.strokeStyle = C_BD; x.lineWidth = 1; x.stroke();
     x.textAlign = 'center';
-    x.fillStyle = r.rating.color; x.font = '700 76px ' + MONO;
-    x.fillText((Math.round(r.score * 100) / 100).toFixed(2), W / 2, y + 88);
-    x.font = '600 24px ' + SANS;
-    x.fillText(r.rating.emoji + ' ' + r.rating.label, W / 2, y + 128);
-    x.fillStyle = '#61717c'; x.font = '400 13.5px ' + SANS;
-    x.fillText('1.00 = 当地正常水平', W / 2, y + 160);
+    x.fillStyle = r.rating.color; x.font = '700 52px ' + SANS;
+    x.fillText(r.rating.emoji + ' ' + (r.rating.title || r.rating.label), W / 2, y + 88);
+    x.font = '700 40px ' + MONO;
+    x.fillText((Math.round(r.score * 100) / 100).toFixed(2), W / 2, y + 152);
+    x.fillStyle = C_FAINT; x.font = '400 13.5px ' + SANS;
+    x.fillText('1.00 = 当地正常水平', W / 2, y + 182);
     // 刻度条
-    var bx = P + 40, bw = W - P * 2 - 80, by = y + 176;
+    var bx = P + 40, bw = W - P * 2 - 80, by = y + 210;
     var bg = x.createLinearGradient(bx, 0, bx + bw, 0);
     ['#e0413a', '#e8763a', '#d9a13a', '#4aa3e0', '#2f9e6e', '#7b4fd9', '#c9971f']
       .forEach(function (c, i, a) { bg.addColorStop(i / (a.length - 1), c); });
     x.fillStyle = bg; roundRect(x, bx, by, bw, 6, 3); x.fill();
     var mx = bx + Math.max(0, Math.min(1, r.score / 3)) * bw;
     x.fillStyle = '#fff'; roundRect(x, mx - 2, by - 5, 4, 16, 2); x.fill();
-    x.textAlign = 'left'; y += 232;
+    x.textAlign = 'left'; y += 286;
 
     // 五维
-    x.fillStyle = '#8fa1ad'; x.font = '600 14px ' + SANS;
+    x.fillStyle = C_DIM; x.font = '600 14px ' + SANS;
     x.fillText('五维评分（50 = 当地正常）', P, y); y += 16;
     D.RADAR_DIMS.forEach(function (d) {
       var v = Math.max(0, Math.min(100, r.radar[d.key]));
-      x.fillStyle = '#61717c'; x.font = '400 13px ' + SANS;
+      x.fillStyle = C_FAINT; x.font = '400 13px ' + SANS;
       x.fillText(d.label, P, y + 14);
-      x.fillStyle = '#1c252d'; roundRect(x, P + 46, y + 5, W - P * 2 - 100, 11, 5); x.fill();
-      x.fillStyle = v >= 50 ? '#35d39a' : '#e0a33d';
+      x.fillStyle = C_BD; roundRect(x, P + 46, y + 5, W - P * 2 - 100, 11, 5); x.fill();
+      x.fillStyle = v >= 50 ? C_AC : C_WARN;
       roundRect(x, P + 46, y + 5, (W - P * 2 - 100) * v / 100, 11, 5); x.fill();
-      x.fillStyle = '#8fa1ad'; x.font = '600 12px ' + MONO;
+      x.fillStyle = C_DIM; x.font = '600 12px ' + MONO;
       x.textAlign = 'right'; x.fillText(Math.round(v), W - P, y + 15); x.textAlign = 'left';
-      y += 26;
+      y += 31;
     });
-    y += 12;
+    y += 16;
 
     // 关键数字（可切换成星级，避免把具体收入晒出去）
     var cur = r.cur, facts;
@@ -333,47 +344,53 @@
     var fw = (W - P * 2 - 3 * 10) / 4;
     facts.slice(0, 4).forEach(function (ft, i) {
       var fx = P + i * (fw + 10);
-      x.fillStyle = '#161d23'; roundRect(x, fx, y, fw, 84, 10); x.fill();
-      x.strokeStyle = '#26333d'; x.stroke();
+      x.fillStyle = C_CARD; roundRect(x, fx, y, fw, 92, 10); x.fill();
+      x.strokeStyle = C_BD; x.stroke();
       x.textAlign = 'center';
-      x.fillStyle = '#61717c'; x.font = '400 11px ' + SANS;
+      x.fillStyle = C_FAINT; x.font = '400 11px ' + SANS;
       x.fillText(ft[0], fx + fw / 2, y + 19);
       var t = String(ft[1]);
       var isStar = t.indexOf('★') >= 0 || t.indexOf('☆') >= 0;
-      x.fillStyle = isStar ? '#e0a33d' : '#dde5ea';
+      x.fillStyle = isStar ? C_WARN : C_TX;
       x.font = isStar ? '400 15px ' + SANS : (t.length > 10 ? '600 13px ' : '600 16px ') + MONO;
       x.fillText(t, fx + fw / 2, y + 45);
-      x.fillStyle = '#8fa1ad'; x.font = '400 11.5px ' + SANS;
-      x.fillText(String(ft[2] || ''), fx + fw / 2, y + 68);
+      x.fillStyle = C_DIM; x.font = '400 11.5px ' + SANS;
+      x.fillText(String(ft[2] || ''), fx + fw / 2, y + 74);
       x.textAlign = 'left';
     });
-    y += 100;
+    y += 116;
 
-    // 二维码 + 说明
-    var qr = QR.make(SHARE_URL, { ecc: 'M' });
-    var qs = 4, qFull = (qr.size + 8) * qs;
-    x.fillStyle = '#161d23'; roundRect(x, P, y, W - P * 2, qFull + 28, 12); x.fill();
-    x.strokeStyle = '#26333d'; x.stroke();
-    QR.draw(x, qr, W - P - qFull - 14, y + 14, qs, '#0f1418', '#dde5ea');
-    x.fillStyle = '#dde5ea'; x.font = '600 19px ' + SANS;
-    x.fillText('扫码测测你的大学', P + 22, y + 52);
-    x.fillStyle = '#8fa1ad'; x.font = '400 13.5px ' + SANS;
-    x.fillText('yuhangwu.com/uni', P + 22, y + 80);
-    y += qFull + 42;
+    /* 最值得改善的一项 —— 这是最容易引发评论区讨论的内容，
+     * 之前只在网页上有、图上没有，等于把最好的话题点漏在了外面。 */
+    var top1 = M.diagnose(state, 1)[0];
+    if (top1) {
+      x.fillStyle = C_CARD; roundRect(x, P, y, W - P * 2, 62, 10); x.fill();
+      x.strokeStyle = C_BD; x.stroke();
+      x.textAlign = 'left';
+      x.fillStyle = C_FAINT; x.font = '400 11.5px ' + SANS;
+      x.fillText('最值得改善', P + 20, y + 23);
+      x.fillStyle = C_TX; x.font = '600 16px ' + SANS;
+      var tl = top1.label + (top1.target ? ' → ' + top1.target : '');
+      if (tl.length > 26) tl = tl.slice(0, 26) + '…';
+      x.fillText(tl, P + 20, y + 46);
+      x.fillStyle = C_AC; x.font = '600 15px ' + MONO;
+      x.textAlign = 'right';
+      x.fillText(M.fmt.pct(top1.pct), W - P - 20, y + 46);
+    }
 
-    /* 按实际内容裁剪 */
-    var finalH = y + 40;
-    var out = document.createElement('canvas');
-    out.width = W * dpr; out.height = finalH * dpr;
-    var o = out.getContext('2d');
-    o.fillStyle = '#0f1418'; o.fillRect(0, 0, W * dpr, finalH * dpr);
-    o.drawImage(cv, 0, 0, W * dpr, finalH * dpr, 0, 0, W * dpr, finalH * dpr);
-    o.scale(dpr, dpr);
-    o.fillStyle = '#3d4a54'; o.font = '400 11.5px ' + SANS;
-    o.textAlign = 'center';
-    o.fillText('主观权重模型 · 仅供参考', W / 2, finalH - 16);
+    /* 底部：不放二维码也不放域名。
+     * 小红书把二维码和明文网址列为违规导流载体（图片会被 OCR 扫），
+     * 命中就是笔记不收录甚至账号降权。改成品牌搜索词，
+     * 平台罚的是导流行为，不是提到一个名字。 */
+    x.textAlign = 'center';
+    x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
+    x.fillText('微信搜「校值」测你的大学', W / 2, H - 74);
+    x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
+    x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，六维打分', W / 2, H - 46);
+    x.fillStyle = C_FAINT; x.font = '400 11.5px ' + SANS;
+    x.fillText('主观权重模型 · 仅供参考', W / 2, H - 22);
 
-    return out;
+    return cv;
   }
   function roundRect(x, l, t, w, h, r) {
     x.beginPath();
