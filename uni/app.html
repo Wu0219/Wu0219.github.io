@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="t1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大学上得值不值 · 大学生活性价比计算器</title>
+<meta name="description" content="大学生活性价比计算器：住宿、地段、校园、专业前景、实习、花销与主观感受七组维度建模，境外按购买力平价折算。答案只存在本地浏览器。">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<script>
+/* 在首次绘制前就把主题定下来，避免闪一下默认皮肤 */
+(function(){
+  var m = location.search.match(/[?&]s=(\d)/);
+  var t = 't' + (m ? Math.min(9, Math.max(1, +m[1])) : (localStorage.getItem('uni-theme') || '1').replace('t',''));
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>大学上得值不值</h1><span class="tag" id="stageTag">本科 / 授课型硕士</span>
+      <span class="sub">答案只存在你自己的浏览器里 · 不上传任何填写内容</span>
+    </div>
+    <div class="btns">
+      <select id="themeSel" title="换个风格"></select>
+      <button id="btnShare" class="primary">生成分享图</button>
+      <button id="btnCopy">复制报告</button>
+      <button id="btnReset" class="ghost">重置</button>
+      <a href="index.html" style="align-self:center;font-size:12.5px">← 全部风格</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="layout">
+
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="note warn" style="margin:14px 16px">
+          <b>适用范围：本科生与授课型硕士。</b>
+          博士和研究型硕士不适用 —— 那类项目有津贴、有实验室作息，成本结构和生活形态完全不同，硬套会严重失真。
+        </div>
+        <div class="note">
+          得分 <b>1.00</b> = 在<b>当地</b>花这个钱，过上了这个价位应有的大学生活。
+          境外按购买力平价折算展示人民币。所有系数都写在 <code>assets/data.js</code> 里，不认同就改。
+        </div>
+      </div>
+      <div id="form"></div>
+    </div>
+
+    <div class="panel-right">
+      <div class="card">
+        <div class="score-box">
+          <div class="score-num" id="scoreNum">—</div>
+          <div class="score-rating" id="scoreRating"></div>
+          <div class="score-scale"><i id="scoreMark" style="left:0"></i></div>
+          <div class="score-scale-lbl"><span>0</span><span>1.00 = 当地正常</span><span>3.0+</span></div>
+          <div class="score-desc" id="scoreDesc"></div>
+        </div>
+
+        <div class="radar-wrap" id="radar"></div>
+        <div class="radar-legend" id="radarLegend"></div>
+        <div class="kv-grid" id="kv"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="cursor:default;border-bottom:1px solid var(--bd-soft)">
+          <div class="ico">!</div>
+          <div><h2>最值得改善的项</h2><div class="desc">只列你真能动的，专业和学校不在其中</div></div>
+        </div>
+        <div class="diag" id="diag"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div><b>怎么用：</b>先选国家和城市层级，再逐项改成你自己的情况。得分 1.00 = 在当地刚好对得起你花的钱。想提分，看右侧「最值得改善的项」。</div>
+    <div><b>如果主观感受那几项很低：</b>那不是一个需要优化的数字。长期情绪低落请优先联系学校的心理咨询中心，这个工具帮不上忙，也不该拿它当判断依据。</div>
+    <div><b>你的数据：</b>所有计算、二维码、分享图都在你的浏览器里完成，<b>你填的任何内容都不会离开这台设备</b>（存在浏览器 localStorage）。页面本身会加载一个 Cloudflare 的访问统计脚本，它只记录「有人打开了这个页面」，拿不到你填的东西。</div>
+    <div><b>免责：</b>这是一个主观权重模型，不是统计拟合。它回答「当下这段大学生活划不划算」，不回答「这个决定五年后值不值」。阈值按 24 个人群样本校准过一轮，仍属暂定。</div>
+  </footer>
+</div>
+
+<div id="toast"></div>
+<div id="shareMask">
+  <div id="shareBox">
+    <img id="shareImg" alt="分享图">
+    <div class="btns" style="justify-content:center">
+      <button id="btnDl" class="primary">下载图片</button>
+      <button id="btnCloseShare" class="ghost">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/analytics.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/model.js"></script>
+<script src="assets/qrcode.js"></script>
+<script src="assets/app.js"></script>
+<script>
+/* 主题切换器 */
+(function () {
+  var NAMES = ['深色终端','极简黑白','撞色便当','暖色柔和','玻璃极光','学术报告','俏皮糖果','赛博霓虹','杂志编辑'];
+  var sel = document.getElementById('themeSel');
+  NAMES.forEach(function (n, i) {
+    var o = document.createElement('option');
+    o.value = 't' + (i + 1); o.textContent = (i + 1) + ' · ' + n;
+    sel.appendChild(o);
+  });
+  sel.value = document.documentElement.getAttribute('data-theme');
+  sel.onchange = function () {
+    document.documentElement.setAttribute('data-theme', this.value);
+    try { localStorage.setItem('uni-theme', this.value); } catch (e) {}
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+/* ===========================================================================
+ * themes.css —— 9 套皮肤
+ * ---------------------------------------------------------------------------
+ * 全部做成 html[data-theme=".."] 下的变量覆盖，放在一个文件里：
+ * 结构和逻辑只有一份，切主题不用重新加载页面，改模型 9 个风格一起生效。
+ * =========================================================================== */
+
+/* ── 1 深色终端（默认，base.css 里已定义，这里只补充特征）──────────── */
+html[data-theme="t1"]{ }
+
+/* ── 2 极简黑白 · Swiss ─────────────────────────────────────────── */
+html[data-theme="t2"]{
+  --bg:#fff; --elev:#fff; --elev2:#f4f4f4; --input:#fff;
+  --bd:#111; --bd-soft:#e0e0e0;
+  --tx:#0a0a0a; --dim:#555; --faint:#8a8a8a;
+  --ac:#0a0a0a; --ac-soft:#f0f0f0;
+  --info:#0a0a0a; --purple:#0a0a0a;
+  --r:0px; --sh:none;
+}
+html[data-theme="t2"] .card{border-width:1px}
+html[data-theme="t2"] button{border-radius:0}
+html[data-theme="t2"] button.primary{background:#0a0a0a;color:#fff}
+html[data-theme="t2"] .score-num{font-weight:800;letter-spacing:-.05em}
+html[data-theme="t2"] .section-head .ico{border-radius:0;background:#0a0a0a;color:#fff}
+html[data-theme="t2"] .f input,html[data-theme="t2"] .f select{border-radius:0}
+
+/* ── 3 撞色便当 · Bento ─────────────────────────────────────────── */
+html[data-theme="t3"]{
+  --bg:#f2f0e9; --elev:#fffdf5; --elev2:#efece1; --input:#fff;
+  --bd:#111; --bd-soft:#d8d4c6;
+  --tx:#111; --dim:#444; --faint:#7a7568;
+  --ac:#2f5bff; --ac-soft:rgba(47,91,255,.10);
+  --warn:#ff6b4a; --info:#2f5bff; --purple:#7b4fd9;
+  --r:16px; --sh:5px 5px 0 #111;
+}
+html[data-theme="t3"] .card{border-width:2.5px}
+html[data-theme="t3"] button{border-width:2px;border-radius:100px;font-weight:700}
+html[data-theme="t3"] button.primary{background:#d8f24a;color:#111;border-color:#111}
+html[data-theme="t3"] .score-num{font-weight:800}
+html[data-theme="t3"] .section-head .ico{background:#d8f24a;color:#111;border:2px solid #111}
+html[data-theme="t3"] .sub-i,html[data-theme="t3"] .kv{background:#fffdf5}
+
+/* ── 4 暖色柔和 · Warm ──────────────────────────────────────────── */
+html[data-theme="t4"]{
+  --bg:#f9f4ee; --elev:#fffdfa; --elev2:#f3ebe1; --input:#fffdfa;
+  --bd:#ece2d5; --bd-soft:#f0e8dd;
+  --tx:#3a322b; --dim:#7d7168; --faint:#a89c91;
+  --ac:#c97b5a; --ac-soft:rgba(201,123,90,.10);
+  --warn:#c9a227; --info:#7f9b7f; --purple:#a08bbf;
+  --r:20px; --sh:0 8px 26px -20px rgba(140,100,70,.6);
+}
+html[data-theme="t4"] button{border-radius:100px}
+html[data-theme="t4"] .f input,html[data-theme="t4"] .f select{border-radius:12px}
+html[data-theme="t4"] .section-head .ico{border-radius:12px}
+
+/* ── 5 玻璃极光 · Aurora ────────────────────────────────────────── */
+html[data-theme="t5"]{
+  --bg:#080a12; --elev:rgba(255,255,255,.05); --elev2:rgba(255,255,255,.09);
+  --input:rgba(255,255,255,.05);
+  --bd:rgba(255,255,255,.14); --bd-soft:rgba(255,255,255,.08);
+  --tx:#eaeefc; --dim:#a3add0; --faint:#6f7899;
+  --ac:#7c8cff; --ac-soft:rgba(124,140,255,.14);
+  --info:#4ad2ff; --purple:#c98cff;
+  --r:16px; --sh:0 8px 32px rgba(0,0,0,.5);
+}
+html[data-theme="t5"] body{
+  background:
+    radial-gradient(50% 40% at 12% 0%,rgba(124,140,255,.22),transparent 68%),
+    radial-gradient(46% 38% at 88% 8%,rgba(74,210,255,.16),transparent 66%),
+    radial-gradient(40% 36% at 50% 100%,rgba(201,140,255,.14),transparent 70%),
+    #080a12;
+  background-attachment:fixed;
+}
+html[data-theme="t5"] .card,html[data-theme="t5"] .top{backdrop-filter:blur(18px)}
+html[data-theme="t5"] .top{background:rgba(8,10,18,.72)}
+
+/* ── 6 学术报告 · Paper ─────────────────────────────────────────── */
+html[data-theme="t6"]{
+  --bg:#fbfaf7; --elev:#fff; --elev2:#f2f0ea; --input:#fff;
+  --bd:#d8d3c7; --bd-soft:#e8e4da;
+  --tx:#1f1c17; --dim:#5d574c; --faint:#928b7d;
+  --ac:#1b3b6f; --ac-soft:rgba(27,59,111,.08);
+  --warn:#a3761d; --info:#1b3b6f; --purple:#5c4a7d;
+  --r:4px; --sh:0 1px 3px rgba(0,0,0,.06);
+  --sans:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;
+}
+html[data-theme="t6"] .brand h1{letter-spacing:.01em}
+html[data-theme="t6"] .section-head .ico{border-radius:2px}
+html[data-theme="t6"] .card{border-radius:4px}
+html[data-theme="t6"] .score-rating{font-style:italic}
+
+/* ── 7 俏皮糖果 · Candy ─────────────────────────────────────────── */
+html[data-theme="t7"]{
+  --bg:#fffbfd; --elev:#fff; --elev2:#fdf0f7; --input:#fff;
+  --bd:rgba(255,79,149,.18); --bd-soft:rgba(255,79,149,.10);
+  --tx:#2c2338; --dim:#6f6484; --faint:#a79dba;
+  --ac:#ff4f95; --ac-soft:rgba(255,79,149,.10);
+  --warn:#ffb020; --info:#3bb8ff; --purple:#7b5cff;
+  --r:22px; --sh:0 12px 30px -20px rgba(123,92,255,.7);
+}
+html[data-theme="t7"] body{
+  background:linear-gradient(160deg,#fff2f8 0%,#f2f6ff 50%,#f0fff8 100%);
+  background-attachment:fixed;
+}
+html[data-theme="t7"] button{border-radius:100px;font-weight:700}
+html[data-theme="t7"] button.primary{background:linear-gradient(96deg,#ff4f95,#7b5cff);color:#fff;border:0}
+html[data-theme="t7"] .section-head .ico{border-radius:50%;background:linear-gradient(140deg,#ff4f95,#7b5cff);color:#fff}
+html[data-theme="t7"] .f input,html[data-theme="t7"] .f select{border-radius:14px}
+
+/* ── 8 赛博霓虹 · Neon ──────────────────────────────────────────── */
+html[data-theme="t8"]{
+  --bg:#07070d; --elev:#0e0e18; --elev2:#15152280; --input:#0b0b14;
+  --bd:#2a2a4a; --bd-soft:#1c1c30;
+  --tx:#e6e6ff; --dim:#9a9ac4; --faint:#5f5f8a;
+  --ac:#00ffc8; --ac-soft:rgba(0,255,200,.10);
+  --warn:#ffd23f; --danger:#ff2e6b; --info:#00d4ff; --purple:#c04fff;
+  --r:6px; --sh:0 0 22px rgba(0,255,200,.10);
+  --sans:var(--mono);
+}
+html[data-theme="t8"] .brand h1{text-shadow:0 0 14px rgba(0,255,200,.55);letter-spacing:.02em}
+html[data-theme="t8"] .score-num{text-shadow:0 0 26px currentColor}
+html[data-theme="t8"] .card{border-color:#2a2a4a}
+html[data-theme="t8"] button.primary{background:#00ffc8;color:#04120e;box-shadow:0 0 18px rgba(0,255,200,.45)}
+html[data-theme="t8"] .section-head .ico{box-shadow:0 0 12px rgba(0,255,200,.35)}
+
+/* ── 9 杂志编辑 · Editorial ─────────────────────────────────────── */
+html[data-theme="t9"]{
+  --bg:#faf6ee; --elev:#fffdf8; --elev2:#f2ebdd; --input:#fffdf8;
+  --bd:#ddd2bf; --bd-soft:#eae1d0;
+  --tx:#241f1a; --dim:#5c5248; --faint:#9a8f80;
+  --ac:#a8842c; --ac-soft:rgba(168,132,44,.10);
+  --warn:#b5651d; --info:#4a6b8a; --purple:#7a5c8a;
+  --r:2px; --sh:none;
+  --sans:Georgia,"Times New Roman","Songti SC",serif;
+}
+html[data-theme="t9"] .top{border-bottom:3px double var(--bd)}
+html[data-theme="t9"] .brand h1{font-size:24px;letter-spacing:.04em;font-weight:400}
+html[data-theme="t9"] .card{border-radius:2px}
+html[data-theme="t9"] .section-head .ico{border-radius:0;background:var(--ac);color:#fffdf8}
+html[data-theme="t9"] .score-num{font-family:Georgia,serif;font-weight:400}
+html[data-theme="t9"] .score-rating{font-style:italic;font-weight:400}
