@@ -243,9 +243,19 @@
   }
 
   /* ---------------- 雷达五维（0~100，50 = 当地正常水平） ---------------- */
+  /* 线性 + clamp 会让维度分顶到 100（实测「前景」经常满分），满分意味着
+   * 「再好也没有余地」，既不真实也不好看。改成指数饱和：
+   * 中位仍然是 50，越好越趋近 100、越差越趋近 0，但两端都永远够不着。
+   * K=1.7 时，本模型定义的「最好情况」落在约 91 分，最差约 9 分。 */
+  var SAT_K = 1.7;
   function pivot(v, lo, mid, hi) {
-    if (v <= mid) return clamp((v - lo) / (mid - lo) * 50, 0, 50);
-    return clamp(50 + (v - mid) / (hi - mid) * 50, 50, 100);
+    if (!(hi > mid) || !(mid > lo)) return 50;
+    if (v <= mid) {
+      var u = Math.max((mid - v) / (mid - lo), 0);        // 0 = 中位，1 = 最差
+      return 50 * Math.exp(-SAT_K * u);
+    }
+    var t = Math.max((v - mid) / (hi - mid), 0);          // 0 = 中位，1 = 最好
+    return 100 - 50 * Math.exp(-SAT_K * t);
   }
   function radarScores(r) {
     // 成本是反向的：花得少 = 分高
@@ -359,6 +369,7 @@
     sensitivity: sensitivity,
     ratingOf: ratingOf,
     weightedFactor: weightedFactor,
+    pivot: pivot,
     ranges: { dorm: DORM_RANGE, campus: CAMPUS_RANGE, prospect: PROSPECT_RANGE },
     fmt: { money: money, pct: pct, pct0: pct0 },
     clamp: clamp, assign: assign

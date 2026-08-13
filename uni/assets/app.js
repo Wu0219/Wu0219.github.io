@@ -206,13 +206,17 @@
     n = Math.max(1, Math.min(5, Math.round(n)));
     return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
   }
-  function costStars(ratio) {          // 支出：越低越好
-    if (!isFinite(ratio) || ratio <= 0) return starBar(5);
-    return starBar(ratio < 0.55 ? 5 : ratio < 0.80 ? 4 : ratio < 1.15 ? 3 : ratio < 1.60 ? 2 : 1);
+  /* 星级统一从「0~100 饱和分」换算，和五维用同一把尺子。
+   * 饱和曲线的上界够不着 100（最好情况约 91），而满星要求 ≥92，
+   * 所以满星实际上拿不到 —— 分数只能无限趋近满分，不会真的封顶。 */
+  function starsFromScore(v) {
+    return starBar(v < 25 ? 1 : v < 45 ? 2 : v < 63 ? 3 : v < 82 ? 4 : 5);
   }
-  function incomeStars(ratio) {        // 收入：越高越好
-    if (!isFinite(ratio) || ratio <= 0) return '—';
-    return starBar(ratio < 0.20 ? 1 : ratio < 0.45 ? 2 : ratio < 0.80 ? 3 : ratio < 1.15 ? 4 : 5);
+  function costScore(ratio) {          // 支出：越低越好
+    return 100 - M.pivot(Math.max(ratio, 0.05), 0.30, 1.0, 2.20);
+  }
+  function incomeScore(ratio) {        // 收入：越高越好
+    return M.pivot(Math.max(ratio, 0), 0, 0.55, 1.30);
   }
 
   /* 星星统一表示「好不好」，描述词补上「实际是多还是少」。
@@ -307,10 +311,10 @@
     var incRatio = r.intern.has ? r.intern.grossIncome / base : 0;
     if (hideMoney) {
       facts = [
-        ['月支出',   costStars(r.grossMonthly / base), costWord(r.grossMonthly / base)],
-        ['净支出',   costStars(r.netMonthly / base),   costWord(r.netMonthly / base)],
-        ['实习收入', incomeStars(incRatio),            incomeWord(incRatio)],
-        ['住宿条件', starBar(r.radar.dorm / 20),       levelWord(r.radar.dorm)]
+        ['月支出',   starsFromScore(costScore(r.grossMonthly / base)), costWord(r.grossMonthly / base)],
+        ['净支出',   starsFromScore(costScore(r.netMonthly / base)),   costWord(r.netMonthly / base)],
+        ['实习收入', incRatio > 0 ? starsFromScore(incomeScore(incRatio)) : '—', incomeWord(incRatio)],
+        ['住宿条件', starsFromScore(r.radar.dorm),                     levelWord(r.radar.dorm)]
       ];
     } else {
       facts = [
