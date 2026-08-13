@@ -509,8 +509,8 @@
   /* ---------------- 详细图片报告 ----------------
    * 一张长图，内容等同于一份完整报告。做成图片而不是 PDF，
    * 是因为微信里长按就能存，而打印到 PDF 在手机上基本走不通。 */
-  function drawReport(withQR) {
-    var r = M.compute(state);
+  function drawReportFor(s, withQR) {
+    var r = M.compute(s);
     var f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
     var money = M.fmt.money, cur = r.cur;
     var W = 900, dpr = 2, P = 56;
@@ -577,9 +577,9 @@
       /* 抬头 */
       line('校值 · 大学生活性价比测评报告', 30, C_TX, true);
       y += 2;
-      line((state.schoolName || '未填写学校') + (state.majorName ? ' · ' + state.majorName : ''), 19, C_TX, true);
+      line((s.schoolName || '未填写学校') + (s.majorName ? ' · ' + s.majorName : ''), 19, C_TX, true);
       line(r.country.label + ' ' + r.region.label + ' · ' + r.loc.label + ' · ' +
-           (state.stage === 1 ? '授课型硕士' : '本科生'), 15, C_FAINT);
+           (s.stage === 1 ? '授课型硕士' : '本科生'), 15, C_FAINT);
 
       /* 总分 */
       y += 12;
@@ -661,7 +661,7 @@
                 ['学年净支出（10 个月）', cur + money(r.annualNet), 1],
                 ['支出 / 基准', f2(r.costRatio), 1]];
       rows(sp);
-      if (state.country !== 'CN') {
+      if (s.country !== 'CN') {
         wrap('按购买力平价折算，净支出相当于人民币 ¥' + money(r.pppNetMonthly) +
              ' / 月，当地基准相当于 ¥' + money(r.pppBaselineMonthly) + ' / 月。', 13, C_FAINT, W - P * 2);
       }
@@ -681,7 +681,7 @@
       /* 改善优先级 */
       var CN = ['', '一', '二', '三', '四', '五', '六', '七', '八'];
       h2(CN[idx] + '、改善优先级');
-      var dg = M.diagnose(state, 6);
+      var dg = M.diagnose(s, 6);
       if (dg.length) {
         dg.forEach(function (d, i) {
           x.fillStyle = C_AC; x.font = '700 15px ' + MONO; x.textAlign = 'left';
@@ -698,13 +698,13 @@
 
       /* 填写明细 */
       h2(CN[idx + 1] + '、填写明细');
-      D.buildSections(state.country).forEach(function (sec) {
+      D.buildSections(s.country).forEach(function (sec) {
         var fs = sec.fields.filter(function (f) { return f.type === 'select'; });
         if (!fs.length) return;
         x.fillStyle = C_AC; x.font = '600 15px ' + SANS; x.textAlign = 'left';
         x.fillText(sec.title, P, y + 15); y += 26;
         fs.forEach(function (f) {
-          var o = f.options[state[f.key]]; if (!o) return;
+          var o = f.options[s[f.key]]; if (!o) return;
           x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS;
           x.fillText(f.label, P + 14, y + 14);
           x.fillStyle = C_TX;
@@ -777,6 +777,219 @@
     return cv;
   }
 
+  /* 对比模式下把两份报告纵向拼成一张：各自完整渲染，再合成一张长图。
+   * 比另写一套双栏版式稳妥得多，而且两边的排版逻辑永远一致。 */
+  function drawReport(withQR) {
+    if (!compare || !slots.B) return drawReportFor(state, withQR);
+    slots[active] = state;
+    var W = 900, dpr = 2;
+    var head = drawCompareHead(slots.A, slots.B, W, dpr);
+    var cA = drawReportFor(slots.A, false);
+    var cB = drawReportFor(slots.B, withQR);
+    var out = document.createElement('canvas');
+    out.width = W * dpr;
+    out.height = head.height + cA.height + cB.height;
+    var o = out.getContext('2d');
+    var cs2 = getComputedStyle(document.documentElement);
+    o.fillStyle = (cs2.getPropertyValue('--bg') || '#fbfaf7').trim() || '#fbfaf7';
+    o.fillRect(0, 0, out.width, out.height);
+    var yy = 0;
+    [head, cA, cB].forEach(function (c) { o.drawImage(c, 0, yy); yy += c.height; });
+    return out;
+  }
+
+  /* 拼接头：两份并排的总览，放在两份完整报告之前 */
+  function drawCompareHead(sA, sB, W, dpr) {
+    var rA = M.compute(sA), rB = M.compute(sB);
+    var f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
+    var H = 300, P = 56;
+    var SANS = '"Microsoft YaHei","PingFang SC",-apple-system,sans-serif';
+    var MONO = 'Consolas,"SF Mono",monospace';
+    var cs2 = getComputedStyle(document.documentElement);
+    function V(k, d) { return (cs2.getPropertyValue(k) || d).trim() || d; }
+    var C_BG = V('--bg', '#fbfaf7'), C_CARD = V('--elev', '#fff'), C_BD = V('--bd', '#d8d3c7'),
+        C_TX = V('--tx', '#1f1c17'), C_DIM = V('--dim', '#5d574c'), C_FAINT = V('--faint', '#928b7d'),
+        C_AC = V('--ac', '#1b3b6f'), C_WARN = V('--warn', '#a3761d');
+    var cv = document.createElement('canvas');
+    cv.width = W * dpr; cv.height = H * dpr;
+    var x = cv.getContext('2d'); x.scale(dpr, dpr);
+    x.fillStyle = C_BG; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, C_AC); g.addColorStop(1, C_WARN);
+    x.fillStyle = g; x.fillRect(0, 0, W, 6);
+
+    x.textAlign = 'left';
+    x.fillStyle = C_TX; x.font = '700 30px ' + SANS;
+    x.fillText('校值 · 对比报告', P, 62);
+    x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS;
+    x.fillText('两份填写的逐项对照，下方是各自的完整报告', P, 88);
+
+    var cw = (W - P * 2 - 16) / 2;
+    [[sA, rA, 'A'], [sB, rB, 'B']].forEach(function (p, i) {
+      var fx = P + i * (cw + 16);
+      var mine = p[1].score, theirs = (i === 0 ? rB.score : rA.score);
+      var win = mine > theirs;
+      x.fillStyle = C_CARD; roundRect(x, fx, 108, cw, 108, 12); x.fill();
+      x.strokeStyle = win ? p[1].rating.color : C_BD;
+      x.lineWidth = win ? 2 : 1; x.stroke(); x.lineWidth = 1;
+      x.textAlign = 'left';
+      x.fillStyle = C_FAINT; x.font = '400 12px ' + SANS;
+      x.fillText(p[2] + (win ? '   更值' : ''), fx + 18, 132);
+      x.fillStyle = C_TX; x.font = '600 17px ' + SANS;
+      var nm2 = (p[0].schoolName || '').trim() || (p[2] === 'A' ? '第一份' : '第二份');
+      if (nm2.length > 12) nm2 = nm2.slice(0, 12) + '…';
+      x.fillText(nm2, fx + 18, 158);
+      x.fillStyle = p[1].rating.color; x.font = '700 34px ' + MONO;
+      x.fillText(f2(p[1].score), fx + 18, 198);
+      x.font = '600 15px ' + SANS; x.textAlign = 'right';
+      x.fillText(p[1].rating.emoji + ' ' + p[1].rating.title, fx + cw - 18, 198);
+      x.textAlign = 'left';
+    });
+
+    x.fillStyle = C_FAINT; x.font = '400 13px ' + SANS;
+    x.fillText(D.RADAR_DIMS.map(function (d) {
+      var va = rA.radar[d.key], vb = rB.radar[d.key], gp = Math.round(Math.abs(va - vb));
+      return gp < 8 ? d.label + ' 持平' : d.label + (va > vb ? ' A+' : ' B+') + gp;
+    }).join('   ·   '), P, 244);
+    x.fillStyle = C_DIM; x.font = '500 14px ' + SANS;
+    var dd = Math.abs(rA.score - rB.score);
+    x.fillText((rA.score >= rB.score ? 'A' : 'B') + ' 综合高出 ' + f2(dd) + ' 分' +
+               (dd < 0.12 ? '（基本打平）' : ''), P, 270);
+    return cv;
+  }
+
+  /* 对比分享图：3:4，两份并排 + 叠加雷达 + 逐维对照。
+   * 这张才是真正能发出去的 ——「我 1.42 室友 0.98」比单人分数更有传播动作。 */
+  function drawCompareShare(withQR) {
+    slots[active] = state;
+    var rA = M.compute(slots.A), rB = M.compute(slots.B);
+    var f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
+    var W = 780, H = 1040, dpr = 2, P = 46;
+    var SANS = '"Microsoft YaHei","PingFang SC",-apple-system,sans-serif';
+    var MONO = 'Consolas,"SF Mono",monospace';
+    var cs2 = getComputedStyle(document.documentElement);
+    function V(k, d) { return (cs2.getPropertyValue(k) || d).trim() || d; }
+    var C_BG = V('--bg', '#0f1418'), C_CARD = V('--elev', '#161d23'), C_BD = V('--bd', '#26333d'),
+        C_TX = V('--tx', '#dde5ea'), C_DIM = V('--dim', '#8fa1ad'), C_FAINT = V('--faint', '#61717c'),
+        C_AC = V('--ac', '#35d39a'), C_WARN = V('--warn', '#e0a33d');
+
+    var cv = document.createElement('canvas');
+    cv.width = W * dpr; cv.height = H * dpr;
+    var x = cv.getContext('2d'); x.scale(dpr, dpr);
+    x.fillStyle = C_BG; x.fillRect(0, 0, W, H);
+    var g = x.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, C_AC); g.addColorStop(1, C_WARN);
+    x.fillStyle = g; x.fillRect(0, 0, W, 6);
+
+    x.textAlign = 'left';
+    x.fillStyle = C_TX; x.font = '700 30px ' + SANS;
+    x.fillText('这两所，哪个更值？', P, 66);
+    x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS;
+    x.fillText('大学生活性价比对比 · 五维评分', P, 92);
+
+    function nm(s, dflt) {
+      var t = (s.schoolName || '').trim() || dflt;
+      return t.length > 11 ? t.slice(0, 11) + '…' : t;
+    }
+    var win = rA.score >= rB.score ? 0 : 1, tie = Math.abs(rA.score - rB.score) < 0.12;
+    var cw = (W - P * 2 - 16) / 2, cy0 = 116;
+    [[slots.A, rA, '第一份'], [slots.B, rB, '第二份']].forEach(function (p, i) {
+      var fx = P + i * (cw + 16);
+      x.fillStyle = C_CARD; roundRect(x, fx, cy0, cw, 176, 14); x.fill();
+      x.strokeStyle = (!tie && i === win) ? p[1].rating.color : C_BD;
+      x.lineWidth = (!tie && i === win) ? 2.5 : 1; x.stroke(); x.lineWidth = 1;
+      x.textAlign = 'center';
+      x.fillStyle = C_TX; x.font = '600 19px ' + SANS;
+      x.fillText(nm(p[0], p[2]), fx + cw / 2, cy0 + 40);
+      x.fillStyle = p[1].rating.color; x.font = '700 54px ' + MONO;
+      x.fillText(f2(p[1].score), fx + cw / 2, cy0 + 106);
+      x.font = '600 20px ' + SANS;
+      x.fillText(p[1].rating.emoji + ' ' + p[1].rating.title, fx + cw / 2, cy0 + 142);
+      if (!tie && i === win) {
+        x.fillStyle = p[1].rating.color; x.font = '600 13px ' + SANS;
+        x.fillText('更 值', fx + cw / 2, cy0 + 166);
+      }
+      x.textAlign = 'left';
+    });
+
+    var dims = D.RADAR_DIMS, n = dims.length, cx = W / 2, cyR = 458, R = 112;
+    for (var ring = 1; ring <= 4; ring++) {
+      x.beginPath();
+      for (var i2 = 0; i2 < n; i2++) {
+        var a2 = -Math.PI / 2 + i2 * 2 * Math.PI / n;
+        var px = cx + Math.cos(a2) * R * ring / 4, py = cyR + Math.sin(a2) * R * ring / 4;
+        i2 ? x.lineTo(px, py) : x.moveTo(px, py);
+      }
+      x.closePath(); x.strokeStyle = C_BD; x.stroke();
+    }
+    [[rA, C_AC, 1], [rB, C_WARN, 0]].forEach(function (q) {
+      x.beginPath();
+      for (var k = 0; k < n; k++) {
+        var an = -Math.PI / 2 + k * 2 * Math.PI / n;
+        var vv = Math.max(0, Math.min(100, q[0].radar[dims[k].key])) / 100;
+        var qx = cx + Math.cos(an) * R * vv, qy = cyR + Math.sin(an) * R * vv;
+        k ? x.lineTo(qx, qy) : x.moveTo(qx, qy);
+      }
+      x.closePath();
+      if (q[2]) { x.globalAlpha = .2; x.fillStyle = q[1]; x.fill(); x.globalAlpha = 1; }
+      x.strokeStyle = q[1]; x.lineWidth = 2.2;
+      if (!q[2]) x.setLineDash([6, 4]);
+      x.stroke(); x.setLineDash([]);
+    });
+    x.lineWidth = 1;
+    x.fillStyle = C_DIM; x.font = '500 14px ' + SANS; x.textAlign = 'center';
+    for (i2 = 0; i2 < n; i2++) {
+      a2 = -Math.PI / 2 + i2 * 2 * Math.PI / n;
+      x.fillText(dims[i2].label, cx + Math.cos(a2) * (R + 26), cyR + Math.sin(a2) * (R + 26) + 5);
+    }
+
+    var ly = cyR + R + 52;
+    [[C_AC, nm(slots.A, '第一份'), 1], [C_WARN, nm(slots.B, '第二份'), 0]].forEach(function (q, i3) {
+      var lx = cx + (i3 ? 24 : -180);
+      x.strokeStyle = q[0]; x.lineWidth = 3;
+      if (!q[2]) x.setLineDash([6, 4]);
+      x.beginPath(); x.moveTo(lx, ly - 5); x.lineTo(lx + 26, ly - 5); x.stroke(); x.setLineDash([]);
+      x.fillStyle = C_DIM; x.font = '400 14px ' + SANS; x.textAlign = 'left';
+      x.fillText(q[1], lx + 34, ly);
+    });
+    x.lineWidth = 1;
+
+    var by = ly + 28;
+    dims.forEach(function (d) {
+      var va = rA.radar[d.key], vb = rB.radar[d.key];
+      x.fillStyle = C_FAINT; x.font = '400 13.5px ' + SANS; x.textAlign = 'left';
+      x.fillText(d.label, P, by + 12);
+      var bx = P + 54, bw = W - P * 2 - 136;
+      x.fillStyle = C_BD; roundRect(x, bx, by, bw, 8, 4); x.fill();
+      x.fillStyle = C_AC; roundRect(x, bx, by, Math.max(bw * va / 100, 3), 8, 4); x.fill();
+      x.fillStyle = C_BD; roundRect(x, bx, by + 12, bw, 8, 4); x.fill();
+      x.fillStyle = C_WARN; roundRect(x, bx, by + 12, Math.max(bw * vb / 100, 3), 8, 4); x.fill();
+      x.fillStyle = C_DIM; x.font = '600 12.5px ' + MONO; x.textAlign = 'right';
+      x.fillText(Math.round(va) + ' / ' + Math.round(vb), W - P, by + 16);
+      x.textAlign = 'left';
+      by += 32;
+    });
+
+    if (withQR) {
+      var qr = QR.make(SHARE_URL, { ecc: 'H' });
+      var qs = Math.max(3, Math.floor(140 / (qr.size + 8))), qF = (qr.size + 8) * qs;
+      var qx2 = W - P - qF, qy2 = H - 30 - qF;
+      x.fillStyle = '#fff'; roundRect(x, qx2 - 6, qy2 - 6, qF + 12, qF + 12, 6); x.fill();
+      QR.draw(x, qr, qx2, qy2, qs, '#000', 'none');
+      x.fillStyle = C_TX; x.font = '700 24px ' + SANS; x.textAlign = 'left';
+      x.fillText('扫码测测你的大学', P, H - 78);
+      x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
+      x.fillText('也可以两所一起对比', P, H - 50);
+    } else {
+      x.textAlign = 'center';
+      x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
+      x.fillText('微信搜「校值」测你的大学', W / 2, H - 62);
+      x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
+      x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，还能两所对比', W / 2, H - 34);
+    }
+    return cv;
+  }
+
   function renderShare() {
     var hide = $('hideMoney').checked, qr = $('withQR').checked;
     try {
@@ -784,7 +997,10 @@
       localStorage.setItem('uni-with-qr', qr ? '1' : '0');
     } catch (e) {}
     var url;
-    try { url = drawShare(hide, qr).toDataURL('image/png'); }
+    try {
+      url = (compare && slots.B ? drawCompareShare(qr) : drawShare(hide, qr))
+              .toDataURL('image/png');
+    }
     catch (e) { toast('生成失败：' + e.message); return null; }
     $('shareImg').src = url;
     return url;
