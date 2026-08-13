@@ -198,7 +198,14 @@
   }
 
   /* ---------------- 分享图 ---------------- */
-  function drawShare() {
+  /* 金额 → 星级。以当地同类学生水平为 3 星，别人只看得出高低，看不出具体数目。 */
+  function stars(ratio) {
+    var n = !isFinite(ratio) || ratio <= 0 ? 1
+          : ratio < 0.60 ? 1 : ratio < 0.85 ? 2 : ratio < 1.15 ? 3 : ratio < 1.60 ? 4 : 5;
+    return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+  }
+
+  function drawShare(hideMoney) {
     var r = refresh._r;
     // 先画在一张足够高的画布上，画完按实际内容裁掉多余部分 ——
     // 内容高度会随「有没有实习」变化，写死高度就会留一大块空白。
@@ -267,15 +274,25 @@
     });
     y += 12;
 
-    // 关键数字
-    var cur = r.cur;
-    var facts = [
-      ['月支出', cur + M.fmt.money(r.grossMonthly)],
-      ['当地基准', cur + M.fmt.money(r.baselineMonthly)]
-    ];
-    if (r.intern.has) facts.push(['实习月入', cur + M.fmt.money(r.intern.grossIncome)]);
-    else facts.push(['实习', '暂无']);
-    facts.push(['净支出', cur + M.fmt.money(r.netMonthly)]);
+    // 关键数字（可切换成星级，避免把具体收入晒出去）
+    var cur = r.cur, facts;
+    if (hideMoney) {
+      var base = r.baselineMonthly || 1;
+      facts = [
+        ['月支出', stars(r.grossMonthly / base)],
+        ['当地水平', '★★★☆☆'],
+        r.intern.has ? ['实习收入', stars(r.intern.grossIncome / base)] : ['实习', '暂无'],
+        ['净支出', stars(r.netMonthly / base)]
+      ];
+    } else {
+      facts = [
+        ['月支出', cur + M.fmt.money(r.grossMonthly)],
+        ['当地基准', cur + M.fmt.money(r.baselineMonthly)]
+      ];
+      if (r.intern.has) facts.push(['实习月入', cur + M.fmt.money(r.intern.grossIncome)]);
+      else facts.push(['实习', '暂无']);
+      facts.push(['净支出', cur + M.fmt.money(r.netMonthly)]);
+    }
     var fw = (W - P * 2 - 3 * 10) / 4;
     facts.slice(0, 4).forEach(function (ft, i) {
       var fx = P + i * (fw + 10);
@@ -284,12 +301,21 @@
       x.textAlign = 'center';
       x.fillStyle = '#61717c'; x.font = '400 11px ' + SANS;
       x.fillText(ft[0], fx + fw / 2, y + 20);
-      x.fillStyle = '#dde5ea'; x.font = '600 16px ' + MONO;
-      var t = String(ft[1]); if (t.length > 10) x.font = '600 13px ' + MONO;
+      var t = String(ft[1]);
+      var isStar = t.indexOf('★') >= 0 || t.indexOf('☆') >= 0;
+      x.fillStyle = isStar ? '#e0a33d' : '#dde5ea';
+      x.font = isStar ? '400 15px ' + SANS : (t.length > 10 ? '600 13px ' : '600 16px ') + MONO;
       x.fillText(t, fx + fw / 2, y + 44);
       x.textAlign = 'left';
     });
     y += 84;
+
+    if (hideMoney) {
+      x.fillStyle = '#61717c'; x.font = '400 11.5px ' + SANS;
+      x.textAlign = 'center';
+      x.fillText('★ 相对当地同类学生水平，三星 = 持平（已隐藏具体金额）', W / 2, y - 8);
+      x.textAlign = 'left'; y += 8;
+    }
 
     // 二维码 + 说明
     var qr = QR.make(SHARE_URL, { ecc: 'M' });
@@ -349,21 +375,32 @@
   }
 
   /* ---------------- 事件 ---------------- */
-  $('btnShare').onclick = function () {
+  function renderShare() {
+    var hide = $('hideMoney').checked;
+    try { localStorage.setItem('uni-hide-money', hide ? '1' : '0'); } catch (e) {}
     var url;
-    try { url = drawShare().toDataURL('image/png'); }
-    catch (e) { toast('生成失败：' + e.message); return; }
-
+    try { url = drawShare(hide).toDataURL('image/png'); }
+    catch (e) { toast('生成失败：' + e.message); return null; }
     $('shareImg').src = url;
-    $('shareMask').classList.add('on');
+    return url;
+  }
 
-    /* 微信内置浏览器会屏蔽 <a download>，那边靠长按图片保存（弹窗里已有提示）；
-     * 其他浏览器这个按钮正常工作，所以一律保留。 */
+  try { $('hideMoney').checked = localStorage.getItem('uni-hide-money') === '1'; } catch (e) {}
+  $('hideMoney').onchange = function () { var u = renderShare(); if (u) bindDownload(u); };
+
+  function bindDownload(url) {
     $('btnDl').onclick = function () {
       var a = document.createElement('a');
       a.download = '大学性价比-' + ((state.schoolName || '测评').slice(0, 12)) + '.png';
       a.href = url; a.click();
     };
+  }
+
+  $('btnShare').onclick = function () {
+    var url = renderShare();
+    if (!url) return;
+    bindDownload(url);
+    $('shareMask').classList.add('on');
   };
   $('btnCloseShare').onclick = function () { $('shareMask').classList.remove('on'); };
   $('shareMask').onclick = function (e) { if (e.target === this) this.classList.remove('on'); };
