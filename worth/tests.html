@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>标定测试 · 程序员版工作性价比模型</title>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<style>
+  .wrap { max-width: 1100px; }
+  .t-row { display:grid; grid-template-columns: 62px 76px 96px 1fr; gap:10px; align-items:baseline;
+           padding:10px 14px; border-top:1px solid var(--border-soft); }
+  .t-row:first-child { border-top:0; }
+  .t-ok  { color: var(--accent); font-family: var(--mono); font-weight:700; font-size:12px; }
+  .t-no  { color: var(--danger); font-family: var(--mono); font-weight:700; font-size:12px; }
+  .t-sc  { font-family: var(--mono); font-size:16px; font-weight:700; }
+  .t-ex  { font-family: var(--mono); font-size:11px; color: var(--text-faint); }
+  .t-nm  { font-size:13px; }
+  .t-note{ grid-column: 2 / -1; font-size:11.5px; color: var(--text-faint); margin-top:2px; }
+  .t-det { grid-column: 2 / -1; font-family: var(--mono); font-size:11px; color: var(--text-dim);
+           margin-top:4px; background: var(--bg-elev2); padding:6px 9px; border-radius:6px; overflow-x:auto; }
+  .summary { font-size:22px; font-weight:700; font-family: var(--mono); padding:16px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>标定测试</h1><span class="tag">model.js</span>
+      <span class="sub">改完系数就跑一遍，看刻度有没有调歪</span>
+    </div>
+    <div class="btns">
+      <a class="btn" href="index.html">← 回到计算器</a>
+      <button id="btnTheme" class="ghost">◑</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <div class="summary" id="summary">运行中…</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="section-head" style="cursor:default;border-bottom:1px solid var(--border-soft)">
+      <div class="ico">◎</div>
+      <div><h2>标定用例</h2>
+      <div class="desc">把真实市场上可识别的几种典型处境代进模型，检查分数是否落在符合直觉的区间</div></div>
+    </div>
+    <div id="cases"></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="section-head" style="cursor:default;border-bottom:1px solid var(--border-soft)">
+      <div class="ico">%</div>
+      <div><h2>税后口径校验</h2>
+      <div class="desc">把模型算出的 neto 和西班牙公开工资计算器的结果对一遍</div></div>
+    </div>
+    <div id="nets"></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="section-head" style="cursor:default;border-bottom:1px solid var(--border-soft)">
+      <div class="ico">≡</div>
+      <div><h2>不变量</h2><div class="desc">无论输入怎么变，这些性质必须永远成立（含求解器与跨国对照）</div></div>
+    </div>
+    <div id="invs"></div>
+  </div>
+
+  <footer class="foot">
+    命令行同样可跑：<code>node assets/tests.js</code>（退出码非 0 表示有用例未通过）
+  </footer>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/model.js"></script>
+<script src="assets/tests.js"></script>
+<script>
+(function () {
+  var th = localStorage.getItem('pjc.theme');
+  if (th) document.documentElement.setAttribute('data-theme', th);
+  document.getElementById('btnTheme').onclick = function () {
+    var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', cur);
+    localStorage.setItem('pjc.theme', cur);
+  };
+
+  var res = PJC_TESTS.run();
+  var f = PJC_MODEL.fmt;
+
+  document.getElementById('summary').innerHTML =
+    '<span style="color:var(--accent)">' + res.pass + ' 通过</span>' +
+    '<span style="color:var(--text-faint)"> / </span>' +
+    '<span style="color:' + (res.fail ? 'var(--danger)' : 'var(--text-faint)') + '">' + res.fail + ' 失败</span>';
+
+  document.getElementById('cases').innerHTML = res.cases.map(function (c) {
+    var d = c.detail;
+    return '<div class="t-row">' +
+      '<div class="' + (c.ok ? 't-ok' : 't-no') + '">' + (c.ok ? 'PASS' : 'FAIL') + '</div>' +
+      '<div class="t-sc" style="color:' + (c.ok ? 'var(--accent)' : 'var(--danger)') + '">' + c.score.toFixed(3) + '</div>' +
+      '<div class="t-ex">期望 ' + c.expect[0] + '~' + c.expect[1] + '</div>' +
+      '<div class="t-nm">' + c.flag + ' ' + c.name + ' <span style="color:var(--text-faint)">→ ' + c.rating + '</span></div>' +
+      '<div class="t-note">' + c.note + '</div>' +
+      '<div class="t-det">TC=' + d.cur + f.money(d.tc) + '　工作日=' + d.workDays.toFixed(1) +
+        '　日薪=' + d.cur + f.money(d.dailySalary) + '　有效工时=' + d.effHours.toFixed(2) + 'h' +
+        '　名义时薪=' + d.cur + f.money(d.rawHourly) +
+        '　PPP实感时薪=¥' + f.money(d.pppAdj) +
+        '　│　env=' + d.env.toFixed(3) + '　growth=' + d.growth.toFixed(3) +
+        '　expect=' + d.expect.toFixed(3) + '　risk=' + d.risk.toFixed(3) + '</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('nets').innerHTML = res.nets.map(function (n) {
+    return '<div class="t-row" style="grid-template-columns:62px 1fr">' +
+      '<div class="' + (n.ok ? 't-ok' : 't-no') + '">' + (n.ok ? 'PASS' : 'FAIL') + '</div>' +
+      '<div class="t-nm">' + n.label + ' <b class="mono">' + f.money(n.net) + '</b>' +
+        ' <span style="color:var(--text-faint)">（月 ' + f.money(n.monthly) + '，期望区间 ' +
+        n.expect[0] + '~' + n.expect[1] + '）</span></div>' +
+      '<div class="t-det" style="grid-column:2/-1">社保 ' + f.money(n.ss) + '　所得税 ' + f.money(n.tax) +
+        '　有效税负 ' + (n.rate * 100).toFixed(1) + '%</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('invs').innerHTML = res.invariants.map(function (i) {
+    return '<div class="t-row" style="grid-template-columns:62px 1fr">' +
+      '<div class="' + (i.ok ? 't-ok' : 't-no') + '">' + (i.ok ? 'PASS' : 'FAIL') + '</div>' +
+      '<div class="t-nm">' + i.name + (i.err ? ' <span style="color:var(--danger)">（' + i.err + '）</span>' : '') + '</div>' +
+      '</div>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

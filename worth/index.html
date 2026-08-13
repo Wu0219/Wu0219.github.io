@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>这班上得值不值 · 程序员版</title>
+<meta name="description" content="面向程序员的工作性价比计算器：总包拆解、有效工时、技术成长、团队环境、风险五维建模，本地运行不上传任何数据。">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>这班上得值不值</h1>
+      <span class="tag">程序员 · 国际版</span>
+      <span class="country-bar" id="countryBar"></span>
+      <span class="sub">全部在本地计算 · 不联网 · 不上传</span>
+    </div>
+    <div class="btns">
+      <button id="btnDual" class="primary">存入中西对照</button>
+      <button id="btnSaveOffer">存为 Offer</button>
+      <button id="btnCopy">复制报告</button>
+      <button id="btnShare">分享链接</button>
+      <button id="btnJson">导出 JSON</button>
+      <button id="btnImport">导入</button>
+      <button id="btnPrint">打印 / PDF</button>
+      <button id="btnReset" class="ghost">重置</button>
+      <button id="btnTheme" class="ghost">◑</button>
+      <input type="file" id="fileImport" accept="application/json" style="display:none">
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="layout">
+
+    <!-- ================= 左：输入 ================= -->
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="presets" id="presets"></div>
+        <div style="padding:12px 16px">
+          <div class="note info" style="margin:0">
+            这是 <a href="https://github.com/zippland/worth-calculator" target="_blank" rel="noopener">zippland/worth-calculator</a>
+            的<b>程序员国际版</b>。中国与西班牙各有独立的税制、社保、假期、薪资曲线与年龄风险模型；
+            总包按结构拆开算（股票要打折），可切税后口径，并新增了<b>技术成长</b>与<b>风险</b>两个维度。
+            想比较两国的 offer，用顶部的「存入中西对照」，去 <b>🌍 中西对照</b> 标签页看等效薪资。
+            所有系数都在 <code>assets/data.js</code>，不认同就改。
+          </div>
+        </div>
+      </div>
+      <div id="form"></div>
+    </div>
+
+    <!-- ================= 右：结果 ================= -->
+    <div class="panel-right">
+      <div class="card">
+        <div class="score-box">
+          <div class="score-country" id="scoreCountry"></div>
+          <div class="score-num mono" id="scoreNum">—</div>
+          <div class="score-rating" id="scoreRating"></div>
+          <div class="score-scale" id="scoreScale"></div>
+          <div class="score-scale-lbl"><span>0</span><span>1.00 = 行业中位</span><span>2.4+</span></div>
+          <div class="score-desc" id="scoreDesc"></div>
+
+          <div class="hourly-cmp">
+            <div>
+              <div class="h-val mono" id="adjHourly">—</div>
+              <div class="h-lbl">你的实感时薪<br>（已折算环境与成长）</div>
+            </div>
+            <div class="vs">vs</div>
+            <div>
+              <div class="h-val mono" id="deservedHourly">—</div>
+              <div class="h-lbl">市场应给的时薪<br>（按你的学历年限风险）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="radar-wrap" id="radar"></div>
+        <div class="radar-legend" id="radarLegend"></div>
+
+        <div class="kv-grid" id="kv"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="cursor:default;border-bottom:1px solid var(--border-soft)">
+          <div class="ico">Σ</div>
+          <div><h2>公式拆解</h2><div class="desc">每一个数字是怎么来的</div></div>
+        </div>
+        <div class="formula" id="formula"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="cursor:default;border-bottom:1px solid var(--border-soft)">
+          <div class="ico">!</div>
+          <div><h2>最值得改善的项</h2><div class="desc">把每一项分别拨好一档，看得分能涨多少</div></div>
+        </div>
+        <div class="diag" id="diag"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 下：分析与说明 ================= -->
+  <div class="card" style="margin-top:22px">
+    <div class="tabs">
+      <div class="tab on" data-tab="dual">🌍 中西对照 · 等效薪资</div>
+      <div class="tab" data-tab="sens">敏感度分析</div>
+      <div class="tab" data-tab="offers">Offer 横向对比</div>
+      <div class="tab" data-tab="about">模型说明与系数表</div>
+    </div>
+    <div class="tab-body on" id="dual"></div>
+    <div class="tab-body" id="sens"></div>
+    <div class="tab-body" id="offers"></div>
+    <div class="tab-body" id="about"></div>
+  </div>
+
+  <footer class="foot">
+    <div><b>怎么用：</b>先在顶部选国家，点预设快速填一份，再逐项改成你自己的情况。得分 1.00 = 在<b>所在国</b>刚好对得起你的年限与付出；想提分，先看右侧「最值得改善的项」。</div>
+    <div><b>比较中西 offer：</b>分别在两个国家各填一份，每填完一份点顶部「存入中西对照」，然后去 <b>🌍 中西对照</b> 标签页 —— 那里会算出「另一边要拿多少钱才追得平」，并把差额拆成薪资 / 工时 / 环境 / 成长 / 风险 / 期望六项。两边都建议打开「按税后口径计算」。</div>
+    <div><b>数据去哪了：</b>哪也没去。全部计算和存储都在你的浏览器里（localStorage），这个页面不发任何网络请求。</div>
+    <div><b>免责：</b>这是一个主观权重模型，不是统计拟合。它回答「当下这一年划不划算」，不回答「五年后值不值」。别拿它做人生决策，拿它做体检。</div>
+    <div style="margin-top:8px">
+      源码与完整模型文档 <a href="https://github.com/Wu0219/worth-calculator" target="_blank" rel="noopener">Wu0219/worth-calculator</a> ·
+      原版 <a href="https://github.com/zippland/worth-calculator" target="_blank" rel="noopener">zippland/worth-calculator</a> ·
+      系数表见 <code>assets/data.js</code> · 标定测试 <a href="tests.html">tests.html</a>
+    </div>
+  </footer>
+</div>
+
+<div id="toast" style="position:fixed;left:50%;bottom:32px;transform:translateX(-50%);
+     background:var(--bg-elev2);border:1px solid var(--border);color:var(--text);
+     padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.25s;
+     pointer-events:none;z-index:99;box-shadow:var(--shadow)"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/model.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
