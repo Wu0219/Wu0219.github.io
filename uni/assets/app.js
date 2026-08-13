@@ -384,7 +384,7 @@
      * 勾选「附上二维码」后才画，适合私下发给朋友或买家的场合。 */
     if (withQR) {
       var qr = QR.make(SHARE_URL, { ecc: 'H' });
-      var qs = Math.floor(104 / (qr.size + 8)), qFull = (qr.size + 8) * qs;
+      var qs = Math.max(3, Math.floor(140 / (qr.size + 8))), qFull = (qr.size + 8) * qs;
       var qx = W - P - qFull, qy = H - 30 - qFull;
       x.fillStyle = '#fff'; roundRect(x, qx - 6, qy - 6, qFull + 12, qFull + 12, 6); x.fill();
       QR.draw(x, qr, qx, qy, qs, '#000', 'none');
@@ -686,7 +686,7 @@
       y += 24;
       if (withQR) {
         var qr2 = QR.make(SHARE_URL, { ecc: 'H' });
-        var qs2 = Math.floor(112 / (qr2.size + 8)), qF2 = (qr2.size + 8) * qs2;
+        var qs2 = Math.max(4, Math.floor(210 / (qr2.size + 8))), qF2 = (qr2.size + 8) * qs2;
         x.fillStyle = '#fff'; roundRect(x, W / 2 - qF2 / 2 - 6, y - 6, qF2 + 12, qF2 + 12, 6); x.fill();
         QR.draw(x, qr2, W / 2 - qF2 / 2, y, qs2, '#000', 'none');
         y += qF2 + 20;
