@@ -442,15 +442,15 @@
       x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
       x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销', P, H - 50);
       x.fillStyle = C_FAINT; x.font = '400 12.5px ' + SANS;
-      x.fillText('微信搜「校值」也能找到', P, H - 26);
+      
     } else {
       x.textAlign = 'center';
       x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
-      x.fillText('微信搜「校值」测你的大学', W / 2, H - 74);
+      x.fillText('校值 · 大学生活性价比测评', W / 2, H - 74);
       x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
       x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，六维打分', W / 2, H - 46);
       x.fillStyle = C_FAINT; x.font = '400 11.5px ' + SANS;
-      x.fillText('校值 · 大学生活性价比测评', W / 2, H - 22);
+      x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销', W / 2, H - 22);
     }
 
     return cv;
@@ -501,8 +501,10 @@
     (d < 0.12 ? '，基本打平' : '') + '。' +
     D.RADAR_DIMS.map(function (dm) {
       var a1 = r.radar[dm.key], b1 = rB.radar[dm.key];
+      // 直接写学校名，不写「你/对方」—— 分享出去时读的人不知道谁是「你」
       return Math.abs(a1 - b1) < 8 ? null :
-        dm.label + (a1 > b1 ? ' 你领先 ' : ' 对方领先 ') + Math.round(Math.abs(a1 - b1));
+        dm.label + ' ' + esc(nameOf(a1 > b1 ? me : other)) +
+        ' 领先 ' + Math.round(Math.abs(a1 - b1));
     }).filter(Boolean).join(' · ') + '</div>';
   }
 
@@ -762,7 +764,7 @@
         y += qF2 + 20;
       }
       x.fillStyle = C_FAINT; x.font = '400 14px ' + SANS; x.textAlign = 'center';
-      x.fillText('校值 · 大学生活性价比测评 · 微信搜「校值」', W / 2, y);
+      x.fillText('校值 · 大学生活性价比测评', W / 2, y);
       x.textAlign = 'left';
       y += 40;
     }
@@ -983,7 +985,7 @@
     } else {
       x.textAlign = 'center';
       x.fillStyle = C_TX; x.font = '700 26px ' + SANS;
-      x.fillText('微信搜「校值」测你的大学', W / 2, H - 62);
+      x.fillText('校值 · 大学生活性价比测评', W / 2, H - 62);
       x.fillStyle = C_DIM; x.font = '400 14px ' + SANS;
       x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销，还能两所对比', W / 2, H - 34);
     }
