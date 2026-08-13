@@ -349,62 +349,20 @@
   }
 
   /* ---------------- 事件 ---------------- */
-  var IS_WX = /MicroMessenger/i.test(navigator.userAgent);
-  var IS_MOBILE = IS_WX || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
   $('btnShare').onclick = function () {
-    var cv, url;
-    try {
-      cv = drawShare();
-      url = cv.toDataURL('image/png');
-    } catch (e) { toast('生成失败：' + e.message); return; }
+    var url;
+    try { url = drawShare().toDataURL('image/png'); }
+    catch (e) { toast('生成失败：' + e.message); return; }
 
     $('shareImg').src = url;
     $('shareMask').classList.add('on');
 
-    /* 微信内置浏览器屏蔽了 <a download>，但长按图片能唤起「保存图片 / 发送给朋友」，
-     * 这是国内 H5 海报的通用做法。移动端一律提示长按，桌面端才给下载按钮。 */
-    var hint = $('shareHint');
-    if (IS_WX) {
-      hint.innerHTML = '<b>长按上面的图片</b> → 保存图片 / 发送给朋友<br>' +
-                       '<span style="opacity:.7">微信里没法直接下载，长按是唯一的路</span>';
-    } else if (IS_MOBILE) {
-      hint.innerHTML = '<b>长按图片</b>保存到相册，或点下面的按钮';
-    } else {
-      hint.textContent = '点「下载图片」保存，或右键图片另存为';
-    }
-
-    $('btnDl').style.display = IS_WX ? 'none' : '';
+    /* 微信内置浏览器会屏蔽 <a download>，那边靠长按图片保存（弹窗里已有提示）；
+     * 其他浏览器这个按钮正常工作，所以一律保留。 */
     $('btnDl').onclick = function () {
       var a = document.createElement('a');
       a.download = '大学性价比-' + ((state.schoolName || '测评').slice(0, 12)) + '.png';
       a.href = url; a.click();
-    };
-
-    // 系统级分享（支持的浏览器可以直接分享到微信/相册）
-    var sb = $('btnSysShare');
-    var canShareFile = false;
-    try {
-      canShareFile = !!(navigator.canShare && navigator.share);
-    } catch (e) {}
-    sb.style.display = canShareFile ? '' : 'none';
-    sb.onclick = function () {
-      cv.toBlob(function (blob) {
-        var file = new File([blob], 'uni-score.png', { type: 'image/png' });
-        var data = { files: [file], title: '大学上得值不值', text: '我的大学生活性价比测评' };
-        if (navigator.canShare && !navigator.canShare(data)) { toast('这个浏览器不支持分享图片，请长按图片保存'); return; }
-        navigator.share(data).catch(function () {});
-      }, 'image/png');
-    };
-
-    // 全屏看图，方便截屏
-    $('btnFull').onclick = function () {
-      var w = window.open('', '_blank');
-      if (!w) { toast('浏览器拦截了新窗口，请长按图片保存'); return; }
-      w.document.write('<!DOCTYPE html><meta name="viewport" content="width=device-width,initial-scale=1">' +
-        '<title>长按保存</title><style>html,body{margin:0;background:#0f1418}' +
-        'img{width:100%;height:auto;display:block}</style><img src="' + url + '">');
-      w.document.close();
     };
   };
   $('btnCloseShare').onclick = function () { $('shareMask').classList.remove('on'); };
