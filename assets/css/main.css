@@ -834,7 +834,7 @@ html:lang(zh) .route-intro{letter-spacing:.04em;}
 
 /* ---------- 404 ---------- */
 .err{min-height:52vh;display:grid;place-content:center;text-align:center;gap:14px;padding:60px 0;}
-.err-avatar{width:96px;height:96px;border:var(--border);box-shadow:var(--shadow);margin:0 auto;filter:grayscale(1);}
+.err-avatar{width:96px;height:96px;border:var(--border);box-shadow:var(--shadow);margin:0 auto;object-fit:cover;}
 .err .code{font-family:"Space Grotesk",sans-serif;font-weight:800;font-size:clamp(4rem,16vw,8rem);line-height:1;color:var(--ink);}
 .err p{color:#454034;}
 
