@@ -198,11 +198,21 @@
   }
 
   /* ---------------- 分享图 ---------------- */
-  /* 金额 → 星级。以当地同类学生水平为 3 星，别人只看得出高低，看不出具体数目。 */
-  function stars(ratio) {
-    var n = !isFinite(ratio) || ratio <= 0 ? 1
-          : ratio < 0.60 ? 1 : ratio < 0.85 ? 2 : ratio < 1.15 ? 3 : ratio < 1.60 ? 4 : 5;
+  /* 金额 → 星级。
+   * 星星表示的是「好不好」，不是「数字大不大」：
+   * 花钱少 = 星多，赚钱多 = 星多。方向搞反的话，
+   * 一个靠实习把开销全覆盖的人会拿到一颗星，那显然是错的。 */
+  function starBar(n) {
+    n = Math.max(1, Math.min(5, Math.round(n)));
     return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+  }
+  function costStars(ratio) {          // 支出：越低越好
+    if (!isFinite(ratio) || ratio <= 0) return starBar(5);
+    return starBar(ratio < 0.55 ? 5 : ratio < 0.80 ? 4 : ratio < 1.15 ? 3 : ratio < 1.60 ? 2 : 1);
+  }
+  function incomeStars(ratio) {        // 收入：越高越好
+    if (!isFinite(ratio) || ratio <= 0) return '暂无';
+    return starBar(ratio < 0.20 ? 1 : ratio < 0.45 ? 2 : ratio < 0.80 ? 3 : ratio < 1.15 ? 4 : 5);
   }
 
   function drawShare(hideMoney) {
@@ -247,7 +257,7 @@
     x.font = '600 24px ' + SANS;
     x.fillText(r.rating.emoji + ' ' + r.rating.label, W / 2, y + 128);
     x.fillStyle = '#61717c'; x.font = '400 13.5px ' + SANS;
-    x.fillText('1.00 = 在当地花这个钱，过上了该有的大学生活', W / 2, y + 160);
+    x.fillText('1.00 = 当地正常水平', W / 2, y + 160);
     // 刻度条
     var bx = P + 40, bw = W - P * 2 - 80, by = y + 176;
     var bg = x.createLinearGradient(bx, 0, bx + bw, 0);
@@ -279,10 +289,10 @@
     if (hideMoney) {
       var base = r.baselineMonthly || 1;
       facts = [
-        ['月支出', stars(r.grossMonthly / base)],
-        ['当地水平', '★★★☆☆'],
-        r.intern.has ? ['实习收入', stars(r.intern.grossIncome / base)] : ['实习', '暂无'],
-        ['净支出', stars(r.netMonthly / base)]
+        ['月支出', costStars(r.grossMonthly / base)],
+        ['净支出', costStars(r.netMonthly / base)],
+        ['实习收入', incomeStars(r.intern.has ? r.intern.grossIncome / base : 0)],
+        ['住宿条件', starBar(r.radar.dorm / 20)]
       ];
     } else {
       facts = [
@@ -308,14 +318,7 @@
       x.fillText(t, fx + fw / 2, y + 44);
       x.textAlign = 'left';
     });
-    y += 84;
-
-    if (hideMoney) {
-      x.fillStyle = '#61717c'; x.font = '400 11.5px ' + SANS;
-      x.textAlign = 'center';
-      x.fillText('★ 相对当地同类学生水平，三星 = 持平（已隐藏具体金额）', W / 2, y - 8);
-      x.textAlign = 'left'; y += 8;
-    }
+    y += 78;
 
     // 二维码 + 说明
     var qr = QR.make(SHARE_URL, { ecc: 'M' });
@@ -323,13 +326,10 @@
     x.fillStyle = '#161d23'; roundRect(x, P, y, W - P * 2, qFull + 28, 12); x.fill();
     x.strokeStyle = '#26333d'; x.stroke();
     QR.draw(x, qr, W - P - qFull - 14, y + 14, qs, '#0f1418', '#dde5ea');
-    x.fillStyle = '#dde5ea'; x.font = '600 17px ' + SANS;
-    x.fillText('扫码测测你的大学', P + 20, y + 40);
-    x.fillStyle = '#8fa1ad'; x.font = '400 13px ' + SANS;
-    x.fillText('住宿 · 地段 · 校园 · 前景 · 实习 · 花销', P + 20, y + 64);
-    x.fillText('六维建模，境外按购买力折算', P + 20, y + 84);
-    x.fillStyle = '#61717c'; x.font = '400 11.5px ' + SANS;
-    x.fillText('全部本地计算，不上传任何数据', P + 20, y + 108);
+    x.fillStyle = '#dde5ea'; x.font = '600 19px ' + SANS;
+    x.fillText('扫码测测你的大学', P + 22, y + 52);
+    x.fillStyle = '#8fa1ad'; x.font = '400 13.5px ' + SANS;
+    x.fillText('yuhangwu.com/uni', P + 22, y + 80);
     y += qFull + 42;
 
     /* 按实际内容裁剪 */
@@ -342,7 +342,7 @@
     o.scale(dpr, dpr);
     o.fillStyle = '#3d4a54'; o.font = '400 11.5px ' + SANS;
     o.textAlign = 'center';
-    o.fillText('本工具适用于本科生与授课型硕士 · 主观权重模型，仅供参考', W / 2, finalH - 16);
+    o.fillText('主观权重模型 · 仅供参考', W / 2, finalH - 16);
 
     return out;
   }
