@@ -101,6 +101,8 @@ code{background:var(--elev2);padding:1px 5px;border-radius:4px;font:12px var(--m
 #shareMask{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;z-index:100;
   align-items:center;justify-content:center;padding:20px}
 #shareMask.on{display:flex}
-#shareBox{background:var(--elev);border:1px solid var(--bd);border-radius:12px;padding:16px;
-  max-height:92vh;display:flex;flex-direction:column;gap:12px}
-#shareBox img{max-width:min(420px,86vw);max-height:70vh;border-radius:8px;display:block}
+#shareBox{background:var(--elev);border:1px solid var(--bd);border-radius:12px;padding:14px;
+  max-height:94vh;display:flex;flex-direction:column;gap:10px;overflow:auto}
+/* 图片给足尺寸：微信里要靠长按它来保存，太小不好按 */
+#shareBox img{width:min(420px,90vw);height:auto;border-radius:8px;display:block;margin:0 auto}
+@media(max-width:520px){ #shareMask{padding:8px} #shareBox{padding:10px} }
