@@ -1,95 +1,100 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="t6">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>大学上得值不值 · 选一个你喜欢的风格</title>
-<meta name="description" content="大学生活性价比计算器，9 种视觉风格任选。住宿、地段、校园、专业前景、实习、花销与主观感受七组维度建模，境外按购买力平价折算，填写内容不上传。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>校值 · 大学生活性价比测评</title>
+<meta name="description" content="校值 · 大学生活性价比测评。住宿、地段、校园、专业前景、实习、花销与主观感受七组维度评分，境外按购买力平价折算人民币，输出可导出的详细报告。">
+<link rel="stylesheet" href="assets/styles.css?v=11">
+<link rel="stylesheet" href="assets/themes.css?v=11">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f1418;color:#dde5ea;padding:56px 24px 80px;
-  font:400 15px/1.6 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1180px;margin:0 auto}
-h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.02em}
-.sub{color:#8fa1ad;margin-top:12px;max-width:660px;font-size:15px}
-.meta{color:#61717c;margin-top:10px;font-size:13px;max-width:660px;line-height:1.75}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-top:40px}
-.card{border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;
-  border:1px solid #262a31;background:#171a1f;
-  transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s,box-shadow .22s}
-.card:hover{transform:translateY(-5px);border-color:#3c424c;box-shadow:0 18px 40px -18px rgba(0,0,0,.85)}
-.thumb{height:170px;padding:18px;display:flex;flex-direction:column;gap:8px;justify-content:center;position:relative;overflow:hidden}
-.meta2{padding:15px 18px 18px;border-top:1px solid #262a31}
-.num{font:600 11px/1 ui-monospace,Consolas,monospace;color:#6b727d;letter-spacing:.14em}
-.name{font-size:16.5px;font-weight:600;margin:8px 0 5px}
-.desc{font-size:12.5px;color:#8b929c;line-height:1.55}
-
-/* 缩略图：用各主题自己的配色画一个抽象版式 */
-.bar{height:9px;border-radius:3px}
-.sc{font:800 30px/1 ui-monospace,Consolas,monospace}
-
-.p1{background:#0f1418}.p1 .sc{color:#35d39a}.p1 .bar{background:#26333d}.p1 .bar.a{background:#35d39a;width:55%}
-.p2{background:#fff}.p2 .sc{color:#0a0a0a}.p2 .bar{background:#e0e0e0;border-radius:0}.p2 .bar.a{background:#0a0a0a;width:52%;border-radius:0}
-.p3{background:#f2f0e9}.p3 .sc{color:#2f5bff}.p3 .bar{background:#fffdf5;border:2px solid #111;border-radius:20px}.p3 .bar.a{background:#d8f24a;width:58%}
-.p4{background:#f9f4ee}.p4 .sc{color:#c97b5a}.p4 .bar{background:#ece2d5;border-radius:20px}.p4 .bar.a{background:#c97b5a;width:54%}
-.p5{background:radial-gradient(70% 60% at 18% 0%,rgba(124,140,255,.4),transparent 66%),#080a12}
-.p5 .sc{color:#7c8cff}.p5 .bar{background:rgba(255,255,255,.12);border-radius:20px}.p5 .bar.a{background:#7c8cff;width:56%}
-.p6{background:#fbfaf7}.p6 .sc{color:#1b3b6f;font-family:Georgia,serif}.p6 .bar{background:#e8e4da;border-radius:2px}.p6 .bar.a{background:#1b3b6f;width:50%}
-.p7{background:linear-gradient(160deg,#fff2f8,#f2f6ff 55%,#f0fff8)}
-.p7 .sc{background:linear-gradient(96deg,#ff4f95,#7b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.p7 .bar{background:#fff;border-radius:20px}.p7 .bar.a{background:linear-gradient(96deg,#ff4f95,#7b5cff);width:60%}
-.p8{background:#07070d}.p8 .sc{color:#00ffc8;text-shadow:0 0 18px rgba(0,255,200,.7)}
-.p8 .bar{background:#1c1c30;border-radius:2px}.p8 .bar.a{background:#00ffc8;width:57%;box-shadow:0 0 12px rgba(0,255,200,.6)}
-.p9{background:#faf6ee}.p9 .sc{color:#a8842c;font-family:Georgia,serif;font-weight:400}
-.p9 .bar{background:#ddd2bf;border-radius:0}.p9 .bar.a{background:#a8842c;width:48%}
-
-footer{margin-top:50px;padding-top:22px;border-top:1px solid #262a31;color:#6b727d;font-size:13px;line-height:1.85}
-footer b{color:#c3cad3}
-code{background:#22262c;padding:2px 6px;border-radius:4px;font:12px ui-monospace,Consolas,monospace;color:#b8c0cb}
-</style>
 </head>
 <body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>校值</h1><span class="tag" id="stageTag">本科 / 授课型硕士</span>
+      <span class="sub">大学生活性价比测评 · 填写内容仅保存在本机</span>
+    </div>
+    <div class="btns">
+      <button id="btnPdf" class="primary">导出详细报告 PDF</button>
+      <button id="btnShare">导出图片</button>
+      <button id="btnCopy">复制摘要</button>
+      <button id="btnReset" class="ghost">重置</button>
+    </div>
+  </div>
+</header>
+
 <div class="wrap">
-  <h1>大学上得值不值</h1>
-  <p class="sub">大学生活性价比测评。住宿、地段、校园、专业前景、实习、花销、主观感受 —— 七组维度算一个总分，境外按购买力平价折算成人民币。</p>
-  <p class="meta">
-    适用于<b style="color:#c3cad3">本科生与授课型硕士</b>（博士和研究型硕士不适用）。
-    九个风格功能完全一样，只是长得不同 —— 挑一个顺眼的进去，进去之后也能随时换。
-  </p>
+  <div class="layout">
 
-  <div class="grid" id="grid"></div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="note">
+          <b>评分基准</b>：得分 1.00 代表在<b>所在城市</b>，你花的钱换来了该价位应有的大学生活；
+          高于 1.00 为超出当地水平，低于则相反。境外数据按购买力平价折算为人民币，可与国内直接比较。
+          适用于本科生与授课型硕士。
+        </div>
+      </div>
+      <div id="form"></div>
+    </div>
 
-  <footer>
-    <div><b>关于你的数据：</b>所有计算都在你的浏览器里完成，<b>填写的内容不会离开这台设备</b>（存在 localStorage）。页面会加载一个 Cloudflare 的访问统计脚本，它只记录「有人打开了这个页面」，拿不到你填了什么。</div>
-    <div><b>关于这个分数：</b>主观权重模型，不是统计拟合。它回答「当下这段大学生活划不划算」，不回答「这个决定五年后值不值」。所有系数都写在 <code>assets/data.js</code> 里，不认同可以自己改。</div>
-    <div><b>如果算出来分很低：</b>先看「最值得改善的项」——那里只列你真能动的部分。专业、学校层次这些已经改不动的，不会出现在建议里。</div>
+    <div class="panel-right">
+      <div class="card">
+        <div class="score-box">
+          <div class="score-num" id="scoreNum">—</div>
+          <div class="score-rating" id="scoreRating"></div>
+          <div class="score-scale"><i id="scoreMark" style="left:0"></i></div>
+          <div class="score-scale-lbl"><span>0</span><span>1.00 = 当地正常</span><span>3.0+</span></div>
+          <div class="score-desc" id="scoreDesc"></div>
+        </div>
+
+        <div class="radar-wrap" id="radar"></div>
+        <div class="radar-legend" id="radarLegend"></div>
+        <div class="kv-grid" id="kv"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="cursor:default;border-bottom:1px solid var(--bd-soft)">
+          <div class="ico">!</div>
+          <div><h2>最值得改善的项</h2><div class="desc">只列你真能动的，专业和学校不在其中</div></div>
+        </div>
+        <div class="diag" id="diag"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div><b>评分方法</b>：住宿、地段、校园、专业前景四组指标按权重合成质量分，除以你的净支出相对当地同类学生基准花销的比值，再由主观感受修正。实习收入计入抵扣、转正预期计入前景、投入工时计入生活成本。</div>
+    <div><b>跨国比较</b>：12 个国家与地区各自维护独立的生活费与住宿基准，境外金额按购买力平价折算为人民币等值，因此不同国家的得分可以直接横向比较。</div>
+    <div><b>数据处理</b>：全部计算在本机浏览器完成，你填写的内容不会离开这台设备。页面仅加载访问量统计脚本，不采集填写内容。</div>
+    <div><b>使用说明</b>：本测评衡量当前这段大学生活的投入产出比，不预测个人的长期发展。若主观感受各项持续偏低，建议优先联系所在学校的心理咨询中心。</div>
   </footer>
 </div>
 
-<script>
-var STYLES = [
-  ['深色终端','近黑背景配薄荷绿，等宽数字，信息密度最高。默认风格。'],
-  ['极简黑白','纯黑白直角，无阴影，瑞士排版。让数字自己说话。'],
-  ['撞色便当','粗黑描边配电光蓝与柠檬黄，硬阴影。视觉冲击最强。'],
-  ['暖色柔和','奶油、陶土、鼠尾草绿，大圆角柔阴影。看久了不累。'],
-  ['玻璃极光','毛玻璃卡片浮在极光渐变上，冷色调，安静有科技感。'],
-  ['学术报告','衬线字体配藏青，直角细线。像一份正式的评估报告。'],
-  ['俏皮糖果','粉紫渐变、大圆角、彩色徽章。最年轻的一版。'],
-  ['赛博霓虹','纯黑底霓虹青，等宽字体全局发光。夜里看很带感。'],
-  ['杂志编辑','米色纸感配金线，衬线字体，双线分隔。像人物特写。']
-];
-document.getElementById('grid').innerHTML = STYLES.map(function (s, i) {
-  var n = i + 1;
-  return '<a class="card" href="app.html?s=' + n + '">' +
-    '<div class="thumb p' + n + '">' +
-      '<div class="sc">1.42</div>' +
-      '<div class="bar a"></div><div class="bar" style="width:78%"></div><div class="bar" style="width:62%"></div>' +
-    '</div>' +
-    '<div class="meta2"><div class="num">STYLE 0' + n + '</div>' +
-    '<div class="name">' + s[0] + '</div><div class="desc">' + s[1] + '</div></div></a>';
-}).join('');
-</script>
-<script src="assets/analytics.js?v=10"></script>
+<div id="printReport"></div>
+<div id="toast"></div>
+<div id="shareMask">
+  <div id="shareBox">
+    <img id="shareImg" alt="分享图，长按可保存">
+    <div style="text-align:center;font-size:13px;color:var(--dim)">长按图片保存</div>
+    <label style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;color:var(--dim);cursor:pointer">
+      <input type="checkbox" id="hideMoney" style="width:auto;accent-color:var(--ac)">
+      隐藏具体金额，用星级代替
+    </label>
+    <div class="btns" style="justify-content:center">
+      <button id="btnDl" class="primary">下载图片</button>
+      <button id="btnCloseShare" class="ghost">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/analytics.js?v=11"></script>
+<script src="assets/data.js?v=11"></script>
+<script src="assets/model.js?v=11"></script>
+<script src="assets/qrcode.js?v=11"></script>
+<script src="assets/app.js?v=11"></script>
+
 </body>
 </html>

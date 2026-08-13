@@ -106,3 +106,38 @@ code{background:var(--elev2);padding:1px 5px;border-radius:4px;font:12px var(--m
 /* 图片给足尺寸：微信里要靠长按它来保存，太小不好按 */
 #shareBox img{width:min(420px,90vw);height:auto;border-radius:8px;display:block;margin:0 auto}
 @media(max-width:520px){ #shareMask{padding:8px} #shareBox{padding:10px} }
+
+/* ========================================================================
+ * 详细报告（打印 / 另存 PDF）
+ * 屏幕上完全隐藏，只在打印时接管整页。不引第三方 PDF 库，
+ * 用浏览器自带的「打印到 PDF」，零依赖也能离线用。
+ * ==================================================================== */
+#printReport{display:none}
+@media print{
+  @page{size:A4;margin:16mm 14mm}
+  html,body{background:#fff!important;color:#111!important}
+  body>*{display:none!important}
+  #printReport{display:block!important;font:400 10.5pt/1.65 "Microsoft YaHei","PingFang SC",sans-serif;color:#111}
+  #printReport .rp-head{display:flex;justify-content:space-between;align-items:flex-start;
+    gap:16pt;border-bottom:2pt solid #1b3b6f;padding-bottom:8pt;margin-bottom:12pt}
+  #printReport .rp-t{font-size:17pt;font-weight:700;color:#1b3b6f}
+  #printReport .rp-s{font-size:9.5pt;color:#555;margin-top:4pt;line-height:1.5}
+  #printReport .rp-score{text-align:right;white-space:nowrap}
+  #printReport .rp-score b{display:block;font-size:30pt;line-height:1;color:#1b3b6f}
+  #printReport .rp-score span{font-size:10pt;color:#555}
+  #printReport .rp-desc{font-size:10pt;color:#333;background:#f4f6f8;
+    border-left:3pt solid #1b3b6f;padding:7pt 10pt;margin-bottom:14pt}
+  #printReport h3{font-size:12pt;color:#1b3b6f;margin:16pt 0 6pt;
+    border-bottom:.6pt solid #c8cfd6;padding-bottom:3pt;break-after:avoid}
+  #printReport .rp-tb{width:100%;border-collapse:collapse;font-size:10pt;break-inside:auto}
+  #printReport .rp-tb th{text-align:left;font-weight:600;color:#555;
+    border-bottom:.8pt solid #99a4ae;padding:4pt 6pt;font-size:9pt}
+  #printReport .rp-tb td{padding:4pt 6pt;border-bottom:.4pt solid #e2e6ea;vertical-align:top}
+  #printReport .rp-tb td:first-child{width:38%;color:#444}
+  #printReport .rp-tb td.n{font-weight:600;font-variant-numeric:tabular-nums}
+  #printReport .rp-tb tr{break-inside:avoid}
+  #printReport .rp-sec td{background:#eef1f4;font-weight:600;color:#1b3b6f;font-size:9.5pt}
+  #printReport .rp-note{font-size:8.5pt;color:#777;margin-top:4pt}
+  #printReport .rp-foot{margin-top:18pt;padding-top:8pt;border-top:.6pt solid #c8cfd6;
+    font-size:8.5pt;color:#777;line-height:1.6}
+}

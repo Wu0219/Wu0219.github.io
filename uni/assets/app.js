@@ -448,6 +448,86 @@
     bindDownload(url);
     $('shareMask').classList.add('on');
   };
+  /* ---------------- 详细报告 PDF ----------------
+   * 不引第三方 PDF 库（要保持零外部依赖、可离线），改用浏览器自带的
+   * 打印到 PDF：先把一份排好版的报告塞进 #printReport，
+   * 打印样式表只显示它、隐藏页面其余部分。 */
+  function buildReport() {
+    var r = M.compute(state), f2 = function (n) { return (Math.round(n * 100) / 100).toFixed(2); };
+    var money = M.fmt.money, cur = r.cur, H = [];
+
+    H.push('<div class="rp-head"><div><div class="rp-t">校值 · 大学生活性价比测评报告</div>' +
+           '<div class="rp-s">' + esc(state.schoolName || '未填写学校') +
+           (state.majorName ? ' · ' + esc(state.majorName) : '') +
+           ' · ' + esc(r.country.label) + ' ' + esc(r.region.label) + ' · ' + esc(r.loc.label) +
+           ' · ' + (state.stage === 1 ? '授课型硕士' : '本科生') + '</div></div>' +
+           '<div class="rp-score"><b>' + f2(r.score) + '</b><span>' + esc(r.rating.title) + '</span></div></div>');
+
+    H.push('<p class="rp-desc">' + esc(r.rating.desc) + '</p>');
+
+    H.push('<h3>一、维度评分</h3><table class="rp-tb"><tr><th>维度</th><th>得分</th><th>水平</th></tr>' +
+      D.RADAR_DIMS.map(function (d) {
+        var v = r.radar[d.key];
+        return '<tr><td>' + d.label + '</td><td class="n">' + Math.round(v) + '</td><td>' +
+               (v >= 78 ? '显著优于当地' : v >= 60 ? '优于当地' : v >= 42 ? '与当地持平' :
+                v >= 28 ? '低于当地' : '显著低于当地') + '</td></tr>';
+      }).join('') + '</table><p class="rp-note">50 分为所在城市同类学生的中位水平。</p>');
+
+    H.push('<h3>二、支出结构</h3><table class="rp-tb">' +
+      [['每月总支出', cur + money(r.grossMonthly)],
+       ['当地同类学生基准', cur + money(r.baselineMonthly)],
+       ['实习月收入', r.intern.has ? cur + money(r.intern.grossIncome) : '无'],
+       ['实际净支出', cur + money(r.netMonthly)],
+       ['学年净支出（10 个月）', cur + money(r.annualNet)],
+       ['支出／基准', f2(r.costRatio)]].map(function (x) {
+        return '<tr><td>' + x[0] + '</td><td class="n" colspan="2">' + esc(x[1]) + '</td></tr>';
+      }).join('') + '</table>' +
+      (state.country !== 'CN' ? '<p class="rp-note">按购买力平价折算，净支出相当于人民币 ¥' +
+        money(r.pppNetMonthly) + '／月，当地基准相当于 ¥' + money(r.pppBaselineMonthly) + '／月。</p>' : ''));
+
+    if (r.intern.has) {
+      H.push('<h3>三、实习投入产出</h3><table class="rp-tb">' +
+        [['含金量', r.intern.quality.label], ['专业对口度', r.intern.relevance.label],
+         ['时间分布', r.intern.term.label], ['转正预期', r.intern.convert.label],
+         ['每周投入（含通勤）', r.intern.weeklyHours + ' 小时'],
+         ['时间成本折减', '×' + f2(r.intern.timePenalty)],
+         ['前景加成', '×' + f2(r.intern.prospectBoost)]].map(function (x) {
+          return '<tr><td>' + x[0] + '</td><td colspan="2">' + esc(x[1]) + '</td></tr>';
+        }).join('') + '</table>');
+    }
+
+    var rows = M.diagnose(state, 6);
+    H.push('<h3>' + (r.intern.has ? '四' : '三') + '、改善优先级</h3>');
+    H.push(rows.length ? '<table class="rp-tb"><tr><th>项目</th><th>调整方向</th><th>预计提升</th></tr>' +
+      rows.map(function (d) {
+        return '<tr><td>' + esc(d.label) + '</td><td>' + esc(d.target || '—') +
+               '</td><td class="n">' + M.fmt.pct(d.pct) + '</td></tr>';
+      }).join('') + '</table><p class="rp-note">仅列出入学后仍可调整的项目，专业与院校层次不在其中。</p>'
+      : '<p class="rp-note">各项均已处于最优档，无可调整项。</p>');
+
+    H.push('<h3>' + (r.intern.has ? '五' : '四') + '、填写明细</h3>');
+    var secs = D.buildSections(state.country), det = [];
+    secs.forEach(function (sec) {
+      var items = sec.fields.filter(function (f) { return f.type === 'select'; }).map(function (f) {
+        var o = f.options[state[f.key]];
+        return o ? '<tr><td>' + esc(f.label) + '</td><td colspan="2">' + esc(o.label) + '</td></tr>' : '';
+      }).join('');
+      if (items) det.push('<tr class="rp-sec"><td colspan="3">' + esc(sec.title) + '</td></tr>' + items);
+    });
+    H.push('<table class="rp-tb">' + det.join('') + '</table>');
+
+    H.push('<div class="rp-foot">评分方法：住宿、地段、校园、专业前景四组指标按权重合成质量分，' +
+           '除以净支出相对当地同类学生基准的比值，再由主观感受修正。' +
+           '境外金额按购买力平价折算，可与国内直接比较。<br>校值 · yuhangwu.com/uni</div>');
+
+    $('printReport').innerHTML = H.join('');
+  }
+
+  $('btnPdf').onclick = function () {
+    buildReport();
+    setTimeout(function () { window.print(); }, 60);
+  };
+
   $('btnCloseShare').onclick = function () { $('shareMask').classList.remove('on'); };
   $('shareMask').onclick = function (e) { if (e.target === this) this.classList.remove('on'); };
   $('btnCopy').onclick = function () {
