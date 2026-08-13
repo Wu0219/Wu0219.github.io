@@ -211,8 +211,23 @@
     return starBar(ratio < 0.55 ? 5 : ratio < 0.80 ? 4 : ratio < 1.15 ? 3 : ratio < 1.60 ? 2 : 1);
   }
   function incomeStars(ratio) {        // 收入：越高越好
-    if (!isFinite(ratio) || ratio <= 0) return '暂无';
+    if (!isFinite(ratio) || ratio <= 0) return '—';
     return starBar(ratio < 0.20 ? 1 : ratio < 0.45 ? 2 : ratio < 0.80 ? 3 : ratio < 1.15 ? 4 : 5);
+  }
+
+  /* 星星统一表示「好不好」，描述词补上「实际是多还是少」。
+   * 只给星星的话，「花得少」和「赚得多」都是满星，看不出差别；
+   * 加一个词就能同时读出方向和好坏。 */
+  function costWord(ratio) {
+    if (!isFinite(ratio) || ratio <= 0) return '几乎不用掏';
+    return ratio < 0.55 ? '很省' : ratio < 0.80 ? '偏省' : ratio < 1.15 ? '正常' : ratio < 1.60 ? '偏高' : '很高';
+  }
+  function incomeWord(ratio) {
+    if (!isFinite(ratio) || ratio <= 0) return '暂无';
+    return ratio < 0.20 ? '很少' : ratio < 0.45 ? '补贴零用' : ratio < 0.80 ? '覆盖大半' : ratio < 1.15 ? '够养活自己' : '有结余';
+  }
+  function levelWord(v100) {           // 0~100 的维度分 → 档次词
+    return v100 < 30 ? '较差' : v100 < 45 ? '一般' : v100 < 60 ? '还行' : v100 < 78 ? '不错' : '很好';
   }
 
   function drawShare(hideMoney) {
@@ -286,39 +301,43 @@
 
     // 关键数字（可切换成星级，避免把具体收入晒出去）
     var cur = r.cur, facts;
+    /* 每格三行：名称 / 星级（永远是高=好）/ 描述词（说明实际是多是少）。
+     * 隐藏金额时把星级放中间，显示金额时把金额放中间，两种模式结构一致。 */
+    var base = r.baselineMonthly || 1;
+    var incRatio = r.intern.has ? r.intern.grossIncome / base : 0;
     if (hideMoney) {
-      var base = r.baselineMonthly || 1;
       facts = [
-        ['月支出', costStars(r.grossMonthly / base)],
-        ['净支出', costStars(r.netMonthly / base)],
-        ['实习收入', incomeStars(r.intern.has ? r.intern.grossIncome / base : 0)],
-        ['住宿条件', starBar(r.radar.dorm / 20)]
+        ['月支出',   costStars(r.grossMonthly / base), costWord(r.grossMonthly / base)],
+        ['净支出',   costStars(r.netMonthly / base),   costWord(r.netMonthly / base)],
+        ['实习收入', incomeStars(incRatio),            incomeWord(incRatio)],
+        ['住宿条件', starBar(r.radar.dorm / 20),       levelWord(r.radar.dorm)]
       ];
     } else {
       facts = [
-        ['月支出', cur + M.fmt.money(r.grossMonthly)],
-        ['当地基准', cur + M.fmt.money(r.baselineMonthly)]
+        ['月支出',   cur + M.fmt.money(r.grossMonthly), costWord(r.grossMonthly / base)],
+        ['净支出',   cur + M.fmt.money(r.netMonthly),   costWord(r.netMonthly / base)],
+        ['实习收入', r.intern.has ? cur + M.fmt.money(r.intern.grossIncome) : '—', incomeWord(incRatio)],
+        ['当地基准', cur + M.fmt.money(r.baselineMonthly), '同类学生水平']
       ];
-      if (r.intern.has) facts.push(['实习月入', cur + M.fmt.money(r.intern.grossIncome)]);
-      else facts.push(['实习', '暂无']);
-      facts.push(['净支出', cur + M.fmt.money(r.netMonthly)]);
     }
     var fw = (W - P * 2 - 3 * 10) / 4;
     facts.slice(0, 4).forEach(function (ft, i) {
       var fx = P + i * (fw + 10);
-      x.fillStyle = '#161d23'; roundRect(x, fx, y, fw, 62, 10); x.fill();
+      x.fillStyle = '#161d23'; roundRect(x, fx, y, fw, 84, 10); x.fill();
       x.strokeStyle = '#26333d'; x.stroke();
       x.textAlign = 'center';
       x.fillStyle = '#61717c'; x.font = '400 11px ' + SANS;
-      x.fillText(ft[0], fx + fw / 2, y + 20);
+      x.fillText(ft[0], fx + fw / 2, y + 19);
       var t = String(ft[1]);
       var isStar = t.indexOf('★') >= 0 || t.indexOf('☆') >= 0;
       x.fillStyle = isStar ? '#e0a33d' : '#dde5ea';
       x.font = isStar ? '400 15px ' + SANS : (t.length > 10 ? '600 13px ' : '600 16px ') + MONO;
-      x.fillText(t, fx + fw / 2, y + 44);
+      x.fillText(t, fx + fw / 2, y + 45);
+      x.fillStyle = '#8fa1ad'; x.font = '400 11.5px ' + SANS;
+      x.fillText(String(ft[2] || ''), fx + fw / 2, y + 68);
       x.textAlign = 'left';
     });
-    y += 78;
+    y += 100;
 
     // 二维码 + 说明
     var qr = QR.make(SHARE_URL, { ecc: 'M' });

@@ -602,7 +602,9 @@
   var RADAR_DIMS = [
     { key: 'dorm',     label: '住宿' },
     { key: 'location', label: '地段' },
-    { key: 'cost',     label: '花销' },
+    // 叫「花销」有歧义：82 分到底是花得多还是花得划算？
+    // 统一成「高 = 好」的命名，读者不用再猜方向。
+    { key: 'cost',     label: '划算' },
     { key: 'prospect', label: '前景' },
     { key: 'campus',   label: '校园' }
   ];
