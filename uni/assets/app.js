@@ -117,6 +117,12 @@
 
   /* ---------------- 雷达图 ---------------- */
   function radar(r) {
+    /* 颜色从主题变量读，别写死 —— 写死 t1 的深色配色后，
+     * 六个浅色主题下标签在白底上只有 2.7:1，看不清。 */
+    var cs = getComputedStyle(document.documentElement);
+    var cGrid = (cs.getPropertyValue('--bd') || '#26333d').trim();
+    var cLbl  = (cs.getPropertyValue('--dim') || '#8fa1ad').trim();
+    var cAc   = (cs.getPropertyValue('--ac') || '#35d39a').trim();
     var dims = D.RADAR_DIMS, n = dims.length, cx = 130, cy = 118, R = 82;
     var pts = [], grid = '', axes = '', labels = '';
     for (var g = 1; g <= 4; g++) {
@@ -125,19 +131,19 @@
         var a = -Math.PI / 2 + i * 2 * Math.PI / n;
         p.push((cx + Math.cos(a) * R * g / 4).toFixed(1) + ',' + (cy + Math.sin(a) * R * g / 4).toFixed(1));
       }
-      grid += '<polygon points="' + p.join(' ') + '" fill="none" stroke="#26333d" stroke-width="1"/>';
+      grid += '<polygon points="' + p.join(' ') + '" fill="none" stroke="'+cGrid+'" stroke-width="1"/>';
     }
     for (i = 0; i < n; i++) {
       a = -Math.PI / 2 + i * 2 * Math.PI / n;
       var x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R;
-      axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="#26333d"/>';
+      axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="'+cGrid+'"/>';
       var v = Math.max(0, Math.min(100, r.radar[dims[i].key])) / 100;
       pts.push((cx + Math.cos(a) * R * v).toFixed(1) + ',' + (cy + Math.sin(a) * R * v).toFixed(1));
       var lx = cx + Math.cos(a) * (R + 20), ly = cy + Math.sin(a) * (R + 20);
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" fill="#8fa1ad" font-size="11.5" text-anchor="middle">' + dims[i].label + '</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" fill="'+cLbl+'" font-size="11.5" text-anchor="middle">' + dims[i].label + '</text>';
     }
     $('radar').innerHTML = '<svg width="260" height="240">' + grid + axes +
-      '<polygon points="' + pts.join(' ') + '" fill="rgba(53,211,154,.18)" stroke="#35d39a" stroke-width="2"/>' +
+      '<polygon points="' + pts.join(' ') + '" fill="'+cAc+'" fill-opacity="0.18" stroke="'+cAc+'" stroke-width="2"/>' +
       labels + '</svg>';
     $('radarLegend').innerHTML = dims.map(function (d) {
       return d.label + ' ' + Math.round(r.radar[d.key]);
@@ -210,7 +216,7 @@
    * 饱和曲线的上界够不着 100（最好情况约 91），而满星要求 ≥92，
    * 所以满星实际上拿不到 —— 分数只能无限趋近满分，不会真的封顶。 */
   function starsFromScore(v) {
-    return starBar(v < 25 ? 1 : v < 45 ? 2 : v < 63 ? 3 : v < 82 ? 4 : 5);
+    return starBar(v < 25 ? 1 : v < 45 ? 2 : v < 63 ? 3 : v < 92 ? 4 : 5);
   }
   function costScore(ratio) {          // 支出：越低越好
     return 100 - M.pivot(Math.max(ratio, 0.05), 0.30, 1.0, 2.20);

@@ -279,12 +279,11 @@
           m[rr][cc] = on; res[rr][cc] = true;
         }
       });
-      // 定时图案
-      for (var i = 8; i < size - 8; i++) {
-        if (m[6][i] === null) { m[6][i] = i % 2 === 0; res[6][i] = true; }
-        if (m[i][6] === null) { m[i][6] = i % 2 === 0; res[i][6] = true; }
-      }
-      // 校正图案
+      /* 校正图案必须画在定时图案**之前**。
+       * 跳过条件靠「中心格已被占用」判断是否与定位图案重叠，如果先画了
+       * 定时图案，第 6 行/列上的校正图案中心（v7 起就有，如 v8 的 (6,24)）
+       * 会被误判成重叠而整个漏掉，数据位填进本该是校正图案的位置 ——
+       * v1~v6 看不出问题，v7 起二维码直接扫不出来。 */
       var pos = ALIGN[version - 1];
       for (var a = 0; a < pos.length; a++) for (var b2 = 0; b2 < pos.length; b2++) {
         var row = pos[a], col = pos[b2];
@@ -294,6 +293,11 @@
             Math.max(Math.abs(r2), Math.abs(c2)) !== 1;
           res[row + r2][col + c2] = true;
         }
+      }
+      // 定时图案
+      for (var i = 8; i < size - 8; i++) {
+        if (m[6][i] === null) { m[6][i] = i % 2 === 0; res[6][i] = true; }
+        if (m[i][6] === null) { m[i][6] = i % 2 === 0; res[i][6] = true; }
       }
       // 固定黑模块
       m[size - 8][8] = true; res[size - 8][8] = true;

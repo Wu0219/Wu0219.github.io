@@ -145,17 +145,24 @@
                                            : region.baseHousing) * hb.k;
     var baselineMonthly = region.baseLiving * loc.livingIdx + baseHouseRaw * loc.houseIdx;
 
-    var grossMonthly = num(s.monthlyLiving) + num(s.monthlyHousing) + num(s.monthlyOther);
+    // 金额一律钳为非负：输入框的 min 属性拦不住手动敲进去的负号，
+    // 负数会让 Math.pow(负, 0.75) 变 NaN，最后静默显示成 0 分。
+    var grossMonthly = Math.max(num(s.monthlyLiving), 0) +
+                       Math.max(num(s.monthlyHousing), 0) +
+                       Math.max(num(s.monthlyOther), 0);
     var intern = internOf(s, C);
 
-    /* 绝对地板：食物、通讯、日用这些刚性开支不可能被实习收入抵扣掉。
-     * 用它做除零保护，比比例地板更有物理意义，饱和点也推得更远。 */
+    /* 绝对地板：食物、通讯、日用这些刚性开支花不到零，跟有没有实习无关。
+     * v2 只在实习抵扣那条路上套了地板，没实习的人就没有下限 ——
+     * 月花销填 1 元能刷出 268 分，填 0 元反而掉到 0 分。
+     * 这里改成无条件套用，两个荒谬结果同时消失。 */
     var rigidFloor = baselineMonthly * G.RIGID_RATIO;
     var offset = Math.min(intern.creditedIncome, Math.max(grossMonthly - rigidFloor, 0));
     var netMonthly = grossMonthly - offset;
     var surplus = Math.max(intern.creditedIncome - offset, 0);
 
-    var costRatioRaw = baselineMonthly > 0 ? netMonthly / baselineMonthly : 1;
+    var effectiveNet = Math.max(netMonthly, rigidFloor);
+    var costRatioRaw = baselineMonthly > 0 ? effectiveNet / baselineMonthly : 1;
     // 两端同时做幂压缩，避免「省钱奖励封顶、超支惩罚敞口」的不对称
     var costRatio = Math.pow(Math.min(costRatioRaw, G.COST_MAX), G.COST_EXP);
     var costFloored = offset > 0 && netMonthly <= rigidFloor + 1e-9;

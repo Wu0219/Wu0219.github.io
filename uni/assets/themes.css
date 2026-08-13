@@ -88,6 +88,9 @@ html[data-theme="t6"] .brand h1{letter-spacing:.01em}
 html[data-theme="t6"] .section-head .ico{border-radius:2px}
 html[data-theme="t6"] .card{border-radius:4px}
 html[data-theme="t6"] .score-rating{font-style:italic}
+/* base.css 的 .primary 是「藏青底 + 深绿字」，在 t6 下深字压深底只有 1.5:1，
+   按钮上的字几乎看不见。其余主题各自覆盖过，只有这里漏了。 */
+html[data-theme="t6"] button.primary{color:#fff}
 
 /* ── 7 俏皮糖果 · Candy ─────────────────────────────────────────── */
 html[data-theme="t7"]{
