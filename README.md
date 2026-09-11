@@ -8,6 +8,12 @@ Served by GitHub Pages (native Jekyll pipeline).
 
 ## Writing a new post
 
+> **The blog is currently unpublished.** `blog/index.html` and every file in `_posts/`
+> carry `published: false`, and `jekyll-feed` is disabled (removed from `plugins` in
+> `_config.yml`, and `{% feed_meta %}` from `_layouts/default.html`). To bring it back:
+> drop the `published: false` lines, restore the plugin + tag, and add a Writing link
+> to the nav in `_layouts/default.html`.
+
 Drop a Markdown file into `_posts/` named `YYYY-MM-DD-slug.md`:
 
 ```markdown
