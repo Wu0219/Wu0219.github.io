@@ -593,6 +593,7 @@
     background:#fff;
     box-shadow:2px 2px 0 var(--ink);
     transition:transform .1s ease;
+    font-variant-ligatures:none; /* else JetBrains Mono joins the "++" in C/C++ */
   }
   .stag:hover{transform:translate(-1px,-1px);background:var(--lime);}
 
