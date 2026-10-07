@@ -180,8 +180,12 @@
   .hero h1 .l2{
     display:inline-block;
     color:var(--paper);
-    -webkit-text-stroke:2.5px var(--ink);
-    text-stroke:2.5px var(--ink);
+    /* stroke is painted under the fill, which hides its inner half and the seams
+       where glyph contours overlap (very visible on CJK). Width is doubled to keep
+       the 2.5px desktop outline, and scales down on phones with a 3px floor. */
+    -webkit-text-stroke:max(3px,.03125em) var(--ink);
+    text-stroke:max(3px,.03125em) var(--ink);
+    paint-order:stroke fill;
     position:relative;
   }
   .hero .paren{
@@ -739,7 +743,7 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3, html:lang(zh) h4{
    line-height (else it clips inside .hero{overflow:hidden}) and no Latin-tuned
    negative tracking. This restores parity with the English layout. */
 html:lang(zh) .hero h1{line-height:1.06;letter-spacing:0;}
-html:lang(zh) .hero h1 .l2{-webkit-text-stroke-width:3px;text-stroke-width:3px;}
+html:lang(zh) .hero h1 .l2{-webkit-text-stroke-width:max(3px,.0375em);text-stroke-width:max(3px,.0375em);}
 html:lang(zh) .hero h1 .paren{letter-spacing:0;}
 html:lang(zh) .sec-head{letter-spacing:0;}
 html:lang(zh) .interest{max-width:26ch;line-height:1.4;}
